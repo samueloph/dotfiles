@@ -1,0 +1,11 @@
+" Specify a directory for plugins
+call plug#begin('~/.vim/plugged')
+
+Plug 'vim-airline/vim-airline'
+Plug 'tpope/vim-fugitive'
+Plug 'vim-syntastic/syntastic'
+Plug 'Yggdroot/indentLine'
+Plug 'dracula/vim', { 'as': 'dracula' }
+
+" Initialize plugin system
+call plug#end()

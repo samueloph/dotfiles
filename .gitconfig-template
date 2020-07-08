@@ -1,0 +1,5 @@
+[user]
+	name = ${NAME-PLACEHOLDER}
+	email = ${EMAIL-PLACEHOLDER}
+[pull]
+	rebase = true
