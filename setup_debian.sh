@@ -306,7 +306,7 @@ setup_tools(){
     apt_install_wrapper $pkglist_tools
 
     # fill in template config files with personal information
-    if [[ ! -f .gitconfig ]]; then
+    if [[ .gitconfig-template -nt .gitconfig ]]; then
         if [[ -z $config_files_name ]]; then
             read -p "Name: " config_files_name
         fi
@@ -382,7 +382,7 @@ setup_bash(){
     echo -e "\e[92m[BASH]\e[0m"
     apt_install_wrapper $pkglist_bash
 
-    if [[ ! -f .bashrc ]]; then
+    if [[ .bashrc-template -nt .bashrc ]]; then
         # fill in template config files with personal information
         if [[ -z $config_files_name ]]; then
             read -p "Name: " config_files_name
