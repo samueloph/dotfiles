@@ -123,6 +123,7 @@ $run_autopkgtest = 1;
 $autopkgtest_root_args = '';
 $autopkgtest_opts = [ '--', 'schroot', '%r-%a-sbuild' ];
 
+$build_arch_all = 1;
+
 # don't remove this, Perl needs it:
 1;
-
