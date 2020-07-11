@@ -19,7 +19,7 @@
 
 # Key ID to use in .changes for the current upload.
 # It overrides both $maintainer_name and $uploader_name
-#$key_id='Francesco Paolo Lovergine <frankie@debian.org>';
+$key_id='${KEY-PLACEHOLDER}';
 
 # PGP-related option to pass to dpkg-buildpackage. Usually neither .dsc
 # nor .changes files shall be signed automatically.

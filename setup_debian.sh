@@ -315,7 +315,7 @@ setup_tools(){
         fi
         sed -e "s/\${NAME-PLACEHOLDER}/$config_files_name/g" -e "s/\${EMAIL-PLACEHOLDER}/$config_files_email/g" .gitconfig-template > .gitconfig
     else
-        echo "Skipping .gitconfig generation because file '.gitconfig' exists in the same directory of this script, remove it for regeneration"
+        echo "Skipping .gitconfig generation because file '.gitconfig' is newer than its template, remove it for regeneration"
     fi
 
     copy_files_wrapper .gitconfig ~/.gitconfig
@@ -395,7 +395,7 @@ setup_bash(){
         fi
         sed -e "s/\${NAME-PLACEHOLDER}/$config_files_name/g" -e "s/\${EMAIL-PLACEHOLDER}/$config_files_email/g" -e "s/\${KEY-PLACEHOLDER}/$config_files_gpgkey/g" -e "s/\${STABLE-PLACEHOLDER}/$stable_codename/g" -e "s/\${OLDSTABLE-PLACEHOLDER}/$oldstable_codename/g" .bashrc-template > .bashrc
     else
-        echo "Skipping .bashrc generation because file '.bashrc' exists in the same directory of this script, remove it for regeneration"
+        echo "Skipping .bashrc generation because file '.bashrc' is newer than its template, remove it for regeneration"
     fi
     copy_files_wrapper .bashrc ~/.bashrc
     copy_files_wrapper .inputrc ~/.inputrc
@@ -421,6 +421,16 @@ setup_packaging_tools(){
         echo "none /var/lib/schroot/union/overlay tmpfs uid=root,gid=root,mode=0750 0 0" | sudo tee -a /etc/fstab > /dev/null
     else
         echo "✔ tmpfs is already used for builds"
+    fi
+
+    # fill in template config files with personal information
+    if [[ .sbuildrc-template -nt .sbuildrc ]]; then
+        if [[ -z $config_files_gpgkey ]]; then
+            read -p "GPG Key: " config_files_gpgkey
+        fi
+        sed -e "s/\${KEY-PLACEHOLDER}/$config_files_gpgkey/g" .sbuildrc-template > .sbuildrc
+    else
+        echo "Skipping .gitconfig generation because file '.gitconfig' is newer than its template, remove it for regeneration"
     fi
 
     copy_files_wrapper .sbuildrc ~/.sbuildrc
