@@ -129,26 +129,26 @@ export DEBEMAIL DEBFULLNAME
 export EDITOR=vim
 
 # aliases to sbuild
-alias bp="gbp buildpackage --git-builder=sbuild -A -v -d unstable -k ${KEY-PLACEHOLDER} --no-clean-source"
-alias bps="gbp buildpackage --git-builder=sbuild -A -v -d unstable --source-only-changes -k ${KEY-PLACEHOLDER} --no-clean-source"
+alias bp="gbp buildpackage --git-builder=sbuild -A -v -d unstable -k ${KEY-PLACEHOLDER}"
+alias bps="gbp buildpackage --git-builder=sbuild -A -v -d unstable --source-only-changes -k ${KEY-PLACEHOLDER}"
 
-alias bp-exp="gbp buildpackage --git-builder=sbuild -A -v -d experimental -k ${KEY-PLACEHOLDER} --no-clean-source"
-alias bps-exp="gbp buildpackage --git-builder=sbuild -A -v -d experimental --source-only-changes -k ${KEY-PLACEHOLDER} --no-clean-source"
+alias bp-exp="gbp buildpackage --git-builder=sbuild -A -v -d experimental -k ${KEY-PLACEHOLDER}"
+alias bps-exp="gbp buildpackage --git-builder=sbuild -A -v -d experimental --source-only-changes -k ${KEY-PLACEHOLDER}"
 
-alias bp-${STABLE-PLACEHOLDER}="gbp buildpackage --git-builder=sbuild -A -v -d ${STABLE-PLACEHOLDER} -k ${KEY-PLACEHOLDER} --no-clean-source"
-alias bps-${STABLE-PLACEHOLDER}="gbp buildpackage --git-builder=sbuild -A -v -d ${STABLE-PLACEHOLDER} --source-only-changes -k ${KEY-PLACEHOLDER} --no-clean-source"
+alias bp-${STABLE-PLACEHOLDER}="gbp buildpackage --git-builder=sbuild -A -v -d ${STABLE-PLACEHOLDER} -k ${KEY-PLACEHOLDER}"
+alias bps-${STABLE-PLACEHOLDER}="gbp buildpackage --git-builder=sbuild -A -v -d ${STABLE-PLACEHOLDER} --source-only-changes -k ${KEY-PLACEHOLDER}"
 
-alias bp-${OLDSTABLE-PLACEHOLDER}="gbp buildpackage --git-builder=sbuild -A -v -d ${OLDSTABLE-PLACEHOLDER} -k ${KEY-PLACEHOLDER} --no-clean-source"
-alias bps-${OLDSTABLE-PLACEHOLDER}="gbp buildpackage --git-builder=sbuild -A -v -d ${OLDSTABLE-PLACEHOLDER} --source-only-changes -k ${KEY-PLACEHOLDER} --no-clean-source"
+alias bp-${OLDSTABLE-PLACEHOLDER}="gbp buildpackage --git-builder=sbuild -A -v -d ${OLDSTABLE-PLACEHOLDER} -k ${KEY-PLACEHOLDER}"
+alias bps-${OLDSTABLE-PLACEHOLDER}="gbp buildpackage --git-builder=sbuild -A -v -d ${OLDSTABLE-PLACEHOLDER} --source-only-changes -k ${KEY-PLACEHOLDER}"
 
-alias bp-${STABLE-PLACEHOLDER}-bpo="gbp buildpackage --git-builder=sbuild -A -v -d ${STABLE-PLACEHOLDER}-backports -k ${KEY-PLACEHOLDER} --build-dep-resolver=aptitude --extra-repository=\"deb http://deb.debian.org/debian ${STABLE-PLACEHOLDER}-backports main\" --no-clean-source"
-alias bps-${STABLE-PLACEHOLDER}-bpo="gbp buildpackage --git-builder=sbuild -A -v -d ${STABLE-PLACEHOLDER}-backports --source-only-changes -k ${KEY-PLACEHOLDER} --build-dep-resolver=aptitude --extra-repository=\"deb http://deb.debian.org/debian ${STABLE-PLACEHOLDER}-backports main\" --no-clean-source"
+alias bp-${STABLE-PLACEHOLDER}-bpo="gbp buildpackage --git-builder=sbuild -A -v -d ${STABLE-PLACEHOLDER}-backports -k ${KEY-PLACEHOLDER} --build-dep-resolver=aptitude --extra-repository=\"deb http://deb.debian.org/debian ${STABLE-PLACEHOLDER}-backports main\""
+alias bps-${STABLE-PLACEHOLDER}-bpo="gbp buildpackage --git-builder=sbuild -A -v -d ${STABLE-PLACEHOLDER}-backports --source-only-changes -k ${KEY-PLACEHOLDER} --build-dep-resolver=aptitude --extra-repository=\"deb http://deb.debian.org/debian ${STABLE-PLACEHOLDER}-backports main\""
 
-alias bp-${OLDSTABLE-PLACEHOLDER}-bpo="gbp buildpackage --git-builder=sbuild -A -v -d ${OLDSTABLE-PLACEHOLDER}-backports -k ${KEY-PLACEHOLDER} --build-dep-resolver=aptitude --extra-repository=\"deb http://deb.debian.org/debian ${OLDSTABLE-PLACEHOLDER}-backports main\" --no-clean-source"
-alias bps-${OLDSTABLE-PLACEHOLDER}-bpo="gbp buildpackage --git-builder=sbuild -A -v -d ${OLDSTABLE-PLACEHOLDER}-backports --source-only-changes -k ${KEY-PLACEHOLDER} --build-dep-resolver=aptitude --extra-repository=\"deb http://deb.debian.org/debian ${OLDSTABLE-PLACEHOLDER}-backports main\" --no-clean-source"
+alias bp-${OLDSTABLE-PLACEHOLDER}-bpo="gbp buildpackage --git-builder=sbuild -A -v -d ${OLDSTABLE-PLACEHOLDER}-backports -k ${KEY-PLACEHOLDER} --build-dep-resolver=aptitude --extra-repository=\"deb http://deb.debian.org/debian ${OLDSTABLE-PLACEHOLDER}-backports main\""
+alias bps-${OLDSTABLE-PLACEHOLDER}-bpo="gbp buildpackage --git-builder=sbuild -A -v -d ${OLDSTABLE-PLACEHOLDER}-backports --source-only-changes -k ${KEY-PLACEHOLDER} --build-dep-resolver=aptitude --extra-repository=\"deb http://deb.debian.org/debian ${OLDSTABLE-PLACEHOLDER}-backports main\""
 
-alias bp-${OLDSTABLE-PLACEHOLDER}-bpo-sloppy="gbp buildpackage --git-builder=sbuild -A -v -d ${OLDSTABLE-PLACEHOLDER}-backports-sloppy -k ${KEY-PLACEHOLDER} --build-dep-resolver=aptitude --extra-repository=\"deb http://deb.debian.org/debian ${OLDSTABLE-PLACEHOLDER}-backports main\" --extra-repository=\"deb http://deb.debian.org/debian ${OLDSTABLE-PLACEHOLDER}-backports-sloppy main\" --no-clean-source"
-alias bps-${OLDSTABLE-PLACEHOLDER}-bpo-sloppy="gbp buildpackage --git-builder=sbuild -A -v -d ${OLDSTABLE-PLACEHOLDER}-backports-sloppy --source-only-changes -k ${KEY-PLACEHOLDER} --build-dep-resolver=aptitude --extra-repository=\"deb http://deb.debian.org/debian ${OLDSTABLE-PLACEHOLDER}-backports main\" --extra-repository=\"deb http://deb.debian.org/debian ${OLDSTABLE-PLACEHOLDER}-backports-sloppy main\" --no-clean-source"
+alias bp-${OLDSTABLE-PLACEHOLDER}-bpo-sloppy="gbp buildpackage --git-builder=sbuild -A -v -d ${OLDSTABLE-PLACEHOLDER}-backports-sloppy -k ${KEY-PLACEHOLDER} --build-dep-resolver=aptitude --extra-repository=\"deb http://deb.debian.org/debian ${OLDSTABLE-PLACEHOLDER}-backports main\" --extra-repository=\"deb http://deb.debian.org/debian ${OLDSTABLE-PLACEHOLDER}-backports-sloppy main\""
+alias bps-${OLDSTABLE-PLACEHOLDER}-bpo-sloppy="gbp buildpackage --git-builder=sbuild -A -v -d ${OLDSTABLE-PLACEHOLDER}-backports-sloppy --source-only-changes -k ${KEY-PLACEHOLDER} --build-dep-resolver=aptitude --extra-repository=\"deb http://deb.debian.org/debian ${OLDSTABLE-PLACEHOLDER}-backports main\" --extra-repository=\"deb http://deb.debian.org/debian ${OLDSTABLE-PLACEHOLDER}-backports-sloppy main\""
 
 export QUILT_PATCHES=debian/patches
 export QUILT_PATCHES=debian/patches
