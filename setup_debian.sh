@@ -506,7 +506,7 @@ pkglist_i3="
     fonts-hack
     i3
     j4-dmenu-desktop
-    ./light.deb
+    light
     nitrogen
     policykit-1-gnome
     redshift-gtk
