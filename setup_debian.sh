@@ -480,7 +480,6 @@ pkglist_atom_extensions="
     linter
     linter-clang
     linter-shellcheck
-    linter-spell
     markdown-pdf
     minimap
     minimap-bookmarks
