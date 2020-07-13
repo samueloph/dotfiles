@@ -129,17 +129,17 @@ export DEBEMAIL DEBFULLNAME
 export EDITOR=vim
 
 # aliases to sbuild
-alias bp="gbp buildpackage --git-builder=sbuild -v"
-alias bps="gbp buildpackage --git-builder=sbuild -v --source-only-changes"
+alias bp="gbp buildpackage --git-builder=sbuild -v --no-clean-source"
+alias bps="gbp buildpackage --git-builder=sbuild -v --source-only-changes --no-clean-source"
 
-alias bp-${STABLE-PLACEHOLDER}-bpo="gbp buildpackage --git-builder=sbuild -v -d ${STABLE-PLACEHOLDER}-backports --build-dep-resolver=aptitude --extra-repository=\"deb http://deb.debian.org/debian ${STABLE-PLACEHOLDER}-backports main\""
-alias bps-${STABLE-PLACEHOLDER}-bpo="gbp buildpackage --git-builder=sbuild -v -d ${STABLE-PLACEHOLDER}-backports --source-only-changes --build-dep-resolver=aptitude --extra-repository=\"deb http://deb.debian.org/debian ${STABLE-PLACEHOLDER}-backports main\""
+alias bp-${STABLE-PLACEHOLDER}-bpo="gbp buildpackage --git-builder=sbuild -v -d ${STABLE-PLACEHOLDER}-backports --build-dep-resolver=aptitude --extra-repository=\"deb http://deb.debian.org/debian ${STABLE-PLACEHOLDER}-backports main\" --no-clean-source"
+alias bps-${STABLE-PLACEHOLDER}-bpo="gbp buildpackage --git-builder=sbuild -v -d ${STABLE-PLACEHOLDER}-backports --source-only-changes --build-dep-resolver=aptitude --extra-repository=\"deb http://deb.debian.org/debian ${STABLE-PLACEHOLDER}-backports main\" --no-clean-source"
 
-alias bp-${OLDSTABLE-PLACEHOLDER}-bpo="gbp buildpackage --git-builder=sbuild -v -d ${OLDSTABLE-PLACEHOLDER}-backports --build-dep-resolver=aptitude --extra-repository=\"deb http://deb.debian.org/debian ${OLDSTABLE-PLACEHOLDER}-backports main\""
-alias bps-${OLDSTABLE-PLACEHOLDER}-bpo="gbp buildpackage --git-builder=sbuild -v -d ${OLDSTABLE-PLACEHOLDER}-backports --source-only-changes --build-dep-resolver=aptitude --extra-repository=\"deb http://deb.debian.org/debian ${OLDSTABLE-PLACEHOLDER}-backports main\""
+alias bp-${OLDSTABLE-PLACEHOLDER}-bpo="gbp buildpackage --git-builder=sbuild -v -d ${OLDSTABLE-PLACEHOLDER}-backports --build-dep-resolver=aptitude --extra-repository=\"deb http://deb.debian.org/debian ${OLDSTABLE-PLACEHOLDER}-backports main\" --no-clean-source"
+alias bps-${OLDSTABLE-PLACEHOLDER}-bpo="gbp buildpackage --git-builder=sbuild -v -d ${OLDSTABLE-PLACEHOLDER}-backports --source-only-changes --build-dep-resolver=aptitude --extra-repository=\"deb http://deb.debian.org/debian ${OLDSTABLE-PLACEHOLDER}-backports main\" --no-clean-source"
 
-alias bp-${OLDSTABLE-PLACEHOLDER}-bpo-sloppy="gbp buildpackage --git-builder=sbuild -v -d ${OLDSTABLE-PLACEHOLDER}-backports-sloppy --build-dep-resolver=aptitude --extra-repository=\"deb http://deb.debian.org/debian ${OLDSTABLE-PLACEHOLDER}-backports main\" --extra-repository=\"deb http://deb.debian.org/debian ${OLDSTABLE-PLACEHOLDER}-backports-sloppy main\""
-alias bps-${OLDSTABLE-PLACEHOLDER}-bpo-sloppy="gbp buildpackage --git-builder=sbuild -v -d ${OLDSTABLE-PLACEHOLDER}-backports-sloppy --source-only-changes --build-dep-resolver=aptitude --extra-repository=\"deb http://deb.debian.org/debian ${OLDSTABLE-PLACEHOLDER}-backports main\" --extra-repository=\"deb http://deb.debian.org/debian ${OLDSTABLE-PLACEHOLDER}-backports-sloppy main\""
+alias bp-${OLDSTABLE-PLACEHOLDER}-bpo-sloppy="gbp buildpackage --git-builder=sbuild -v -d ${OLDSTABLE-PLACEHOLDER}-backports-sloppy --build-dep-resolver=aptitude --extra-repository=\"deb http://deb.debian.org/debian ${OLDSTABLE-PLACEHOLDER}-backports main\" --extra-repository=\"deb http://deb.debian.org/debian ${OLDSTABLE-PLACEHOLDER}-backports-sloppy main\" --no-clean-source"
+alias bps-${OLDSTABLE-PLACEHOLDER}-bpo-sloppy="gbp buildpackage --git-builder=sbuild -v -d ${OLDSTABLE-PLACEHOLDER}-backports-sloppy --source-only-changes --build-dep-resolver=aptitude --extra-repository=\"deb http://deb.debian.org/debian ${OLDSTABLE-PLACEHOLDER}-backports main\" --extra-repository=\"deb http://deb.debian.org/debian ${OLDSTABLE-PLACEHOLDER}-backports-sloppy main\" --no-clean-source"
 
 export QUILT_PATCHES=debian/patches
 export QUILT_DIFF_ARGS="--no-timestamps --no-index -pab"
