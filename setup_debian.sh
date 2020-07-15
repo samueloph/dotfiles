@@ -366,7 +366,7 @@ setup_vim(){
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
     # only proceed if file does not exists or it has not been copied already
-    if [[ ! -f ~/.vimrc &&  $(md5sum ~/.vimrc | cut -f1 -d" " 2>/dev/null) != $(md5sum .vimrc | cut -f1 -d" ") ]]; then
+    if [[ ! -f ~/.vimrc || $(md5sum ~/.vimrc | cut -f1 -d" " 2>/dev/null) != $(md5sum .vimrc | cut -f1 -d" ") ]]; then
         echo "►► Setting up vim-plug and .vimrc"
         copy_files_wrapper .vimrc-pre-pluginstall ~/.vimrc
         vim +'PlugInstall --sync' +qa
