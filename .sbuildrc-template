@@ -29,7 +29,7 @@ $key_id='${KEY-PLACEHOLDER}';
 # Set to 1 to force creation of a source package, but note that
 # this is inappropriate for binary NMUs, where the option will
 # always be disabled.
-#$build_source = 0;
+$build_source = 1;
 
 # By default, the -s option only includes the .orig.tar.gz when needed
 # (i.e. when the Debian revision is 0 or 1).  By setting this option
