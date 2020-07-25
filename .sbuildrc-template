@@ -121,7 +121,7 @@ $piuparts_opts = ['--schroot', 'unstable-amd64-sbuild', '--no-eatmydata'];
 
 $run_autopkgtest = 1;
 $autopkgtest_root_args = '';
-$autopkgtest_opts = [ '--', 'schroot', '%r-%a-sbuild' ];
+$autopkgtest_opts = [ '--', 'schroot', '%r' ];
 
 $build_arch_all = 1;
 
