@@ -137,17 +137,10 @@ create_schroot(){
         echo "✔ sbuild's ${release} chroot is already configured"
     fi
 
-    # setup schroot aliases
-    if ! find /etc/schroot/chroot.d/ -name "${release}-amd64-sbuild-*" -exec grep -q "^aliases.*$release_alias" {} +; then
-        echo "►► setting $release_alias alias for ${release}'s schroot"
-        if ! find /etc/schroot/chroot.d/ -name "${release}-amd64-sbuild-*" -exec grep -q "^aliases" {} +; then
-            echo "aliases=${release_alias}" | sudo tee -a /etc/schroot/chroot.d/${release}-amd64-sbuild-* >/dev/null
-        else
-            sudo find /etc/schroot/chroot.d/ -name "${release}-amd64-sbuild-*" -exec sed -i -e "/aliases/ {/${release_alias}/! s/$/,${release_alias}/}" {} +
-        fi
-    else
-        echo "✔ $release_alias alias is set for ${release}'s schroot"
-    fi
+
+    # setup release as an alias so we can call autopkgtest by the schroot alias instead of using the full schroot name
+    setup_schroot_alias "$release" "$release"
+    setup_schroot_alias "$release" "$release_alias"
 
     # setup eatmydata
     if ! find /etc/schroot/chroot.d/ -name "${release}-amd64-sbuild-*" -exec grep -q "^command-prefix.*eatmydata" {} +; then
@@ -210,6 +203,24 @@ create_schroot(){
     echo -e "[/CCACHE FOR SCHROOT]"
 
     echo -e "\e[32m[/CREATE-${release^^}-SCHROOT]\e[0m"
+}
+
+setup_schroot_alias(){
+
+    local release=$1
+    local release_alias=$2
+
+    # setup schroot aliases
+    if ! find /etc/schroot/chroot.d/ -name "${release}-amd64-sbuild-*" -exec grep -q "^aliases.*\(=\|,\)$release_alias\($\|,\)" {} +; then
+        echo "►► setting $release_alias alias for ${release}'s schroot"
+        if ! find /etc/schroot/chroot.d/ -name "${release}-amd64-sbuild-*" -exec grep -q "^aliases" {} +; then
+            echo "aliases=${release_alias}" | sudo tee -a /etc/schroot/chroot.d/${release}-amd64-sbuild-* >/dev/null
+        else
+            sudo find /etc/schroot/chroot.d/ -name "${release}-amd64-sbuild-*" -exec sed -i -e "/aliases/ s/$/,${release_alias}/" {} +
+        fi
+    else
+        echo "✔ $release_alias alias is set for ${release}'s schroot"
+    fi
 }
 
 setup_gnome(){
