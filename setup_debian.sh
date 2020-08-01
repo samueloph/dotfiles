@@ -25,19 +25,20 @@ apt_install_wrapper(){
     local one_day_ago
     local pkgcache_modification_timestamp
     local to_be_installed=""
+    local package_list=("$@")
 
     one_day_ago=$(date -d 'now - 1 days' +%s)
     pkgcache_modification_timestamp=$(date -r "/var/cache/apt/pkgcache.bin" +%s)
 
-    for var in "$@"
+    for package in "${package_list[@]}"
     do
         # var can be a location to a .deb file, so remove the path part of it
         local packagename
-        packagename=$(awk -F "/" '{print $NF}' <<< $var | awk '{gsub(".deb$", "");print}')
+        packagename=$(awk -F "/" '{print $NF}' <<< "$package" | awk '{gsub(".deb$", "");print}')
 
         # select package to be installed if not already in the system
         if ! (dpkg-query -W -f='${Status}' "$packagename" 2>/dev/null | grep -q "install ok installed"); then
-            to_be_installed="$to_be_installed $var"
+            to_be_installed="$to_be_installed $package"
         else
             echo "✔ $packagename is already installed"
         fi
@@ -51,7 +52,7 @@ apt_install_wrapper(){
         if [[ pkgcache_modification_timestamp -le one_day_ago ]]; then
             sudo apt update
         fi
-        sudo apt install $to_be_installed
+        sudo apt install "$to_be_installed"
         echo "--------------------------------------------------------------------------------"
     fi
 }
@@ -101,12 +102,12 @@ copy_files_wrapper(){
         else
             ((RETURNVAR+=1))
             echo "[WARN] $DEST already exists and it's different, old file will be ${DEST}.bkp-$timestamp"
-            mv "$DEST" "$DEST".bkp-"$timestamp"
+            mv "$DEST" "${DEST}.bkp-${timestamp}"
             $SUDO cp "$SOURCE" "$DEST"
 
             # log changes
-            echo $SOURCE >> $changed_files
-            echo ${DEST}.bkp-${timestamp} >> $backup_files
+            echo "$SOURCE" >> "$changed_files"
+            echo "${DEST}.bkp-${timestamp}" >> "$backup_files"
         fi
     fi
 }
@@ -130,8 +131,8 @@ create_schroot(){
         echo "►► setting up sbuild's ${release} chroot"
         echo "--------------------------------------------------------------------------------"
         apt_install_wrapper apt-cacher-ng
-        sudo sbuild-createchroot --include=eatmydata,ccache,gnupg ${release} /srv/chroot/${release}-amd64-sbuild http://127.0.0.1:3142/deb.debian.org/debian
-        sudo sbuild-adduser $LOGNAME >/dev/null 2>&1
+        sudo sbuild-createchroot --include=eatmydata,ccache,gnupg "$release" "/srv/chroot/${release}-amd64-sbuild http://127.0.0.1:3142/deb.debian.org/debian"
+        sudo sbuild-adduser "$LOGNAME" >/dev/null 2>&1
         echo "--------------------------------------------------------------------------------"
     else
         echo "✔ sbuild's ${release} chroot is already configured"
@@ -146,7 +147,7 @@ create_schroot(){
     if ! find /etc/schroot/chroot.d/ -name "${release}-amd64-sbuild-*" -exec grep -q "^command-prefix.*eatmydata" {} +; then
         echo "►► setting eatmydata command-prefix for ${release}'s schroot"
         if ! find /etc/schroot/chroot.d/ -name "${release}-amd64-sbuild-*" -exec grep -q "^command-prefix" {} +; then
-            echo "command-prefix=eatmydata" | sudo tee -a /etc/schroot/chroot.d/${release}-amd64-sbuild-* >/dev/null
+            echo "command-prefix=eatmydata" | sudo tee -a "/etc/schroot/chroot.d/${release}-amd64-sbuild-"* >/dev/null
         else
             sudo find /etc/schroot/chroot.d/ -name "${release}-amd64-sbuild-*" -exec sed -i -e '/command-prefix/ {/eatmydata/! s/$/,eatmydata/}' {} +
         fi
@@ -172,7 +173,7 @@ create_schroot(){
         echo "►► setting up mounting of ccache folder from sbuild's chroot"
         echo "$ccache_dir /$ccache_dir none rw,bind 0 0" | sudo tee -a /etc/schroot/sbuild/fstab >/dev/null
 
-        echo "/etc/schroot/sbuild/fstab" >> $changed_files
+        echo "/etc/schroot/sbuild/fstab" >> "$changed_files"
     else
         echo "✔ ccache folder is already on chroot's fstab"
     fi
@@ -181,7 +182,7 @@ create_schroot(){
         test_ccache="true"
         echo "►► setting ccache command-prefix for ${release}'s schroot"
         if ! find /etc/schroot/chroot.d/ -name "${release}-amd64-sbuild-*" -exec grep -q "^command-prefix" {} +; then
-            echo "command-prefix=/var/cache/ccache-sbuild/sbuild-setup" | sudo tee -a  /etc/schroot/chroot.d/${release}-amd64-sbuild-* >/dev/null
+            echo "command-prefix=/var/cache/ccache-sbuild/sbuild-setup" | sudo tee -a  "/etc/schroot/chroot.d/${release}-amd64-sbuild-"* >/dev/null
         else
             sudo find /etc/schroot/chroot.d/ -name "${release}-amd64-sbuild-*" -exec sed -i -e '/command-prefix/ {/\/var\/cache\/ccache-sbuild\/sbuild-setup/! s/$/,\/var\/cache\/ccache-sbuild\/sbuild-setup/}' {} +
         fi
@@ -191,7 +192,7 @@ create_schroot(){
 
     # test ccache if needed
     if [[ $test_ccache == "true" ]];then
-        if sudo schroot -c source:${release}-amd64-sbuild -d /home -- ccache -p | grep -q "$ccache_dir/ccache.conf"; then
+        if sudo schroot -c "source:${release}-amd64-sbuild" -d /home -- ccache -p | grep -q "$ccache_dir/ccache.conf"; then
             echo "✔ ccache sucessfully tested"
         else
             echo "⚠️ could not test ccache, something is wrong ⚠️"
@@ -214,7 +215,7 @@ setup_schroot_alias(){
     if ! find /etc/schroot/chroot.d/ -name "${release}-amd64-sbuild-*" -exec grep -q "^aliases.*\(=\|,\)$release_alias\($\|,\)" {} +; then
         echo "►► setting $release_alias alias for ${release}'s schroot"
         if ! find /etc/schroot/chroot.d/ -name "${release}-amd64-sbuild-*" -exec grep -q "^aliases" {} +; then
-            echo "aliases=${release_alias}" | sudo tee -a /etc/schroot/chroot.d/${release}-amd64-sbuild-* >/dev/null
+            echo "aliases=$release_alias" | sudo tee -a "/etc/schroot/chroot.d/${release}-amd64-sbuild-"* >/dev/null
         else
             sudo find /etc/schroot/chroot.d/ -name "${release}-amd64-sbuild-*" -exec sed -i -e "/aliases/ s/$/,${release_alias}/" {} +
         fi
@@ -226,7 +227,7 @@ setup_schroot_alias(){
 setup_gnome(){
     # tweak some gnome settings using gsettings
     echo -e "\e[92m[GNOME]\e[0m"
-    apt_install_wrapper $pkglist_gnome
+    apt_install_wrapper "$pkglist_gnome"
 
     if [[ $(gsettings get org.gnome.desktop.interface gtk-theme) != "'Adwaita-dark'" ]]; then
         echo "►► Setting Gnome theme to Adwaita-dark"
@@ -292,7 +293,7 @@ setup_firefox(){
 setup_i3(){
     # setup various i3 tools and settings
     echo -e "\e[92m[I3]\e[0m"
-    apt_install_wrapper $pkglist_i3
+    apt_install_wrapper "$pkglist_i3"
 
     # install i3-gnome if not already installed
     if [[ ! -f /usr/share/xsessions/i3-gnome.desktop ]]; then
@@ -314,15 +315,15 @@ setup_i3(){
 setup_tools(){
     # setup miscellaneous
     echo -e "\e[92m[TOOLS]\e[0m"
-    apt_install_wrapper $pkglist_tools
+    apt_install_wrapper "$pkglist_tools"
 
     # fill in template config files with personal information
     if [[ .gitconfig-template -nt .gitconfig ]]; then
         if [[ -z $config_files_name ]]; then
-            read -p "Name: " config_files_name
+            read -rp "Name: " config_files_name
         fi
         if [[ -z $config_files_email ]]; then
-            read -p "Email: " config_files_email
+            read -rp "Email: " config_files_email
         fi
         sed -e "s/\${NAME-PLACEHOLDER}/$config_files_name/g" -e "s/\${EMAIL-PLACEHOLDER}/$config_files_email/g" .gitconfig-template > .gitconfig
     else
@@ -337,7 +338,7 @@ setup_tools(){
 setup_battery(){
     # install battery saving tools
     echo -e "\e[92m[BATTERY]\e[0m"
-    apt_install_wrapper $pkglist_battery
+    apt_install_wrapper "$pkglist_battery"
 
     echo -e "\e[92m[/BATTERY]\e[0m"
 }
@@ -345,7 +346,7 @@ setup_battery(){
 setup_atom(){
     # install atom and its packages
     echo -e "\e[92m[ATOM]\e[0m"
-        apt_install_wrapper $pkglist_atom
+        apt_install_wrapper "$pkglist_atom"
 
     if ! dpkg-query -W -f='${Status}' atom >/dev/null 2>&1; then
         curl -fLso atom.deb https://atom.io/download/deb
@@ -359,7 +360,7 @@ setup_atom(){
     # instal the same packages as the following command:
     # apm stars --user samueloph --install
     # but the starred packages might be out of sync
-    atom_packages_installer $pkglist_atom_extensions
+    atom_packages_installer "$pkglist_atom_extensions"
 
     echo -e "\e[92m[/ATOM]\e[0m"
 }
@@ -370,7 +371,7 @@ setup_vim(){
     # After vimrc-pre-pluginstall is copied and PlugInstall is run, the real
     # dotfile is copied.
     echo -e "\e[92m[VIM]\e[0m"
-    apt_install_wrapper $pkglist_vim
+    apt_install_wrapper "$pkglist_vim"
 
     # install vim-plug
     curl -fLso ~/.vim/autoload/plug.vim --create-dirs \
@@ -391,18 +392,18 @@ setup_vim(){
 
 setup_bash(){
     echo -e "\e[92m[BASH]\e[0m"
-    apt_install_wrapper $pkglist_bash
+    apt_install_wrapper "$pkglist_bash"
 
     if [[ .bashrc-template -nt .bashrc ]]; then
         # fill in template config files with personal information
         if [[ -z $config_files_name ]]; then
-            read -p "Name: " config_files_name
+            read -rp "Name: " config_files_name
         fi
         if [[ -z $config_files_email ]]; then
-            read -p "Email: " config_files_email
+            read -rp "Email: " config_files_email
         fi
         if [[ -z $config_files_gpgkey ]]; then
-            read -p "GPG Key: " config_files_gpgkey
+            read -rp "GPG Key: " config_files_gpgkey
         fi
         sed -e "s/\${NAME-PLACEHOLDER}/$config_files_name/g" -e "s/\${EMAIL-PLACEHOLDER}/$config_files_email/g" -e "s/\${KEY-PLACEHOLDER}/$config_files_gpgkey/g" -e "s/\${STABLE-PLACEHOLDER}/$stable_codename/g" -e "s/\${OLDSTABLE-PLACEHOLDER}/$oldstable_codename/g" .bashrc-template > .bashrc
     else
@@ -418,17 +419,17 @@ setup_packaging_tools(){
     # install and configure a bunch of tools needed for packaging work
 
     echo -e "\e[92m[PACKAGING-TOOLS]\e[0m"
-    apt_install_wrapper $pkglist_packaging_tools
+    apt_install_wrapper "$pkglist_packaging_tools"
 
     create_schroot unstable experimental
-    create_schroot $stable_codename ${stable_codename}-backports
-    create_schroot $oldstable_codename ${oldstable_codename}-backports-sloppy
+    create_schroot "$stable_codename" "${stable_codename}-backports"
+    create_schroot "$oldstable_codename" "${oldstable_codename}-backports-sloppy"
 
     if ! grep -q "none /var/lib/schroot/union/overlay tmpfs uid=root,gid=root,mode=0750 0 0" /etc/fstab; then
         echo "►► Using tmpfs for builds"
         sudo cp /etc/fstab /etc/fstab.bkp-"$timestamp"
-        echo "/etc/fstab" >> $changed_files
-        echo "/etc/fstab.bkp-${timestamp}" >> $backup_files
+        echo "/etc/fstab" >> "$changed_files"
+        echo "/etc/fstab.bkp-${timestamp}" >> "$backup_files"
         echo "none /var/lib/schroot/union/overlay tmpfs uid=root,gid=root,mode=0750 0 0" | sudo tee -a /etc/fstab > /dev/null
     else
         echo "✔ tmpfs is already used for builds"
@@ -437,9 +438,9 @@ setup_packaging_tools(){
     # fill in template config files with personal information
     if [[ .sbuildrc-template -nt .sbuildrc ]]; then
         if [[ -z $config_files_gpgkey ]]; then
-            read -p "GPG Key: " config_files_gpgkey
+            read -rp "GPG Key: " config_files_gpgkey
         fi
-        sed -e "s/\${KEY-PLACEHOLDER}/$config_files_gpgkey/g" .sbuildrc-template > .sbuildrc
+        sed -e "s/\${KEY-PLACEHOLDER}/${config_files_gpgkey}/g" .sbuildrc-template > .sbuildrc
     else
         echo "Skipping .gitconfig generation because file '.gitconfig' is newer than its template, remove it for regeneration"
     fi
@@ -480,7 +481,7 @@ setup_ssd(){
 }
 
 # lists of packages to be used by the functions above
-pkglist_atom_extensions="
+pkglist_atom_extensions=(
     atom-beautify
     autocomplete-clang
     file-icons
@@ -506,13 +507,13 @@ pkglist_atom_extensions="
     script
     split-diff
     tabs-to-spaces
-"
+)
 
-pkglist_gnome="
+pkglist_gnome=(
     fonts-hack
-"
+)
 
-pkglist_i3="
+pkglist_i3=(
     fonts-hack
     i3
     j4-dmenu-desktop
@@ -521,30 +522,30 @@ pkglist_i3="
     policykit-1-gnome
     redshift-gtk
     xss-lock
-"
+)
 
-pkglist_atom="
+pkglist_atom=(
     clang
     flake8
     shellcheck
-"
+)
 
-pkglist_bash="
+pkglist_bash=(
     powerline
     powerline-gitstatus
-"
-pkglist_vim="
+)
+pkglist_vim=(
     curl
     flake8
     vim
-"
+)
 
-pkglist_battery="
+pkglist_battery=(
     acpi-call-dkms
     tlp
-"
+)
 
-pkglist_tools="
+pkglist_tools=(
     colordiff
     docker.io
     make
@@ -558,9 +559,9 @@ pkglist_tools="
     tree
     virt-manager
     whois
-"
+)
 
-pkglist_packaging_tools="
+pkglist_packaging_tools=(
     ccache
     debhelper
     dh-make
@@ -572,7 +573,7 @@ pkglist_packaging_tools="
     piuparts
     quilt
     sbuild-debian-developer-setup
-"
+)
 
 # codenames of releases to be used by the packaging tools setup
 stable_codename="buster"
