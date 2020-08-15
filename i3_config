@@ -55,7 +55,7 @@ bindsym $mod+Shift+q kill
 # installed.
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 # bindsym $mod+d exec --no-startup-id j4-dmenu-desktop
-bindsym $mod+d exec --no-startup-id rofi -show drun
+bindsym $mod+d exec --no-startup-id rofi -show drun -i -sort -show-icons
 
 # change focus
 bindsym $mod+j focus left
