@@ -233,7 +233,7 @@ setup_schroot_alias(){
 setup_gnome(){
     # tweak some gnome settings using gsettings
     echo -e "\e[92m[GNOME]\e[0m"
-    apt_install_wrapper "$pkglist_gnome"
+    apt_install_wrapper "${pkglist_gnome[@]}"
 
     if [[ $(gsettings get org.gnome.desktop.interface gtk-theme) != "'Adwaita-dark'" ]]; then
         echo "►► Setting Gnome theme to Adwaita-dark"
@@ -299,7 +299,7 @@ setup_firefox(){
 setup_i3(){
     # setup various i3 tools and settings
     echo -e "\e[92m[I3]\e[0m"
-    apt_install_wrapper "$pkglist_i3"
+    apt_install_wrapper "${pkglist_i3[@]}"
 
     # install i3-gnome if not already installed
     if [[ ! -f /usr/share/xsessions/i3-gnome.desktop ]]; then
@@ -345,7 +345,7 @@ setup_tools(){
 setup_battery(){
     # install battery saving tools
     echo -e "\e[92m[BATTERY]\e[0m"
-    apt_install_wrapper "$pkglist_battery"
+    apt_install_wrapper "${pkglist_battery[@]}"
 
     echo -e "\e[92m[/BATTERY]\e[0m"
 }
@@ -353,7 +353,7 @@ setup_battery(){
 setup_atom(){
     # install atom and its packages
     echo -e "\e[92m[ATOM]\e[0m"
-        apt_install_wrapper "$pkglist_atom"
+    apt_install_wrapper "${pkglist_atom[@]}"
 
     if ! dpkg-query -W -f='${Status}' atom >/dev/null 2>&1; then
         curl -fLso atom.deb https://atom.io/download/deb
@@ -378,7 +378,7 @@ setup_vim(){
     # After vimrc-pre-pluginstall is copied and PlugInstall is run, the real
     # dotfile is copied.
     echo -e "\e[92m[VIM]\e[0m"
-    apt_install_wrapper "$pkglist_vim"
+    apt_install_wrapper "${pkglist_vim[@]}"
 
     # install vim-plug
     curl -fLso ~/.vim/autoload/plug.vim --create-dirs \
@@ -399,7 +399,7 @@ setup_vim(){
 
 setup_bash(){
     echo -e "\e[92m[BASH]\e[0m"
-    apt_install_wrapper "$pkglist_bash"
+    apt_install_wrapper "${pkglist_bash[@]}"
 
     if [[ .bashrc-template -nt .bashrc ]]; then
         # fill in template config files with personal information
@@ -426,7 +426,7 @@ setup_packaging_tools(){
     # install and configure a bunch of tools needed for packaging work
 
     echo -e "\e[92m[PACKAGING-TOOLS]\e[0m"
-    apt_install_wrapper "$pkglist_packaging_tools"
+    apt_install_wrapper "${pkglist_packaging_tools[@]}"
 
     create_schroot unstable experimental
     create_schroot "$stable_codename" "${stable_codename}-backports"
