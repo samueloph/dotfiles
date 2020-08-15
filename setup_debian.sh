@@ -24,7 +24,7 @@ apt_install_wrapper(){
     # input: list of packages
     local one_day_ago
     local pkgcache_modification_timestamp
-    local to_be_installed=""
+    local to_be_installed=()
     local package_list=("$@")
 
     one_day_ago=$(date -d 'now - 1 days' +%s)
@@ -42,23 +42,21 @@ apt_install_wrapper(){
 
         # select package to be installed if not already in the system
         if ! (dpkg-query -W -f='${Status}' "$packagename" 2>/dev/null | grep -q "install ok installed"); then
-            to_be_installed="$to_be_installed $package"
+            to_be_installed+=("$package")
         else
             echo "✔ $packagename is already installed"
         fi
     done
 
     # install everything that was selected to be installed
-    if [[ $to_be_installed != ""  ]]; then
+    if [[ ! ${#to_be_installed[@]} -eq 0  ]]; then
         echo "--------------------------------------------------------------------------------"
-        # remove leading and trailing whitespaces from to_be_installed
-        to_be_installed=$(sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' <<< "$to_be_installed")
-        echo "►► Installing $to_be_installed"
+        echo "►► Installing ${to_be_installed[*]}"
         # apt cache needs update if last one was less than 1 day ago
         if [[ pkgcache_modification_timestamp -le one_day_ago ]]; then
             sudo apt update
         fi
-        sudo apt install "$to_be_installed"
+        sudo apt install "${to_be_installed[@]}"
         echo "--------------------------------------------------------------------------------"
     fi
 }
