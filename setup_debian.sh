@@ -32,8 +32,12 @@ apt_install_wrapper(){
 
     for package in "${package_list[@]}"
     do
-        # var can be a location to a .deb file, so remove the path part of it
         local packagename
+
+        # remove leading and trailing whitespaces from package
+        package=$(sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' <<< "$package")
+
+        # var can be a location to a .deb file, so remove the path part of it
         packagename=$(awk -F "/" '{print $NF}' <<< "$package" | awk '{gsub(".deb$", "");print}')
 
         # select package to be installed if not already in the system
@@ -45,8 +49,10 @@ apt_install_wrapper(){
     done
 
     # install everything that was selected to be installed
-    if [[ -n $to_be_installed ]]; then
+    if [[ $to_be_installed != ""  ]]; then
         echo "--------------------------------------------------------------------------------"
+        # remove leading and trailing whitespaces from to_be_installed
+        to_be_installed=$(sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' <<< "$to_be_installed")
         echo "►► Installing $to_be_installed"
         # apt cache needs update if last one was less than 1 day ago
         if [[ pkgcache_modification_timestamp -le one_day_ago ]]; then
@@ -315,7 +321,7 @@ setup_i3(){
 setup_tools(){
     # setup miscellaneous
     echo -e "\e[92m[TOOLS]\e[0m"
-    apt_install_wrapper "$pkglist_tools"
+    apt_install_wrapper "${pkglist_tools[@]}"
 
     # fill in template config files with personal information
     if [[ .gitconfig-template -nt .gitconfig ]]; then
@@ -548,6 +554,7 @@ pkglist_battery=(
 pkglist_tools=(
     colordiff
     docker.io
+    gparted
     make
     msmtp
     nmap

@@ -6,6 +6,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'vim-syntastic/syntastic'
 Plug 'Yggdroot/indentLine'
 Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'preservim/nerdtree'
 
 " Initialize plugin system
 call plug#end()
@@ -127,3 +128,4 @@ function! HLNext (blinktime)
   redraw
 endfunction
 
+nmap <F6> :NERDTreeToggle<CR>
