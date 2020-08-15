@@ -64,14 +64,18 @@ apt_install_wrapper(){
 }
 
 atom_packages_installer(){
+    local package_list=("$@")
     # install atom packages if they're not already installed
     # input: list of packages
-    for package in "$@"
+    for package in "${package_list[@]}"
     do
+        # remove leading and trailing whitespaces from package
+        package=$(sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' <<< "$package")
+
         # only proceed if it's not already installed
         if [[ ! -d "$HOME/.atom/packages/$package" ]]
         then
-            apm install $package
+            apm install "$package"
         else
             echo "✔ atom package $package is already installed"
         fi
@@ -367,7 +371,7 @@ setup_atom(){
     # instal the same packages as the following command:
     # apm stars --user samueloph --install
     # but the starred packages might be out of sync
-    atom_packages_installer "$pkglist_atom_extensions"
+    atom_packages_installer "${pkglist_atom_extensions[@]}"
 
     echo -e "\e[92m[/ATOM]\e[0m"
 }
