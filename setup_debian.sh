@@ -139,7 +139,7 @@ create_schroot(){
         echo "►► setting up sbuild's ${release} chroot"
         echo "--------------------------------------------------------------------------------"
         apt_install_wrapper apt-cacher-ng
-        sudo sbuild-createchroot --include=eatmydata,ccache,gnupg "$release" "/srv/chroot/${release}-amd64-sbuild http://127.0.0.1:3142/deb.debian.org/debian"
+        sudo sbuild-createchroot --include=eatmydata,ccache,gnupg "$release" "/srv/chroot/${release}-amd64-sbuild" http://127.0.0.1:3142/deb.debian.org/debian
         sudo sbuild-adduser "$LOGNAME" >/dev/null 2>&1
         echo "--------------------------------------------------------------------------------"
     else
