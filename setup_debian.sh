@@ -525,7 +525,6 @@ pkglist_gnome=(
 pkglist_i3=(
     fonts-hack
     i3
-    j4-dmenu-desktop
     light
     nitrogen
     policykit-1-gnome
