@@ -455,6 +455,7 @@ setup_packaging_tools(){
     fi
 
     copy_files_wrapper .sbuildrc ~/.sbuildrc
+    copy_files_wrapper .gbp.conf ~/.gbp.conf
 
     echo -e "\e[92m[/PACKAGING-TOOLS]\e[0m"
 }
