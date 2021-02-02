@@ -576,6 +576,7 @@ pkglist_packaging_tools=(
     blhc
     ccache
     debhelper
+    debmake
     dh-make
     diffoscope
     dput-ng
