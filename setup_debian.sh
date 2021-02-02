@@ -573,6 +573,7 @@ pkglist_tools=(
 )
 
 pkglist_packaging_tools=(
+    blhc
     ccache
     debhelper
     dh-make
