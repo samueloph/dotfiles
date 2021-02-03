@@ -451,11 +451,21 @@ setup_packaging_tools(){
         fi
         sed -e "s/\${KEY-PLACEHOLDER}/${config_files_gpgkey}/g" .sbuildrc-template > .sbuildrc
     else
-        echo "Skipping .gitconfig generation because file '.gitconfig' is newer than its template, remove it for regeneration"
+        echo "Skipping .sbuildrc generation because file '.sbuildrc' is newer than its template, remove it for regeneration"
+    fi
+
+    if [[ .devscripts-template -nt .devscripts ]]; then
+        if [[ -z $config_salsa_token ]]; then
+            read -rp "Salsa Token: " config_salsa_token
+        fi
+        sed -e "s/\${SALSA_TOKEN-PLACEHOLDER}/${config_salsa_token}/g" .devscripts-template > .devscripts
+    else
+        echo "Skipping .devscripts generation because file '.devscripts' is newer than its template, remove it for regeneration"
     fi
 
     copy_files_wrapper .sbuildrc ~/.sbuildrc
     copy_files_wrapper .gbp.conf ~/.gbp.conf
+    copy_files_wrapper .devscripts ~/.devscripts
 
     echo -e "\e[92m[/PACKAGING-TOOLS]\e[0m"
 }
@@ -596,6 +606,7 @@ oldstable_codename="stretch"
 config_files_name=""
 config_files_email=""
 config_files_gpgkey=""
+config_salsa_token=""
 
 # path of this script, to be used to evaluate path of dotfiles
 DIR_PATH="$(dirname "$(realpath "$0")")"
