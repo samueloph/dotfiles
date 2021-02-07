@@ -141,6 +141,8 @@ alias bp-new-${OLDSTABLE-PLACEHOLDER}-bpo="gbp buildpackage --git-builder=sbuild
 alias bp-${OLDSTABLE-PLACEHOLDER}-bpo-sloppy="gbp buildpackage --git-builder=sbuild -v -d ${OLDSTABLE-PLACEHOLDER}-backports-sloppy --source-only-changes --build-dep-resolver=aptitude --extra-repository=\"deb http://deb.debian.org/debian ${OLDSTABLE-PLACEHOLDER}-backports main\" --extra-repository=\"deb http://deb.debian.org/debian ${OLDSTABLE-PLACEHOLDER}-backports-sloppy main\" --no-clean-source"
 alias bp-new-${OLDSTABLE-PLACEHOLDER}-bpo-sloppy="gbp buildpackage --git-builder=sbuild -v -d ${OLDSTABLE-PLACEHOLDER}-backports-sloppy --build-dep-resolver=aptitude --extra-repository=\"deb http://deb.debian.org/debian ${OLDSTABLE-PLACEHOLDER}-backports main\" --extra-repository=\"deb http://deb.debian.org/debian ${OLDSTABLE-PLACEHOLDER}-backports-sloppy main\" --no-clean-source"
 
+alias update-schroots="sudo sbuild-update -udcar unstable-amd64-sbuild; sudo sbuild-update -udcar ${STABLE-PLACEHOLDER}-amd64-sbuild; sudo sbuild-update -udcar ${OLDSTABLE-PLACEHOLDER}-amd64-sbuild"
+
 export QUILT_PATCHES=debian/patches
 export QUILT_DIFF_ARGS="--no-timestamps --no-index -pab"
 export QUILT_REFRESH_ARGS="--no-timestamps --no-index -pab"
