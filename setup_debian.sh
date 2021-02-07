@@ -124,9 +124,7 @@ create_schroot(){
     # create schroot, using eatmydata and ccache
     # input:
     # $1: release to create the schroot for
-    # $2: aliases to be used for the schroot
     local release=$1
-    local release_alias=$2
     # flag to control whether ccache needs to be tested or not, will be set to true
     # if ccache is installed or changed
     local test_ccache="false"
@@ -149,7 +147,21 @@ create_schroot(){
 
     # setup release as an alias so we can call autopkgtest by the schroot alias instead of using the full schroot name
     setup_schroot_alias "$release" "$release"
-    setup_schroot_alias "$release" "$release_alias"
+
+    if [[ $release == "unstable" ]]; then
+        setup_schroot_alias "$release" "experimental"
+        setup_schroot_alias "$release" "UNRELEASED"
+    fi
+
+    if [[ $release == "$stable_codename" ]]; then
+        setup_schroot_alias "$release" "${stable_codename}-security"
+        setup_schroot_alias "$release" "${stable_codename}-backports"
+    fi
+
+    if [[ $release == "$oldstable_codename" ]]; then
+        setup_schroot_alias "$release" "${oldstable_codename}-security"
+        setup_schroot_alias "$release" "${oldstable_codename}-backports-sloppy"
+    fi
 
     # setup eatmydata
     if ! find /etc/schroot/chroot.d/ -name "${release}-amd64-sbuild-*" -exec grep -q "^command-prefix.*eatmydata" {} +; then
@@ -437,9 +449,9 @@ setup_packaging_tools(){
     echo -e "\e[92m[PACKAGING-TOOLS]\e[0m"
     apt_install_wrapper "${pkglist_packaging_tools[@]}"
 
-    create_schroot unstable experimental
-    create_schroot "$stable_codename" "${stable_codename}-backports"
-    create_schroot "$oldstable_codename" "${oldstable_codename}-backports-sloppy"
+    create_schroot unstable
+    create_schroot "$stable_codename"
+    create_schroot "$oldstable_codename"
 
     if ! grep -q "none /var/lib/schroot/union/overlay tmpfs uid=root,gid=root,mode=0750 0 0" /etc/fstab; then
         echo "►► Using tmpfs for builds"
