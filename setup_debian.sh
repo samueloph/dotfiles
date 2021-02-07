@@ -258,6 +258,13 @@ setup_gnome(){
         echo "✔ Gnome monospace font is already Hack 11"
     fi
 
+    if [[ $(gsettings get org.gnome.desktop.wm.preferences focus-mode) != "'sloppy'" ]]; then
+        echo "►► Setting Gnome to focus on mouse hover"
+        gsettings set org.gnome.desktop.wm.preferences focus-mode "sloppy"
+    else
+        echo "✔ Gnome is already set to focus on mouse hover"
+    fi
+
     echo -e "\e[92m[/GNOME]\e[0m"
 }
 
