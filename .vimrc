@@ -22,6 +22,7 @@ let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
 
 " [identline] use gray color
 let g:indentLine_color_term = 239
+let g:indentLine_setConceal = 0
 
 " [syntastic] use recommended setings
 " https://github.com/vim-syntastic/syntastic#settings
