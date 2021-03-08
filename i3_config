@@ -201,7 +201,7 @@ bindsym Print exec gnome-screenshot --interactive
 bindsym $mod+m exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ 100% && $refresh_i3status
 
 # Redshift
-exec --no-startup-id redshift-gtk
+#exec --no-startup-id redshift-gtk
 
 # Restore wallpaper
 exec --no-startup-id nitrogen --restore

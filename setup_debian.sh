@@ -334,7 +334,7 @@ setup_i3(){
     mkdir -p ~/.config/i3
     copy_files_wrapper i3_config ~/.config/i3/config
     copy_files_wrapper .i3status.conf ~/.i3status.conf
-    copy_files_wrapper redshift.conf ~/.config/redshift.conf
+    #copy_files_wrapper redshift.conf ~/.config/redshift.conf
     copy_files_wrapper rofi_config ~/.config/rofi/config
 
     echo -e "\e[92m[/I3]\e[0m"
@@ -558,7 +558,7 @@ pkglist_i3=(
     light
     nitrogen
     policykit-1-gnome
-    redshift-gtk
+    #redshift-gtk
     rofi
     xss-lock
 )
