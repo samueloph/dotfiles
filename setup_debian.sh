@@ -585,6 +585,7 @@ pkglist_battery=(
 )
 
 pkglist_tools=(
+    bc
     colordiff
     docker.io
     gparted
