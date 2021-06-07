@@ -564,6 +564,7 @@ pkglist_i3=(
 )
 
 pkglist_atom=(
+    black
     clang
     flake8
     shellcheck
