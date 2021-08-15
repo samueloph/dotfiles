@@ -620,8 +620,8 @@ pkglist_packaging_tools=(
 )
 
 # codenames of releases to be used by the packaging tools setup
-stable_codename="buster"
-oldstable_codename="stretch"
+stable_codename="bullseye"
+oldstable_codename="buster"
 
 # personal information used to fill in configuration files
 config_files_name=""
