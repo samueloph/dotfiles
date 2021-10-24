@@ -1,3 +1,7 @@
 $include /etc/inputrc
+# https://bugs.debian.org/990353
 set completion-ignore-case On
 set show-all-if-ambiguous On
+# Up and down context sensitive history
+"\e[A": history-search-backward
+"\e[B": history-search-forward
