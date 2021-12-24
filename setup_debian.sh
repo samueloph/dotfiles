@@ -550,6 +550,8 @@ pkglist_atom_extensions=(
 
 pkglist_gnome=(
     fonts-hack
+    gnome-shell-extension-gpaste
+    gnome-shell-extension-system-monitor
 )
 
 pkglist_i3=(
