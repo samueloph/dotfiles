@@ -19,6 +19,9 @@ shopt -s histappend
 HISTSIZE=5000
 HISTFILESIZE=10000
 
+# add timestamp to bash history
+export HISTTIMEFORMAT="%g/%m/%d %H:%M "
+
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
