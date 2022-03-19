@@ -133,7 +133,7 @@ export EDITOR=vim
 
 # aliases to sbuild
 alias bp="gbp buildpackage --git-builder=sbuild -v --source-only-changes --no-clean-source"
-alias bp-new="gbp buildpackage --git-builder=sbuild -v --no-clean-source"
+alias bp-new="gbp buildpackage --git-builder=sbuild -v --no-clean-source --force-orig-source"
 
 alias bp-${STABLE-PLACEHOLDER}-bpo="gbp buildpackage --git-builder=sbuild -v -d ${STABLE-PLACEHOLDER}-backports --source-only-changes --build-dep-resolver=aptitude --extra-repository=\"deb http://deb.debian.org/debian ${STABLE-PLACEHOLDER}-backports main\" --no-clean-source"
 alias bp-new-${STABLE-PLACEHOLDER}-bpo="gbp buildpackage --git-builder=sbuild -v -d ${STABLE-PLACEHOLDER}-backports --build-dep-resolver=aptitude --extra-repository=\"deb http://deb.debian.org/debian ${STABLE-PLACEHOLDER}-backports main\" --no-clean-source"
