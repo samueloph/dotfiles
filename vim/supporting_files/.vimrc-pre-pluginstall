@@ -7,6 +7,7 @@ Plug 'vim-syntastic/syntastic'
 Plug 'Yggdroot/indentLine'
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'preservim/nerdtree'
+Plug 'wellle/context.vim'
 
 " Initialize plugin system
 call plug#end()

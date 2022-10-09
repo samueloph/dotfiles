@@ -1,0 +1,82 @@
+#!/bin/bash
+
+# This variable lists all variables containing the extensions lists.
+# Scripts can use this variable to identify and parse the other variables.
+# shellcheck disable=SC2034
+EXTENSION_LIST_OF_DICT_VSCODE=(
+    "extension_dict_vscode_generic"
+    "extension_dict_vscode_domain_specific"
+    "extension_dict_vscode_python"
+    "extension_dict_vscode_cloud"
+    "extension_dict_vscode_misc"
+    "extension_dict_vscode_c_and_related"
+    "extension_dict_vscode_ruby"
+)
+
+# This variable is used through variable indirection with $package_lists_vscode_all_extensions
+# shellcheck disable=SC2034
+declare -A extension_dict_vscode_generic=(
+    ["johnpapa.vscode-peacock"]="Subtly change the workspace color of your workspace. Ideal when you have multiple VS Code instances and you want to quickly identify which is which."
+    ["alefragnani.Bookmarks"]="Mark lines and jump to them"
+    ["eamodio.gitlens"]="Supercharge Git within VS Code — Visualize code authorship at a glance via Git blame annotations and CodeLens, seamlessly navigate and explore Git repositories, gain valuable insights via rich visualizations and powerful comparison commands, and so much more"
+    ["streetsidesoftware.code-spell-checker"]="Spelling checker for source code"
+    ["mkxml.vscode-filesize"]="Show the current file size in the status bar"
+    ["mechatroner.rainbow-csv"]="Highlight CSV and TSV files, Run SQL-like queries"
+    ["Tyriar.sort-lines"]="Sorts lines of text"
+    ["shardulm94.trailing-spaces"]="Highlight trailing spaces and delete them in a flash!"
+    ["usernamehw.errorlens"]="Improve highlighting of errors, warnings and other language diagnostics."
+    ["aaron-bond.better-comments"]="Improve your code commenting by annotating with alert, informational, TODOs, and more!"
+    ["ms-vscode-remote.remote-ssh"]="Open any folder on a remote machine using SSH and take advantage of VS Code's full feature set."
+)
+
+# This variable is used through variable indirection with $package_lists_vscode_all_extensions
+# shellcheck disable=SC2034
+declare -A extension_dict_vscode_domain_specific=(
+    ["timonwong.shellcheck"]="Integrates ShellCheck into VS Code, a linter for Shell scripts."  # requires installing shellcheck
+    ["samuelcolvin.jinjahtml"]="Syntax highlighting for jinja(2) including HTML, Markdown, YAML, Ruby and LaTeX templates"
+    ["ms-vscode.powershell"]="Develop PowerShell modules, commands and scripts in Visual Studio Code!"  # requires installing powershell
+    ["redhat.vscode-yaml"]="YAML Language Support by Red Hat, with built-in Kubernetes syntax support"
+    ["joaompinto.vscode-graphviz"]="This extension provides GraphViz (dot) language support for Visual Studio Code"
+    ["shd101wyy.markdown-preview-enhanced"]="Markdown Preview Enhanced ported to vscode"
+    ["coolbear.systemd-unit-file"]="Language support for systemd unit files"
+    ["ban.troff"]="TROFF Syntax Highlighter"
+)
+
+# This variable is used through variable indirection with $package_lists_vscode_all_extensions
+# shellcheck disable=SC2034
+declare -A extension_dict_vscode_python=(
+    ["Boto3typed.boto3-ide"]="IntelliSense and type checking for all boto3 services"
+    ["njpwerner.autodocstring"]="Generates python docstrings automatically"
+    ["ms-python.python"]="IntelliSense (Pylance), Linting, Debugging (multi-threaded, remote), Jupyter Notebooks, code formatting, refactoring, unit tests, and more."
+)
+
+# This variable is used through variable indirection with $package_lists_vscode_all_extensions
+# shellcheck disable=SC2034
+declare -A extension_dict_vscode_cloud=(
+    ["aws-scripting-guy.cform"]="VS Code Plugin for CloudFormation"
+    ["amazonwebservices.aws-toolkit-vscode"]="Amazon Web Services toolkit for browsing and updating cloud resources"
+)
+
+# This variable is used through variable indirection with $package_lists_vscode_all_extensions
+# shellcheck disable=SC2034
+declare -A extension_dict_vscode_misc=(
+    # ["esbenp.prettier-vscode"]="Code formatter using prettier"  # requires installation of prettier (node)
+    # ["oderwat.indent-rainbow"]="Makes indentation easier to read"
+    # ["kamikillerto.vscode-colorize"]="A vscode extension to help visualize css colors in files."  # only useful on a few rare occasions (unless doing webdev)
+)
+
+# This variable is used through variable indirection with $package_lists_vscode_all_extensions
+# shellcheck disable=SC2034
+declare -A extension_dict_vscode_c_and_related=(
+    ["jeff-hykin.better-cpp-syntax"]="The bleeding edge of the C++ syntax"
+    ["ms-vscode.cpptools-extension-pack"]="Popular extensions for C++ development in Visual Studio Code."
+    ["ms-vscode.cmake-tools"]="Extended CMake support in Visual Studio Code"
+    ["josetr.cmake-language-support-vscode"]="CMake language support for VS Code."
+    ["maelvalais.autoconf"]="Syntax support for the Autoconf M4 and Automake files (Autotools)"
+)
+
+# This variable is used through variable indirection with $package_lists_vscode_all_extensions
+# shellcheck disable=SC2034
+declare -A extension_dict_vscode_ruby=(
+    ["rebornix.ruby"]="Ruby language support and debugging for Visual Studio Code"
+)

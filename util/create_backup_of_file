@@ -1,0 +1,48 @@
+#!/bin/bash
+
+create_backup_of_file(){
+    # Open a subshell as this is supposed to be sourced into other scripts
+    # and we don't want to modify their environment (with the bash flags).
+    (
+        # Set bash strict mode, for extra safety.
+        # This will make the execution stop if there are any errors, any unset
+        # variable is used, or a command in a pipeline fails.
+        set -euo pipefail
+
+        if [[ $# -ne 2 ]]; then
+            echo "Exactly 2 arguments are required: create_backup_of_file --sudo={true|false} <file_path>"
+            exit 1
+        fi
+
+        # Path of this file, to be used to evaluate path of other files in the project.
+        script_path="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
+        project_toplevel="$script_path/.."
+
+        changed_files_logfile="$project_toplevel/logs/changed_files_logfile"
+        backup_files_logfile="$project_toplevel/logs/backup_files_logfile"
+
+        # Timestamp to use for backup file names.
+        timestamp=$(date -d now +'%Y-%m-%d-%Hh%Mm%Ss')
+
+        if [[ $1 == --sudo=true ]]; then
+            sudo_enabled=true
+        else
+            sudo_enabled=false
+        fi
+        file_path="$2"
+        backup_file_path="${file_path}.bkp-${timestamp}"
+
+        # Create the backup file.
+        if $sudo_enabled; then
+            sudo cp "$file_path" "$backup_file_path"
+        else
+            cp "$file_path" "$backup_file_path"
+        fi
+
+        echo "[INFO] Backup file created for $file_path at $backup_file_path"
+
+        # Log change.
+        echo "$file_path" >> "$changed_files_logfile"
+        echo "$backup_file_path" >> "$backup_files_logfile"
+    )
+}

@@ -1,0 +1,77 @@
+#!/bin/bash
+
+copy_files_wrapper(){
+    # Open a subshell as this is supposed to be sourced into other scripts
+    # and we don't want to modify their environment (with the bash flags).
+    (
+        # Set bash strict mode, for extra safety.
+        # This will make the execution stop if there are any errors, any unset
+        # variable is used, or a command in a pipeline fails.
+        set -euo pipefail
+
+        if [[ $# -ne 3 ]]; then
+            echo "Exactly 3 arguments are required: copy_files_wrapper --sudo={true|false} <source_file> <dest_location>"
+            exit 1
+        fi
+
+        # Path of this file, to be used to evaluate path of other files in the project..
+        script_path="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
+        project_toplevel="$script_path/.."
+
+        # Copy files if they're not already at the destination, create a backup
+        # of changed files and log it.
+
+        # shellcheck source=/dev/null
+        source "$project_toplevel/util/create_backup_of_file"
+
+        if [[ $1 == --sudo=true ]]; then
+            sudo_enabled=true
+        else
+            sudo_enabled=false
+        fi
+        source_file=$2
+        dest_location=$3
+
+        # If dest_location is a folder, keep the filename.
+        if [[ -d $dest_location ]]; then
+            # Check if last character of dest_location is already "/", to avoid adding
+            # it again.
+            if [[ ${dest_location:0-1} == "/" ]]; then
+                dest_location=$dest_location"$(basename -- "$source_file")"
+            else
+                dest_location=$dest_location/"$(basename -- "$source_file")"
+            fi
+        fi
+
+        # If no ovewrite is needed, copy file.
+        if [[ ! -f $dest_location ]]; then
+            echo "►► Copying $dest_location"
+            if $sudo_enabled; then
+                sudo cp "$source_file" "$dest_location"
+            else
+                cp "$source_file" "$dest_location"
+            fi
+            # If the file is used by apt, then perform an apt update afterwards.
+            if [[ "$dest_location" =~ /etc/apt/* ]]; then sudo apt update -qq; fi
+        # Ovewrite is needed.
+        else
+            # Check if file is already the same.
+            if cmp -s "$source_file" "$dest_location"; then
+                echo "✔ $dest_location is already the same"
+            # File is different, create a backup and ovewrite.
+            else
+                if [[ "$dest_location" =~ /etc/apt/* ]]; then sudo apt update -qq; fi
+                echo "[INFO] $dest_location already exists and it's different, overwriting it with new file from $source_file."
+
+                create_backup_of_file "--sudo=$sudo_enabled" "$dest_location"
+                if $sudo_enabled; then
+                    sudo cp "$source_file" "$dest_location"
+                else
+                    cp "$source_file" "$dest_location"
+                fi
+                # If the file is used by apt, then perform an apt update afterwards.
+                if [[ "$dest_location" =~ /etc/apt/* ]]; then sudo apt update -qq; fi
+            fi
+        fi
+    )
+}

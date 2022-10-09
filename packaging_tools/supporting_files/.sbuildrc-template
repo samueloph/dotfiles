@@ -1,4 +1,4 @@
-#rall example for ~/.sbuildrc.  (Also see /etc/sbuild/sbuild.conf.)  -*- Perl -*-
+# example for ~/.sbuildrc.  (Also see /etc/sbuild/sbuild.conf.)  -*- Perl -*-
 #
 # Default settings are commented out.
 # Additional options found in /etc/sbuild/sbuild.conf may be

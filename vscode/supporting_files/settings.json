@@ -1,0 +1,81 @@
+{
+    // START samueloph vscode settings 2022-10-08 \/-----------------------------------------------------------------------------------
+
+    // VsCode's nice settings.
+    // Enable sticky scroll.
+    "editor.stickyScroll.enabled": true,
+    // Colorize matching brackets.
+    "editor.bracketPairColorization.enabled": true,
+    // Multi-line pasting into terminal without warning.
+    "terminal.integrated.enableMultiLinePasteWarning": false,
+    // Dark color theme.
+    "workbench.colorTheme": "Default Dark+",
+    // Restore previous session.
+    "workbench.startupEditor": "none",
+    // Use "Hack" font (requires installation of the "Hack" font).
+    "editor.fontFamily": "Hack",
+    // Don't show variables in outline (too noisy).
+    "outline.showVariables": false,
+    // Increase terminal scrollback.
+    "terminal.integrated.scrollback": 5000,
+    // Disable drag and drop (always messes up mouse selection of texts).
+    "editor.dragAndDrop": false,
+    // Don't highlight matching brackets, the colorization is enough.
+    "editor.matchBrackets": "never",
+    // Automatically insert a new line at end of file (POSIX compliance).
+    "files.insertFinalNewline": true,
+    // Sort files first in the file explorer.
+    "explorer.sortOrder": "filesFirst",
+    // Increase number of JSON items computed (for big JSON files).
+    "json.maxItemsComputed": 10000,
+    // Enable word-wrapping.
+    "editor.wordWrap": "on",
+    // Set JSON formatter.
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    // Increase indentation size in workbench (file explorer, etc...).
+    "workbench.tree.indent": 20,
+    // Enable command center (title bar)
+    "window.commandCenter": true,
+    "window.titleBarStyle": "custom",
+
+    // Extensions settings
+    "projectManager.openInNewWindowWhenClickingInStatusBar": true,
+    // Use project-manager in the remote host
+    "remote.extensionKind": {
+        "alefragnani.project-manager": [
+            "workspace"
+        ]
+    },
+    "bookmarks.sideBar.expanded": true,
+    "[yaml]": {
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    },
+
+    // Telemetry
+    "telemetry.telemetryLevel": "off",
+    "aws.telemetry": false,
+    "redhat.telemetry.enabled": false,
+
+    // Python settings
+    "python.linting.enabled": true,
+    "python.linting.flake8Enabled": true,
+    // Enable pytest globally by default
+    "python.testing.pytestEnabled": true,
+    "python.testing.pytestArgs": [
+        // "-s" will stop pytest from suppressing test outputs,
+        // otherwise pytest would only show outputs of failing tests.
+        "-s",
+        // Coverage is not supported by vscode:
+        // https://github.com/Microsoft/vscode-python/issues/693
+        // Note that this will make pytest fail if pytest-cov is not installed,
+        // if that's the case, then this option needs to be be removed (overrides
+        // can be set at a workspace level, it's up to you to decide what's the
+        // best approach). You might also prefer to only set this option
+        // per-workspace (wherever coverage is used).
+        "--no-cov"
+    ],
+
+    // END samueloph vscode settings 2022-10-08 /\-----------------------------------------------------------------------------------
+}

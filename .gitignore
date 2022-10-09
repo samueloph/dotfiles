@@ -1,5 +1,9 @@
-.bashrc
-.devscripts
-.gitconfig
-.sbuildrc
+bash/supporting_files/bashrc.d/30_packaging.bashrc
+misc/supporting_files/.gitconfig
+packaging_tools/supporting_files/.devscripts
+packaging_tools/supporting_files/.sbuildrc
 logs/
+util/variables/name
+util/variables/email_address
+util/variables/gpg_key_id
+util/variables/salsa_token

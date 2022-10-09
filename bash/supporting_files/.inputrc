@@ -1,4 +1,5 @@
 $include /etc/inputrc
+# Make autocompletion case insensitive and display suggestions after single tab.
 # https://bugs.debian.org/990353
 set completion-ignore-case On
 set show-all-if-ambiguous On

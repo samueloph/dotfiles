@@ -1,0 +1,62 @@
+#!/bin/bash
+
+apt_install_wrapper(){
+    # Run 'apt install' for packages that are not currently installed.
+    # Can install local .deb files and will run 'apt update' if last
+    # one was more than 3 hours ago.
+    #
+    # Input:
+    # $@ = list of packages
+
+    # Open a subshell as this is supposed to be sourced into other scripts
+    # and we don't want to modify their environment (with the bash flags).
+    (
+        # Set bash strict mode, for extra safety.
+        # This will make the execution stop if there are any errors, any unset
+        # variable is used, or a command in a pipeline fails.
+        set -euo pipefail
+
+        local three_hours_ago
+        local pkgcache_modification_timestamp
+        local to_be_installed=()
+        local package_list=("$@")
+
+        three_hours_ago=$(date -d 'now - 3 hours' +%s)
+        pkgcache_modification_timestamp=$(date -r "/var/cache/apt/pkgcache.bin" +%s)
+
+        # Iterate on all packages passed as positional arguments.
+        for package in "${package_list[@]}"; do
+            local packagename
+
+            # Remove leading and trailing whitespaces from package.
+            package=$(sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' <<< "$package")
+
+            # "package" can be a location to a .deb file, so remove the path
+            # part of it (get the basename of the path).
+            packagename=$(awk -F "/" '{print $NF}' <<< "$package" | awk '{gsub(".deb$", "");print}')
+
+            # Select package to be installed (by adding its name to "to_be_installed")
+            # if not already in the system.
+            if ! (dpkg-query -W -f='${Status}' "$packagename" 2>/dev/null | grep -q "install ok installed")
+            then
+                to_be_installed+=("$package")
+            else
+                echo "✔ $packagename is already installed"
+            fi
+        done
+
+        # Install everything that was selected to be installed at once.
+        # First check if there is any package to be installed.
+        if [[ ! ${#to_be_installed[@]} -eq 0 ]]; then
+            echo "--------------------------------------------------------------------------------"
+            echo "►► Installing ${to_be_installed[*]}"
+            # Apt cache needs update if last one was more than 3 hours ago.
+            if [[ pkgcache_modification_timestamp -ge three_hours_ago ]]; then
+                sudo apt update -qq
+            fi
+            # Install packages without prompting for anything.
+            sudo DEBIAN_FRONTEND=noninteractive apt install -y "${to_be_installed[@]}"
+            echo "--------------------------------------------------------------------------------"
+        fi
+    )
+}

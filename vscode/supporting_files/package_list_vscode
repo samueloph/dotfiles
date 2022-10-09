@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# shellcheck disable=SC2034
+PACKAGE_LIST_VSCODE=(
+    snapd
+    fonts-hack
+    black
+    clang
+    flake8
+    shellcheck
+    mypy
+)

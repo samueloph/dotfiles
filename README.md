@@ -1,75 +1,63 @@
-# samueloph Debian testing setup
+# Samuel Henrique \<samueloph\> dotfiles and scripts for setup
 
-## TL;DR: Run `setup_debian.sh` for system setup
+## About
+I've decided to create this to speedup configuration of newly installed systems but also to be able to point other people to the way I configure it in case they find it useful.
 
-## setup_debian.sh
+At the same time this has been a very good exercise in writting bash code and gave me a good understanding of its limits.
 
-1. Personal information
+As of 2022-10-23, I have spent an estimated amount of 100 hours working on this.
 
- You will be asked to provide information needed to generate the dotfiles; Name, Email and GPG key. This information will not be asked if the generated dotfiles (under the same directory as the script) are newer than its templates.
+## Setup
+In order to setup everything, you can call `setup_debian.sh` with the `--setup-all` option, you can get a list of available options with `setup_debian.sh -h`. This script will generate logs and backup files for changes made.
 
-1. Backups
+Individual `setup_*.sh` scripts can also be called, eg.: `vim/setup_vim.sh` for vim setup only.
 
- All the files changed are backed up up in their own folders using the format `ORIGINALNAME.bkp-TIMESTAMP`
+The script `sbuild_debian/setup_sbuild_debian.sh` can be used to install and configure chroots to be used by sbuild.
 
-1. Logs
+A list of vscode extensions I use is available at [vscode/vscode_extensions.md](vscode/vscode_extensions.md).
 
- Logs for the changed files and their backups are stored under the logs/ folder, the output of the scrip will contain a summary of the changes.
+Settings are at [vscode/supporting_files/settings.json](vscode/supporting_files/settings.json).
 
-1. Customization
+Keybindings at [vscode/supporting_files/keybindings.json](vscode/supporting_files/keybindings.json).
 
- The scripts consists of a bunch of functions that are called sequentially, in order to only run some of them, one can comment the unwanted the function calls.
+## Setup scripts
+### setup_debian.sh
+Run all other setup scripts and can be controlled with arguments (to chose only certain scripts).
+### misc/setup_misc.sh
+Run all the scripts under the `misc/` folder (described below).
+#### misc/setup_apt_repos.sh
+Setup unstable and experimental repos, with pinning so they don't get used by default (except with firefox, which is pulled from unstable.)
+#### misc/setup_misc_packages.sh
+Install miscellaneous packages from the official repository, the list of packages installed is on [misc/supporting_files/package_list_misc_packages](misc/supporting_files/package_list_misc_packages).
+#### misc/setup_firefox.sh
+Install firefox and remove firefox-esr (requires unstable repo set on `misc/setup_apt_repos.sh`).
+#### misc/setup_git.sh
+Setup .gitconfig (mainly name and email address).
+#### misc/setup_battery_tools.sh
+Install tools related to battery usage (usefull for laptops), the list of packages installed is on [misc/supporting_files/package_list_battery_tools](misc/supporting_files/package_list_battery_tools).
+#### misc/setup_fstrim.sh
+Enable fstrim (for systems with SSD drives).
+#### misc/setup_tmpfs.sh
+Mount `/tmp` in memory (useful for systems with at last 16GiB of RAM).
+### bash/setup_bash.sh
+Enable usage of `~/.bashrc.d/` folder and add scripts there, also install a `~/.inputrc` dotfile with autocompletion improvements. Part of the setup will install and enable powerline with gitstatus.
+### gnome/setup_gnome.sh
+Configure Gnome with dark theme, Hack font, animations disabled...
+### vim/setup_vim.sh
+Install vim-plug, extensions and add my own [vim/supporting_files/.vimrc](vim/supporting_files/.vimrc).
+### snap/setup_snap_packages.sh
+Install snapd and all the packages I use, packages are listed in the script itself at [snap_packages/setup_snap_packages.sh](snap_packages/setup_snap_packages.sh).
+### vscode/setup_vscode.sh
+Install vscode with my list of extensions and my own settings and keybindings.
 
-1. Constants
+Extensions I use can be seen at [vscode/vscode_extensions.md](vscode/vscode_extensions.md).
 
- Functions will mostly use a constants that are made of a list of packages to be installed. The current stable and oldstable releases' codenames are also constants needed to generate the dotfiles.
+Settings are at [vscode/supporting_files/settings.json](vscode/supporting_files/settings.json).
 
-## Main functions
+Keybindings at [vscode/supporting_files/keybindings.json](vscode/supporting_files/keybindings.json).
+### packaging_tools/setup_packaging_tools.sh
+Setup sbuild with chroots for unstable, stable and oldstable. It install packages and dotfiles, and will mount chroots on memory if the system has at least 16GiB of RAM.
+### sbuild_debian/setup_sbuild_debian.sh
+Install a chroot to be used by sbuild. It will set the chroot to be used with apt-cacher-ng, eatmydata and ccache. It will also mount the chroots on memory if the system has at least 16 GiB of RAM.
 
-1. setup_apt
-
- Configure unstable and experimental repositories with pinning.
-
-1. setup_firefox
-
- Install firefox from unstable in favor of firefox-esr from testing
-
-1. setup_tools
-
- Install miscellaneous tools and setup gitconfig.
-
-1. setup_battery
-
- Install battery tools, for laptops.
-
-1. setup_atom
-
- Install atom (FROM EXTERNAL REPOSITORY) and atom extensions.
-
-1. setup_i3
-
- Install i3, its dotfiles and some extras. This will also install i3-gnome (FROM EXTERNAL REPOSITORY).
-
-1. setup_vim
-
- Install vimplug, extensions and setup vimrc.
-
-1. setup_bash
-
- Setup bashrc and inputrc.
-
-1. setup_tmpfs
-
- Setup tmpfs to mount tmp on RAM (for systems with a good amount of RAM).
-
-1. setup_ssd
-
- Setup trim for SSD systems.
-
-1. setup_packaging_tools
-
- Install and setup sbuild, with schroots for unstable, stable and oldstable.
-
-1. setup_gnome
-
- Setup gnome's display options, such as font and dark theme.
+This script is usually called by `setup_packaging_tools.sh` but it can be used it directly too.
