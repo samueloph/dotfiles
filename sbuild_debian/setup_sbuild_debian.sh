@@ -213,6 +213,13 @@ setup_sbuild_tmpfs(){
     fi
 }
 
+if [[ $# -eq 0 ]]; then
+    echo "At least 1 argument is required: setup_sbuild_debian.sh <release_codename>"
+    echo "<release_codename> is the codename of the chroot you want to prepare."
+    echo "You may also provide multiple space-delimited <release_codename>s for multiple chroots setup."
+    exit 1
+fi
+
 for release in "$@"
 do
     setup_sbuild_debian "$release"

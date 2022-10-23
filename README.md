@@ -61,3 +61,5 @@ Setup sbuild with chroots for unstable, stable and oldstable. It install package
 Install a chroot to be used by sbuild. It will set the chroot to be used with apt-cacher-ng, eatmydata and ccache. It will also mount the chroots on memory if the system has at least 16 GiB of RAM.
 
 This script is usually called by `setup_packaging_tools.sh` but it can be used it directly too.
+
+It expects the release codenames as arguments (eg.: `sbuild_debian/setup_sbuild_debian.sh unstable` for unstable installation or `sbuild_debian/setup_sbuild_debian.sh unstable trixie`... for more than a single chroot).

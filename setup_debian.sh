@@ -28,6 +28,7 @@ then
     echo "--setup-snap-packages"
     echo "--setup-vscode"
     echo "--setup-packaging-tools"
+    echo "--setup-sbuild-debian (this option will install only the unstable chroot, you can install more by calling it directly or using --setup-packaging-tools (which installs unstable, stable and oldstable))."
     echo "For more information, read the README.md file."
     exit 1
 fi
@@ -71,6 +72,9 @@ for argument in "$@" ; do
     fi
     if [[ $argument == "--setup-packaging-tools" ]] ; then
         bash "$project_toplevel/packaging_tools/setup_packaging_tools.sh"
+    fi
+    if [[ $argument == "--setup-sbuild-debian" ]] ; then
+        bash "$project_toplevel/sbuild_debian/setup_sbuild_debian.sh" unstable
     fi
 done
 
