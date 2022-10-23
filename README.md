@@ -12,6 +12,8 @@ In order to setup everything, you can call `setup_debian.sh` with the `--setup-a
 
 Individual `setup_*.sh` scripts can also be called, eg.: `vim/setup_vim.sh` for vim setup only.
 
+The `sbuild_debian/setup_sbuild_debian.sh` script might be especially useful for people who just want to setup a chroot environment to be used with sbuild. You just need to call it with a release codename, like `sbuild_debian/setup_sbuild_debian.sh unstable` and it will setup a chroot with eatmydata, ccache, apt-cacher-nd, aliases and auto updates done by a cronjob.
+
 The script `sbuild_debian/setup_sbuild_debian.sh` can be used to install and configure chroots to be used by sbuild.
 
 A list of vscode extensions I use is available at [vscode/vscode_extensions.md](vscode/vscode_extensions.md).
@@ -58,7 +60,7 @@ Keybindings at [vscode/supporting_files/keybindings.json](vscode/supporting_file
 ### packaging_tools/setup_packaging_tools.sh
 Setup sbuild with chroots for unstable, stable and oldstable. It install packages and dotfiles, and will mount chroots on memory if the system has at least 16GiB of RAM.
 ### sbuild_debian/setup_sbuild_debian.sh
-Install a chroot to be used by sbuild. It will set the chroot to be used with apt-cacher-ng, eatmydata and ccache. It will also mount the chroots on memory if the system has at least 16 GiB of RAM.
+Install a chroot to be used by sbuild. It will set the chroot to be used with apt-cacher-ng, eatmydata and ccache. It will also mount the chroots on memory if the system has at least 16 GiB of RAM. Chroot auto updates are enabled with a cronjob.
 
 This script is usually called by `setup_packaging_tools.sh` but it can be used it directly too.
 
