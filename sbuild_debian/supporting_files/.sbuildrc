@@ -19,7 +19,7 @@
 
 # Key ID to use in .changes for the current upload.
 # It overrides both $maintainer_name and $uploader_name
-$key_id='${KEY-PLACEHOLDER}';
+# $key_id='${GPG_KEY-PLACEHOLDER}';
 
 # PGP-related option to pass to dpkg-buildpackage. Usually neither .dsc
 # nor .changes files shall be signed automatically.
@@ -29,7 +29,7 @@ $key_id='${KEY-PLACEHOLDER}';
 # Set to 1 to force creation of a source package, but note that
 # this is inappropriate for binary NMUs, where the option will
 # always be disabled.
-$build_source = 1;
+# $build_source = 1;
 
 # By default, the -s option only includes the .orig.tar.gz when needed
 # (i.e. when the Debian revision is 0 or 1).  By setting this option
@@ -113,11 +113,10 @@ $build_source = 1;
 #$stats_dir = "$HOME/stats";
 
 $run_lintian = 1;
-#$lintian_opts = ['-i', '-I'];
 $lintian_opts = ['-i', '-I', '-E', '--pedantic'];
 
 $run_piuparts = 0;
-$piuparts_opts = ['--schroot', 'unstable-amd64-sbuild', '--no-eatmydata'];
+# $piuparts_opts = ['--schroot', 'unstable-${ARCH-PLACEHOLDER}-sbuild', '--no-eatmydata'];
 
 $run_autopkgtest = 1;
 $autopkgtest_root_args = '';

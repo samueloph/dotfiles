@@ -47,7 +47,7 @@ Enable usage of `~/.bashrc.d/` folder and add scripts there, also install a `~/.
 Configure Gnome with dark theme, Hack font, animations disabled...
 ### vim/setup_vim.sh
 Install vim-plug, extensions and add my own [vim/supporting_files/.vimrc](vim/supporting_files/.vimrc).
-### snap/setup_snap_packages.sh
+### snap_packages/setup_snap_packages.sh
 Install snapd and all the packages I use, packages are listed in the script itself at [snap_packages/setup_snap_packages.sh](snap_packages/setup_snap_packages.sh).
 ### vscode/setup_vscode.sh
 Install vscode with my list of extensions and my own settings and keybindings.

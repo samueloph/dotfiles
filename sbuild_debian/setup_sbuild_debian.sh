@@ -39,6 +39,30 @@ setup_sbuild_debian(){
 
     apt_install_wrapper "${PACKAGE_LIST_SBUILD_DEBIAN[@]}"
 
+    # fill in template config files with personal information
+    if [[ $supporting_files_folder/.sbuildrc -nt $supporting_files_folder/.sbuildrc ]]
+    then
+
+        # shellcheck source=/dev/null
+        source "$project_toplevel/util/variables/gpg_key_id" &>/dev/null \
+        || read -rp "GPG key ID (for ~/.sbuildrc configuration): " GPG_KEY_ID \
+        && echo "GPG_KEY_ID=\"$GPG_KEY_ID\"" > "$project_toplevel/util/variables/gpg_key_id"
+
+        if [[ -z "$GPG_KEY_ID" ]]; then
+            sed -e "/\${GPG_KEY-PLACEHOLDER}/s/^# *//" \
+                -e "s/\${GPG_KEY-PLACEHOLDER}/${GPG_KEY_ID}/g" \
+                -i "$supporting_files_folder/.sbuildrc"
+        fi
+
+        sed -e "/\${ARCH-PLACEHOLDER}/s/^# *//" \
+            -e "s/\${ARCH-PLACEHOLDER}/$(dpkg --print-architecture)/g" \
+            -i "$supporting_files_folder/.sbuildrc"
+
+        copy_files_wrapper --sudo=false "$supporting_files_folder/.sbuildrc" "$HOME/.sbuildrc"
+    else
+        echo "Skipping $supporting_files_folder/.sbuildrc copying because you already have a file in the destination and it's newer than the one from this script."
+    fi
+
     # Only proceed if no chroot for $release is found.
     if find /etc/schroot/chroot.d/ -type f -name "${release}-${arch}-sbuild-*" \
         -exec false {} +
@@ -53,7 +77,6 @@ setup_sbuild_debian(){
     else
         echo "✔ sbuild's ${release} chroot is already configured"
     fi
-
 
     # Setup release codename as an alias so we can call autopkgtest by the
     # schroot alias instead of using the chroot name.

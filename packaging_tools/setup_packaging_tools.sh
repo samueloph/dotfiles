@@ -29,36 +29,21 @@ setup_packaging_tools(){
 
     "$project_toplevel/sbuild_debian/setup_sbuild_debian.sh" unstable "$STABLE_CODENAME" "$OLDSTABLE_CODENAME"
 
-    # fill in template config files with personal information
-    if [[ $supporting_files_folder/.sbuildrc-template -nt $supporting_files_folder/.sbuildrc ]]
-    then
-
-        # shellcheck source=/dev/null
-        source "$project_toplevel/util/variables/gpg_key_id" &>/dev/null ||
-        read -rp "GPG key ID: " GPG_KEY_ID &&
-        echo "GPG_KEY_ID=\"$GPG_KEY_ID\"" > "$project_toplevel/util/variables/gpg_key_id"
-
-        sed "s/\${KEY-PLACEHOLDER}/${GPG_KEY_ID}/g" \
-            "$supporting_files_folder/.sbuildrc-template" > "$supporting_files_folder/.sbuildrc"
-    else
-        echo "Skipping $supporting_files_folder/.sbuildrc generation because the file is newer than its template, remove it for regeneration"
-    fi
-
     if [[ $supporting_files_folder/.devscripts-template -nt $supporting_files_folder/.devscripts ]]
     then
 
         # shellcheck source=/dev/null
-        source "$project_toplevel/util/variables/salsa_token" &>/dev/null ||
-        read -rp "Salsa token: " SALSA_TOKEN &&
-        echo "SALSA_TOKEN=\"$SALSA_TOKEN\"" > "$project_toplevel/util/variables/salsa_token"
+        source "$project_toplevel/util/variables/salsa_token" &>/dev/null \
+        || read -rp "Salsa token: " SALSA_TOKEN \
+        && echo "SALSA_TOKEN=\"$SALSA_TOKEN\"" > "$project_toplevel/util/variables/salsa_token"
 
-        sed "s/\${SALSA_TOKEN-PLACEHOLDER}/${SALSA_TOKEN}/g" \
+        sed -e "/\${SALSA_TOKEN-PLACEHOLDER}/s/^# *//" \
+            -e "s/\${SALSA_TOKEN-PLACEHOLDER}/${SALSA_TOKEN}/g" \
             "$supporting_files_folder/.devscripts-template" > "$supporting_files_folder/.devscripts"
     else
-        echo "Skipping $supporting_files_folder/.devscripts generation because the file is newer than its template, remove it for regeneration"
+        echo "Skipping $supporting_files_folder/.devscripts copying because you already have a file in the destination and it's newer than the one from this script."
     fi
 
-    copy_files_wrapper --sudo=false "$supporting_files_folder/.sbuildrc" "$HOME/.sbuildrc"
     copy_files_wrapper --sudo=false "$supporting_files_folder/.gbp.conf" "$HOME/.gbp.conf"
     copy_files_wrapper --sudo=false "$supporting_files_folder/.devscripts" "$HOME/.devscripts"
 

@@ -16,7 +16,7 @@ backup_files_logfile="$logs_folder/backup_files_logfile"
 # and that the first argument is valid. Any other invalid arguments will be gracefully
 # ignored.
 if [[ $# -eq 0 ]] \
-|| [[ ! $1 =~ --setup-(all|misc|bash|gnome|vim|snap-packages|vscode|packaging-tools) ]]
+|| [[ ! $1 =~ --setup-(all|misc|bash|gnome|vim|snap-packages|vscode|packaging-tools|sbuild-debian) ]]
 then
     echo "At least 1 argument is required: setup_debian.sh [options...]"
     echo "Available options are:"
@@ -28,7 +28,7 @@ then
     echo "--setup-snap-packages"
     echo "--setup-vscode"
     echo "--setup-packaging-tools"
-    echo "--setup-sbuild-debian (this option will install only the unstable chroot, you can install more by calling it directly or using --setup-packaging-tools (which installs unstable, stable and oldstable))."
+    echo "--setup-sbuild-debian (this option will install only the unstable chroot, you can install more by calling setup_sbuild_debian.sh directly or using --setup-packaging-tools (which installs unstable, stable and oldstable))."
     echo "For more information, read the README.md file."
     exit 1
 fi
@@ -41,39 +41,41 @@ echo "backup-files" >> "$backup_files_logfile"
 
 # Call all setup scripts requested for in the arguments.
 for argument in "$@" ; do
-    if [[ $argument == "--setup-all" ]] ; then
+    if [[ $argument == "--setup-all" ]]; then
         # Call all the setup scripts.
         bash "$project_toplevel/misc/setup_misc.sh"
         bash "$project_toplevel/bash/setup_bash.sh"
         bash "$project_toplevel/gnome/setup_gnome.sh"
         bash "$project_toplevel/vim/setup_vim.sh"
-        bash "$project_toplevel/snap/setup_snap_packages.sh"
+        bash "$project_toplevel/snap_packages/setup_snap_packages.sh"
         bash "$project_toplevel/vscode/setup_vscode.sh"
         bash "$project_toplevel/packaging_tools/setup_packaging_tools.sh"
+        echo "If you installed any snap packages, you will need to logout and login again so Gnome can pick up the snap packages' shortcuts"
         break
     fi
-    if [[ $argument == "--setup-misc" ]] ; then
+    if [[ $argument == "--setup-misc" ]]; then
         bash "$project_toplevel/misc/setup_misc.sh"
     fi
-    if [[ $argument == "--setup-bash" ]] ; then
+    if [[ $argument == "--setup-bash" ]]; then
         bash "$project_toplevel/bash/setup_bash.sh"
     fi
-    if [[ $argument == "--setup-gnome" ]] ; then
+    if [[ $argument == "--setup-gnome" ]]; then
         bash "$project_toplevel/gnome/setup_gnome.sh"
     fi
-    if [[ $argument == "--setup-vim" ]] ; then
+    if [[ $argument == "--setup-vim" ]]; then
         bash "$project_toplevel/vim/setup_vim.sh"
     fi
-    if [[ $argument == "--setup-snap-packages" ]] ; then
-        bash "$project_toplevel/snap/setup_snap_packages.sh"
+    if [[ $argument == "--setup-snap-packages" ]]; then
+        bash "$project_toplevel/snap_packages/setup_snap_packages.sh"
+        echo "If you installed any snap packages, you will need to logout and login again so Gnome can pick up the snap packages' shortcuts"
     fi
-    if [[ $argument == "--setup-vscode" ]] ; then
+    if [[ $argument == "--setup-vscode" ]]; then
         bash "$project_toplevel/vscode/setup_vscode.sh"
     fi
-    if [[ $argument == "--setup-packaging-tools" ]] ; then
+    if [[ $argument == "--setup-packaging-tools" ]]; then
         bash "$project_toplevel/packaging_tools/setup_packaging_tools.sh"
     fi
-    if [[ $argument == "--setup-sbuild-debian" ]] ; then
+    if [[ $argument == "--setup-sbuild-debian" ]]; then
         bash "$project_toplevel/sbuild_debian/setup_sbuild_debian.sh" unstable
     fi
 done

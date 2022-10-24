@@ -45,3 +45,4 @@ setup_snap(){
 }
 
 setup_snap
+echo "If you installed any snap packages, you will need to logout and login again so Gnome can pick up the snap packages' shortcuts"

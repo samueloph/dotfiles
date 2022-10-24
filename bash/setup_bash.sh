@@ -36,28 +36,34 @@ setup_bash(){
         source "$project_toplevel/util/variables/oldstable_codename"
 
         # shellcheck source=/dev/null
-        source "$project_toplevel/util/variables/name" &>/dev/null ||
-        read -rp "Name: " NAME &&
-        echo "NAME=\"$NAME\"" > "$project_toplevel/util/variables/name"
+        source "$project_toplevel/util/variables/name" &>/dev/null \
+        || read -rp "Name: " NAME \
+        && echo "NAME=\"$NAME\"" > "$project_toplevel/util/variables/name"
 
         # shellcheck source=/dev/null
-        source "$project_toplevel/util/variables/email_address" &>/dev/null ||
-        read -rp "Email address: " EMAIL_ADDRESS &&
-        echo "EMAIL_ADDRESS=\"$EMAIL_ADDRESS\"" > "$project_toplevel/util/variables/email_address"
+        source "$project_toplevel/util/variables/email_address" &>/dev/null \
+        || read -rp "Email address: " EMAIL_ADDRESS \
+        && echo "EMAIL_ADDRESS=\"$EMAIL_ADDRESS\"" > "$project_toplevel/util/variables/email_address"
 
         # shellcheck source=/dev/null
-        source "$project_toplevel/util/variables/gpg_key_id" &>/dev/null ||
-        read -rp "GPG key ID: " GPG_KEY_ID &&
-        echo "GPG_KEY_ID=\"$GPG_KEY_ID\"" > "$project_toplevel/util/variables/gpg_key_id"
+        source "$project_toplevel/util/variables/gpg_key_id" &>/dev/null \
+        || read -rp "GPG key ID: " GPG_KEY_ID \
+        && echo "GPG_KEY_ID=\"$GPG_KEY_ID\"" > "$project_toplevel/util/variables/gpg_key_id"
 
-        sed -e "s/\${NAME-PLACEHOLDER}/$NAME/g" \
+        sed -e "/\${NAME-PLACEHOLDER}/s/^# *//" \
+            -e "/\${EMAIL-PLACEHOLDER}/s/^# *//" \
+            -e "/export DEBEMAIL DEBFULLNAME/s/^# *//" \
+            -e "/\${GPG_KEY-PLACEHOLDER}/s/^# *//" \
+            -e "/\${STABLE-PLACEHOLDER}/s/^# *//" \
+            -e "/\${OLDSTABLE-PLACEHOLDER}/s/^# *//" \
+            -e "s/\${NAME-PLACEHOLDER}/$NAME/g" \
             -e "s/\${EMAIL-PLACEHOLDER}/$EMAIL_ADDRESS/g" \
-            -e "s/\${KEY-PLACEHOLDER}/$GPG_KEY_ID/g" \
+            -e "s/\${GPG_KEY-PLACEHOLDER}/$GPG_KEY_ID/g" \
             -e "s/\${STABLE-PLACEHOLDER}/$STABLE_CODENAME/g" \
             -e "s/\${OLDSTABLE-PLACEHOLDER}/$OLDSTABLE_CODENAME/g" \
-            "$supporting_files_folder/bashrc.d/30_packaging.template" > "$supporting_files_folder/bashrc.d/30_packaging.bashrc"
+            -i "$supporting_files_folder/bashrc.d/30_packaging.bashrc"
     else
-        echo "Skipping $supporting_files_folder/bashrc.d/30_packaging.bashrc generation because the file is newer than its template, remove it for regeneration"
+        echo "Skipping $supporting_files_folder/bashrc.d/30_packaging.bashrc copying because you already have a file in the destination and it's newer than the one from this script."
     fi
 
     for bashrc_script in "$supporting_files_folder"/bashrc.d/*.bashrc; do

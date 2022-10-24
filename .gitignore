@@ -1,7 +1,5 @@
-bash/supporting_files/bashrc.d/30_packaging.bashrc
 misc/supporting_files/.gitconfig
 packaging_tools/supporting_files/.devscripts
-packaging_tools/supporting_files/.sbuildrc
 logs/backup_files_logfile
 logs/changed_files_logfile
 util/variables/name
