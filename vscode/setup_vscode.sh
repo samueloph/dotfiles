@@ -70,7 +70,7 @@ setup_vscode_settings(){
 
     # Anytime the settings are updated, the version needs to be updated both here
     # and in the settings files.
-    settings_version="2022-10-08"
+    settings_version="2022-10-27"
     settings_header="samueloph vscode settings"
 
     # If no settings file exists, just copy ours there.

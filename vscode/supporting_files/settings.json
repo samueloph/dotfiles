@@ -1,5 +1,5 @@
 {
-    // START samueloph vscode settings 2022-10-08 \/-----------------------------------------------------------------------------------
+    // START samueloph vscode settings 2022-10-27 \/-----------------------------------------------------------------------------------
 
     // VsCode's nice settings.
     // Enable sticky scroll.
@@ -61,6 +61,8 @@
     // Python settings
     "python.linting.enabled": true,
     "python.linting.flake8Enabled": true,
+    "python.linting.mypyEnabled": true,
+    "python.formatting.provider": "black",
     // Enable pytest globally by default
     "python.testing.pytestEnabled": true,
     "python.testing.pytestArgs": [
@@ -77,5 +79,5 @@
         "--no-cov"
     ],
 
-    // END samueloph vscode settings 2022-10-08 /\-----------------------------------------------------------------------------------
+    // END samueloph vscode settings 2022-10-27 /\-----------------------------------------------------------------------------------
 }
