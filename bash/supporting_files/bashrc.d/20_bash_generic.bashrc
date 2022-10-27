@@ -1,4 +1,4 @@
-# shellcheck shell=bash
+#!/bin/bash
 # Increase history size
 HISTSIZE=5000
 HISTFILESIZE=10000

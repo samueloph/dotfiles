@@ -26,9 +26,9 @@ setup_bash(){
 
     setup_bashrcd
 
-    if [[ $supporting_files_folder/bashrc.d/30_packaging.template -nt $HOME/.bashrc.d/30_packaging.bashrc ]]
+    if [[ $supporting_files_folder/bashrc.d/30_packaging.bashrc -nt $HOME/.bashrc.d/30_packaging.bashrc ]]
     then
-        # Fill in template config bashrc script with the correct values.
+        # Fill in bashrc script's PLACEHOLDERs with the correct values.
 
         # shellcheck source=/dev/null
         source "$project_toplevel/util/variables/stable_codename"
@@ -45,20 +45,14 @@ setup_bash(){
         || read -rp "Email address: " EMAIL_ADDRESS \
         && echo "EMAIL_ADDRESS=\"$EMAIL_ADDRESS\"" > "$project_toplevel/util/variables/email_address"
 
-        # shellcheck source=/dev/null
-        source "$project_toplevel/util/variables/gpg_key_id" &>/dev/null \
-        || read -rp "GPG key ID: " GPG_KEY_ID \
-        && echo "GPG_KEY_ID=\"$GPG_KEY_ID\"" > "$project_toplevel/util/variables/gpg_key_id"
 
         sed -e "/\${NAME-PLACEHOLDER}/s/^# *//" \
             -e "/\${EMAIL-PLACEHOLDER}/s/^# *//" \
             -e "/export DEBEMAIL DEBFULLNAME/s/^# *//" \
-            -e "/\${GPG_KEY-PLACEHOLDER}/s/^# *//" \
             -e "/\${STABLE-PLACEHOLDER}/s/^# *//" \
             -e "/\${OLDSTABLE-PLACEHOLDER}/s/^# *//" \
             -e "s/\${NAME-PLACEHOLDER}/$NAME/g" \
             -e "s/\${EMAIL-PLACEHOLDER}/$EMAIL_ADDRESS/g" \
-            -e "s/\${GPG_KEY-PLACEHOLDER}/$GPG_KEY_ID/g" \
             -e "s/\${STABLE-PLACEHOLDER}/$STABLE_CODENAME/g" \
             -e "s/\${OLDSTABLE-PLACEHOLDER}/$OLDSTABLE_CODENAME/g" \
             -i "$supporting_files_folder/bashrc.d/30_packaging.bashrc"

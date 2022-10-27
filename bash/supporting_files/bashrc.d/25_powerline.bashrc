@@ -1,4 +1,4 @@
-# shellcheck shell=bash
+#!/bin/bash
 # Powerline
 powerline-daemon -q
 # shellcheck disable=SC2034

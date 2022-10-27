@@ -1,4 +1,4 @@
-# shellcheck shell=bash
+#!/bin/bash
 # This bashrc script is generated from the setup script of samueloph's
 # dotfiles, the script swaps the placeholders "${.*-PLACEHOLDER}" with
 # their values (eg.: debian stable release codename, email address...).
