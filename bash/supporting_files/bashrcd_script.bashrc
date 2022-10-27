@@ -1,4 +1,5 @@
 # shellcheck shell=bash
+
 ### START samueloph dotfiles bashrcd 2022-10-08
 
 # Anything that's inside this block might be overwritten by

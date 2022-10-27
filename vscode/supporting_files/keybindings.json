@@ -1,8 +1,10 @@
 [
+
     // START samueloph vscode keybindings 2022-10-08 \/-----------------------------------------------------------------------------------
 
     // Let ctrl+e be used in the terminal.
     { "key": "ctrl+e", "command": "-workbench.action.quickOpen" },
 
     // END samueloph vscode keybindings 2022-10-08 \/-----------------------------------------------------------------------------------
+
 ]

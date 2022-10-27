@@ -98,7 +98,7 @@ setup_bashrcd(){
             # dot "." metacharacter to match newlines "\n" as well.
             # Note the lack of the "/g" modifier, as we only expect a single match
             # in the whole ~/.bashrc file.
-            perl -i -0pe "s/.*START ${bashrcd_script_header}.*END ${bashrcd_script_header}.*//s" \
+            perl -i -0pe "s/### START ${bashrcd_script_header}.*END ${bashrcd_script_header}.*//s" \
                 "$HOME/.bashrc"
             tail -n +2 "$supporting_files_folder/bashrcd_script.bashrc" >> "$HOME/.bashrc"
         fi

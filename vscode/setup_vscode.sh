@@ -97,7 +97,7 @@ setup_vscode_settings(){
                 # dot "." metacharacter to match newlines "\n" as well.
                 # Note the lack of the "/g" modifier, as we only expect a single match
                 # in the whole settings file.
-                perl -i -0pe "s/.*START ${settings_header}.*END ${settings_header}.*//s" \
+                perl -i -0pe "s/\s*\/\/ START ${settings_header}.*END ${settings_header}.*//s" \
                     "$HOME/.config/Code/User/settings.json"
                 # Remove last "}" from settings so we can append our file to it.
                 sed -i 's/}[^}]*$//' "$HOME/.config/Code/User/settings.json"
@@ -153,7 +153,7 @@ setup_vscode_keybindings(){
                 # dot "." metacharacter to match newlines "\n" as well.
                 # Note the lack of the "/g" modifier, as we only expect a single match
                 # in the whole keybindings file.
-                perl -i -0pe "s/.*START ${keybindings_header}.*END ${keybindings_header}.*//s" \
+                perl -i -0pe "s/\s*\/\/ START ${keybindings_header}.*END ${keybindings_header}.*//s" \
                     "$HOME/.config/Code/User/keybindings.json"
                 # Remove last "]" from keybindings so we can append our file to it.
                 sed -i 's/][^]]*$//' "$HOME/.config/Code/User/keybindings.json"

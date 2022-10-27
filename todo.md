@@ -17,3 +17,4 @@
 1. bluetooth experimental mode (so I can see power level of my bluetooth headset)
 1. clarify the variables/ folder is prefered over environment variables as its value persists (for future executions)
 1. default to only install chroot for unstable
+1. setup_bash and setup_vscode will remove whatever is after the settings it ships when it updates it (will fix this soon).
