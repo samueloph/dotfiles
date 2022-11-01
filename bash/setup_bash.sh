@@ -71,18 +71,16 @@ setup_bash(){
 # The files are parsed in sorted order from the ~/.bashrc.d/ folder, so numbers
 # can be prepended to scripts to ensure a given order (eg.: ~/.bashrc.d/10_powerline.bashrc).
 setup_bashrcd(){
-    # Anytime the script is updated, the version needs to be updated both here
-    # and in bashrcd_script.bashrc.
-    bashrcd_script_version="2022-10-08"
-    bashrcd_script_header="samueloph dotfiles bashrcd"
+    bashrcd_script_identifier="samueloph dotfiles bashrcd"
+    bashrcd_script_version=$(grep "START $bashrcd_script_identifier" "$supporting_files_folder/bashrcd_script.bashrc" | grep -oE "[0-9]{4}-[0-9]{2}-[0-9]{2}")
 
     # If the script already exists in ~/.bashrc and has a different version, use
     # perl to remove it, then append the new script to the end of ~/.bashrc.
     #
     # Check if there is any version of the script present.
-    if grep -q "START ${bashrcd_script_header}.*" "$HOME/.bashrc"; then
+    if grep -q "START ${bashrcd_script_identifier}.*" "$HOME/.bashrc"; then
         # Check if the version present is the one set as the latest one ($bashrcd_script_version).
-        if grep -q "START ${bashrcd_script_header} ${bashrcd_script_version}" "$HOME/.bashrc"
+        if grep -q "START ${bashrcd_script_identifier} ${bashrcd_script_version}" "$HOME/.bashrc"
         then
             echo "✔ bashrc.d is already enabled"
         # Not the latest version, remove it and append the new one to the end of ~/.bashrc.
@@ -98,7 +96,7 @@ setup_bashrcd(){
             # dot "." metacharacter to match newlines "\n" as well.
             # Note the lack of the "/g" modifier, as we only expect a single match
             # in the whole ~/.bashrc file.
-            perl -i -0pe "s/### START ${bashrcd_script_header}.*END ${bashrcd_script_header}.*//s" \
+            perl -i -0pe "s/### START ${bashrcd_script_identifier}.*END ${bashrcd_script_identifier}//s" \
                 "$HOME/.bashrc"
             tail -n +2 "$supporting_files_folder/bashrcd_script.bashrc" >> "$HOME/.bashrc"
         fi

@@ -68,20 +68,18 @@ setup_vscode_extensions(){
 setup_vscode_settings(){
     echo -e "\e[1;32m--------------------[VSCODE SETTINGS]--------------------\e[0m"
 
-    # Anytime the settings are updated, the version needs to be updated both here
-    # and in the settings files.
-    settings_version="2022-10-27"
-    settings_header="samueloph vscode settings"
+    settings_identifier="samueloph vscode settings"
+    settings_version=$(grep "START $settings_identifier" "$supporting_files_folder/settings.json" | grep -oE "[0-9]{4}-[0-9]{2}-[0-9]{2}")
 
     # If no settings file exists, just copy ours there.
     if [[ ! -f "$HOME/.config/Code/User/settings.json" ]]; then
         copy_files_wrapper --sudo=false "$supporting_files_folder/settings.json" "$HOME/.config/Code/User/settings.json"
     else
         # If there is a settings file already, check if it has our settings.
-        if grep -q "START ${settings_header}.*" "$HOME/.config/Code/User/settings.json"
+        if grep -q "START ${settings_identifier}.*" "$HOME/.config/Code/User/settings.json"
         then
             # Check if the version present is the one set as the latest one ($settings_version).
-            if grep -q "START ${settings_header} ${settings_version}" "$HOME/.config/Code/User/settings.json"
+            if grep -q "START ${settings_identifier} ${settings_version}" "$HOME/.config/Code/User/settings.json"
             then
                 echo "✔ vscode settings are already set"
             # Not the latest version, remove it and append the new one to the end of the file.
@@ -97,7 +95,7 @@ setup_vscode_settings(){
                 # dot "." metacharacter to match newlines "\n" as well.
                 # Note the lack of the "/g" modifier, as we only expect a single match
                 # in the whole settings file.
-                perl -i -0pe "s/\s*\/\/ START ${settings_header}.*END ${settings_header}.*//s" \
+                perl -i -0pe "s/\s*\/\/ START ${settings_identifier}.*END ${settings_identifier}//s" \
                     "$HOME/.config/Code/User/settings.json"
                 # Remove last "}" from settings so we can append our file to it.
                 sed -i 's/}[^}]*$//' "$HOME/.config/Code/User/settings.json"
@@ -124,20 +122,18 @@ setup_vscode_keybindings(){
 
     echo -e "\e[1;32m--------------------[VSCODE KEYBINDINGS]--------------------\e[0m"
 
-    # Anytime the keybindings are updated, the version needs to be updated both here
-    # and in the keybindings files.
-    keybindings_version="2022-10-08"
-    keybindings_header="samueloph vscode keybindings"
+    keybindings_identifier="samueloph vscode keybindings"
+    keybindings_version=$(grep "START $keybindings_identifier" "$supporting_files_folder/keybindings.json" | grep -oE "[0-9]{4}-[0-9]{2}-[0-9]{2}")
 
     # If no keybindings file exists, just copy ours there.
     if [[ ! -f "$HOME/.config/Code/User/keybindings.json" ]]; then
         copy_files_wrapper --sudo=false "$supporting_files_folder/keybindings.json" "$HOME/.config/Code/User/keybindings.json"
     else
         # If there is a keybindings file already, check if it has our keybindings.
-        if grep -q "START ${keybindings_header}.*" "$HOME/.config/Code/User/keybindings.json"
+        if grep -q "START ${keybindings_identifier}.*" "$HOME/.config/Code/User/keybindings.json"
         then
             # Check if the version present is the one set as the latest one ($keybindings_version).
-            if grep -q "START ${keybindings_header} ${keybindings_version}" "$HOME/.config/Code/User/keybindings.json"
+            if grep -q "START ${keybindings_identifier} ${keybindings_version}" "$HOME/.config/Code/User/keybindings.json"
             then
                 echo "✔ vscode keybindings are already set"
             # Not the latest version, remove it and append the new one to the end of the file.
@@ -153,7 +149,7 @@ setup_vscode_keybindings(){
                 # dot "." metacharacter to match newlines "\n" as well.
                 # Note the lack of the "/g" modifier, as we only expect a single match
                 # in the whole keybindings file.
-                perl -i -0pe "s/\s*\/\/ START ${keybindings_header}.*END ${keybindings_header}.*//s" \
+                perl -i -0pe "s/\s*\/\/ START ${keybindings_identifier}.*END ${keybindings_identifier}//s" \
                     "$HOME/.config/Code/User/keybindings.json"
                 # Remove last "]" from keybindings so we can append our file to it.
                 sed -i 's/][^]]*$//' "$HOME/.config/Code/User/keybindings.json"

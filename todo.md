@@ -17,4 +17,5 @@
 1. bluetooth experimental mode (so I can see power level of my bluetooth headset)
 1. clarify the variables/ folder is prefered over environment variables as its value persists (for future executions)
 1. default to only install chroot for unstable
-1. setup_bash and setup_vscode will remove whatever is after the settings it ships when it updates it (will fix this soon).
+1. move DEBEMAIL and DEBFULLNAME to its own bashrc file.
+1. make use of distro-info-data and deprecate usage of variable files for release codenames, this also allow us to make 30_packaging.bashrc not need any changes if we make the bp/bps commands read from distro-info-data.

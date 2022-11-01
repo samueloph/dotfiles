@@ -1,6 +1,5 @@
 {
-
-    // START samueloph vscode settings 2022-10-27 \/-----------------------------------------------------------------------------------
+    // START samueloph vscode settings 2022-11-01 \/
 
     // VsCode's nice settings.
     // Enable sticky scroll.
@@ -78,8 +77,5 @@
         // best approach). You might also prefer to only set this option
         // per-workspace (wherever coverage is used).
         "--no-cov"
-    ],
-
-    // END samueloph vscode settings 2022-10-27 /\-----------------------------------------------------------------------------------
-
+    ], // END samueloph vscode settings
 }
