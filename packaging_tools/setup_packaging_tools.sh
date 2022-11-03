@@ -12,12 +12,20 @@ source "$project_toplevel/util/apt_install_wrapper"
 # shellcheck source=/dev/null
 source "$project_toplevel/util/copy_files_wrapper"
 # shellcheck source=/dev/null
-source "$project_toplevel/util/variables/stable_codename"
-# shellcheck source=/dev/null
-source "$project_toplevel/util/variables/oldstable_codename"
-
-# shellcheck source=/dev/null
 source "$supporting_files_folder/package_list_packaging_tools"
+
+# Find out codenames of stable and oldstable.
+while IFS="," read -r _version _codename series _created _release _eol _eol_lts _eol_elts
+do
+  if [[ -n $stable_codename ]]; then
+    oldstable_codename="$series"
+    break
+  fi
+  if [[ -n $release ]]; then
+    stable_codename="$series"
+    continue
+  fi
+done < <(grep -Ev "Sid|Experimental" /usr/share/distro-info/debian.csv | tac)
 
 setup_packaging_tools(){
 
@@ -27,7 +35,7 @@ setup_packaging_tools(){
 
     apt_install_wrapper "${PACKAGE_LIST_PACKAGING_TOOLS[@]}"
 
-    "$project_toplevel/sbuild_debian/setup_sbuild_debian.sh" unstable "$STABLE_CODENAME" "$OLDSTABLE_CODENAME"
+    "$project_toplevel/sbuild_debian/setup_sbuild_debian.sh" unstable "$stable_codename" "$oldstable_codename"
 
     if [[ $supporting_files_folder/.devscripts-template -nt $supporting_files_folder/.devscripts ]]
     then

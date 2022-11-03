@@ -31,11 +31,6 @@ setup_bash(){
         # Fill in bashrc script's PLACEHOLDERs with the correct values.
 
         # shellcheck source=/dev/null
-        source "$project_toplevel/util/variables/stable_codename"
-        # shellcheck source=/dev/null
-        source "$project_toplevel/util/variables/oldstable_codename"
-
-        # shellcheck source=/dev/null
         source "$project_toplevel/util/variables/name" &>/dev/null \
         || read -rp "Name: " NAME \
         && echo "NAME=\"$NAME\"" > "$project_toplevel/util/variables/name"
@@ -49,12 +44,8 @@ setup_bash(){
         sed -e "/\${NAME-PLACEHOLDER}/s/^# *//" \
             -e "/\${EMAIL-PLACEHOLDER}/s/^# *//" \
             -e "/export DEBEMAIL DEBFULLNAME/s/^# *//" \
-            -e "/\${STABLE-PLACEHOLDER}/s/^# *//" \
-            -e "/\${OLDSTABLE-PLACEHOLDER}/s/^# *//" \
             -e "s/\${NAME-PLACEHOLDER}/$NAME/g" \
             -e "s/\${EMAIL-PLACEHOLDER}/$EMAIL_ADDRESS/g" \
-            -e "s/\${STABLE-PLACEHOLDER}/$STABLE_CODENAME/g" \
-            -e "s/\${OLDSTABLE-PLACEHOLDER}/$OLDSTABLE_CODENAME/g" \
             -i "$supporting_files_folder/bashrc.d/30_packaging.bashrc"
     else
         echo "Skipping $supporting_files_folder/bashrc.d/30_packaging.bashrc copying because you already have a file in the destination and it's newer than the one from this script."

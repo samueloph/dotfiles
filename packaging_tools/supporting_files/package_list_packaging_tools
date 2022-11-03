@@ -16,4 +16,5 @@ PACKAGE_LIST_PACKAGING_TOOLS=(
     piuparts
     quilt
     sbuild-debian-developer-setup
+    distro-info-data
 )

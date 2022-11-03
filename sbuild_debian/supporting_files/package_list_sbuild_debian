@@ -6,4 +6,5 @@ PACKAGE_LIST_SBUILD_DEBIAN=(
     sbuild
     ccache
     sbuild-debian-developer-setup
+    distro-info-data
 )

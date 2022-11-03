@@ -39,7 +39,20 @@ setup_sbuild_debian(){
 
     apt_install_wrapper "${PACKAGE_LIST_SBUILD_DEBIAN[@]}"
 
-    # fill in template config files with personal information
+    # Find out codenames of stable and oldstable.
+    while IFS="," read -r _version _codename series _created _release _eol _eol_lts _eol_elts
+    do
+    if [[ -n $stable_codename ]]; then
+        oldstable_codename="$series"
+        break
+    fi
+    if [[ -n $release ]]; then
+        stable_codename="$series"
+        continue
+    fi
+    done < <(grep -Ev "Sid|Experimental" /usr/share/distro-info/debian.csv | tac)
+
+    # Fill in template config files with personal information.
     if [[ $supporting_files_folder/.sbuildrc -nt $supporting_files_folder/.sbuildrc ]]
     then
 
@@ -87,9 +100,12 @@ setup_sbuild_debian(){
     if [[ $release == "unstable" ]]; then
         setup_schroot_alias "$release" "experimental"
         setup_schroot_alias "$release" "UNRELEASED"
-    else
-    # If release is not unstable, assume it's either stable or oldstable and
-    # set aliases to -security, -backports and -backports-sloppy.
+    elif [[ $release == "$stable_codename" ]]; then
+    # Set aliases to -security and -backports.
+        setup_schroot_alias "$release" "${release}-security"
+        setup_schroot_alias "$release" "${release}-backports"
+    elif [[ $release == "$oldstable_codename" ]]; then
+    # Set aliases to -security, -backports and -backports-sloppy.
         setup_schroot_alias "$release" "${release}-security"
         setup_schroot_alias "$release" "${release}-backports"
         setup_schroot_alias "$release" "${release}-backports-sloppy"
