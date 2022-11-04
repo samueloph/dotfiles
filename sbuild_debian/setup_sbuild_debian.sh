@@ -53,7 +53,7 @@ setup_sbuild_debian(){
     done < <(grep -Ev "Sid|Experimental" /usr/share/distro-info/debian.csv | tac)
 
     # Fill in template config files with personal information.
-    if [[ $supporting_files_folder/.sbuildrc -nt $supporting_files_folder/.sbuildrc ]]
+    if [[ $supporting_files_folder/.sbuildrc -nt $HOME/.sbuildrc ]]
     then
 
         # shellcheck source=/dev/null
