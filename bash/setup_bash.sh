@@ -26,10 +26,12 @@ setup_bash(){
 
     setup_bashrcd
 
-    if [[ $supporting_files_folder/bashrc.d/30_packaging.bashrc -nt $HOME/.bashrc.d/30_packaging.bashrc ]]
-    then
-        # Fill in bashrc script's PLACEHOLDERs with the correct values.
+    for bashrc_script in "$supporting_files_folder"/bashrc.d/*.bashrc; do
+        copy_files_wrapper --sudo=false "$bashrc_script" "$HOME/.bashrc.d/"
+    done
 
+    if [[ ! ${stable_codename:-} ]]; then
+        # Generate 35_deb_packaging_personal_vars.bashrc
         # shellcheck source=/dev/null
         source "$project_toplevel/util/variables/name" &>/dev/null \
         || read -rp "Name: " NAME \
@@ -40,20 +42,10 @@ setup_bash(){
         || read -rp "Email address: " EMAIL_ADDRESS \
         && echo "EMAIL_ADDRESS=\"$EMAIL_ADDRESS\"" > "$project_toplevel/util/variables/email_address"
 
-
-        sed -e "/\${NAME-PLACEHOLDER}/s/^# *//" \
-            -e "/\${EMAIL-PLACEHOLDER}/s/^# *//" \
-            -e "/export DEBEMAIL DEBFULLNAME/s/^# *//" \
-            -e "s/\${NAME-PLACEHOLDER}/$NAME/g" \
-            -e "s/\${EMAIL-PLACEHOLDER}/$EMAIL_ADDRESS/g" \
-            -i "$supporting_files_folder/bashrc.d/30_packaging.bashrc"
-    else
-        echo "Skipping $supporting_files_folder/bashrc.d/30_packaging.bashrc copying because you already have a file in the destination and it's newer than the one from this script."
+        echo "DEBEMAIL=\"$EMAIL_ADDRESS\"" > "$HOME/.bashrc.d/35_deb_packaging_personal_vars.bashrc"
+        echo "DEBFULLNAME=\"$NAME\"" >> "$HOME/.bashrc.d/35_deb_packaging_personal_vars.bashrc"
+        echo "export DEBEMAIL DEBFULLNAME" >> "$HOME/.bashrc.d/35_deb_packaging_personal_vars.bashrc"
     fi
-
-    for bashrc_script in "$supporting_files_folder"/bashrc.d/*.bashrc; do
-        copy_files_wrapper --sudo=false "$bashrc_script" "$HOME/.bashrc.d/"
-    done
 
     echo -e "\e[1;32m--------------------[/BASH]-------------------\e[0m"
 }

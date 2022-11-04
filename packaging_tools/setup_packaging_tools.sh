@@ -15,13 +15,13 @@ source "$project_toplevel/util/copy_files_wrapper"
 source "$supporting_files_folder/package_list_packaging_tools"
 
 # Find out codenames of stable and oldstable.
-while IFS="," read -r _version _codename series _created _release _eol _eol_lts _eol_elts
+while IFS="," read -r _version _codename series _created release _eol _eol_lts _eol_elts
 do
-  if [[ -n $stable_codename ]]; then
+  if [[ ${stable_codename:-} ]]; then
     oldstable_codename="$series"
     break
   fi
-  if [[ -n $release ]]; then
+  if [[ ${release:-} ]]; then
     stable_codename="$series"
     continue
   fi
