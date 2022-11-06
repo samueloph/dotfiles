@@ -41,7 +41,7 @@ alias "bp-new-$oldstable_codename-bpo-sloppy"="gbp buildpackage --git-builder=sb
 alias "bp-$oldstable_codename-bpo-sloppy"="bp-new-${oldstable_codename}-bpo-sloppy --force-orig-source --source-only-changes"
 
 # Command to manually update all chroots, in case it's updates are not in a cronjob.
-alias update-schroots="sudo /usr/share/doc/sbuild/examples/sbuild-debian-developer-setup-update-all"
+alias update-schroots="sudo sh /usr/share/doc/sbuild/examples/sbuild-debian-developer-setup-update-all"
 
 # This is copied from:
 # https://salsa.debian.org/ruby-team/meta/-/blob/da3f8ebc58853d2706e8ef07679d8389ae09f366/new-upstream
