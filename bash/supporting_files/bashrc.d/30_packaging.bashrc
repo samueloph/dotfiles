@@ -46,11 +46,14 @@ alias update-schroots="sudo sh /usr/share/doc/sbuild/examples/sbuild-debian-deve
 # This is copied from:
 # https://salsa.debian.org/ruby-team/meta/-/blob/da3f8ebc58853d2706e8ef07679d8389ae09f366/new-upstream
 function import-new-release {
+  (
+    set -euo pipefail
     gbp import-orig --pristine-tar ${1:-'--uscan'}
     upstream_version=$(git tag | grep upstream/ | sort -V | tail -1 | cut -d / -f 2)
     epoch=$(dpkg-parsechangelog -SVersion | sed -e '/:/!d; s/:.*/:/')
     gbp dch --new-version="${epoch}${upstream_version}-1"
     debcommit -a
+  )
 }
 
 export QUILT_PATCHES=debian/patches
