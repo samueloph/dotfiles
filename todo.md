@@ -18,9 +18,7 @@ https://super-unix.com/ubuntu/ubuntu-how-to-set-custom-keyboard-shortcuts-from-t
 1. firefox tab manager (arrow button on the right side that lists all tabs open), might be enabled by other extensions already: browser.tabs.tabmanager.enabled
 1. enable sudo for current user
 1. consider using stow for all dotfiles (and keep bashscript for commands that need to be run)
-1. gnome-boxes with spice-vdagent (for shared copy-pasting)
 1. context.vim with configuration described in https://github.com/wellle/context.vim/issues/53#issuecomment-1267599583
-1. vscode set python formatter to black
 1. ddcutil and gnome extension to change external display's brightness
 1. bluetooth experimental mode (so I can see power level of my bluetooth headset)
 https://www.reddit.com/r/Fedora/comments/shc2kh/get_bluetooth_device_battery_level_in_power/
@@ -38,24 +36,14 @@ https://github.com/junegunn/vim-plug/wiki/tips#automatic-installation
 https://github.com/junegunn/vim-plug/wiki/faq#shouldnt-vim-plug-update-itself-on-plugupdate-like-vundle
 1. log headers with aligned text on setup scripts
 https://unix.stackexchange.com/questions/267729/how-can-i-print-a-variable-with-padded-center-alignment
-1. Dotfiles add rust-analyzer
+1. Dotfiles add rust-analyzer (requires rustup)
 1. vscode enable middle click pase
 https://github.com/Microsoft/vscode/issues/110
 https://stackoverflow.com/questions/36723333/how-to-enable-middle-mouse-button-click-paste-in-vs-code
-1. vscode wrap md files
-https://stackoverflow.com/questions/62127203/vscode-word-wrap-for-markdown-not-working/68441499#68441499
-1. vscode wrap tabs
 1. Rust debugger extension
 https://marketplace.visualstudio.com/items?itemName=vadimcn.vscode-lldb
 1. gnome alt tab only on current screen/workspace
 https://linuxiac.com/alt-tab-to-switch-only-on-current-workspace-in-gnome-shell/ (this doesnt work)
-1. disable inlay hints for Rust by default (too noisy)
-"editor.inlayHints.enabled": "offUnlessPressed",
 1. vim debugging extension
 https://github.com/puremourning/vimspector
-1. vscode python enable mypy and black by default
-dotfiled settings vscode:
-"python.linting.mypyEnabled": true,
-"python.formatting.provider": "black",
-https://github.com/psf/black/issues/1352
 1. gnome-clock configure clocks for other countries

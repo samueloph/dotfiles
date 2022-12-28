@@ -17,4 +17,7 @@ PACKAGE_LIST_MICS_PACKAGES=(
     tree
     virt-manager
     whois
+    # For gnome-boxes' shared clipboard (between VM and host)
+    # The VM also has to have it installed.
+    spice-vdagent
 )
