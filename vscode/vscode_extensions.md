@@ -56,3 +56,10 @@
 |---|---|---|
 |rebornix.ruby|Ruby language support and debugging for Visual Studio Code|https://marketplace.visualstudio.com/items?itemName=rebornix.ruby|
 
+## Rust
+|Package ID|Description|URL|
+|---|---|---|
+|rust-lang.rust-analyzer|Rust language support for Visual Studio Code|https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer|
+|Swellaby.vscode-rust-test-adapter|View and run your Rust tests in the Sidebar of Visual Studio Code|https://marketplace.visualstudio.com/items?itemName=Swellaby.vscode-rust-test-adapter|
+|vadimcn.vscode-lldb|A native debugger powered by LLDB. Debug C++, Rust and other compiled languages.|https://marketplace.visualstudio.com/items?itemName=vadimcn.vscode-lldb|
+

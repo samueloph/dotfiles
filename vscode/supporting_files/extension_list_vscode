@@ -11,6 +11,7 @@ EXTENSION_LIST_OF_DICT_VSCODE=(
     "extension_dict_vscode_misc"
     "extension_dict_vscode_c_and_related"
     "extension_dict_vscode_ruby"
+    "extension_dict_vscode_rust"
 )
 
 # This variable is used through variable indirection with $package_lists_vscode_all_extensions
@@ -79,4 +80,12 @@ declare -A extension_dict_vscode_c_and_related=(
 # shellcheck disable=SC2034
 declare -A extension_dict_vscode_ruby=(
     ["rebornix.ruby"]="Ruby language support and debugging for Visual Studio Code"
+)
+
+# This variable is used through variable indirection with $package_lists_vscode_all_extensions
+# shellcheck disable=SC2034
+declare -A extension_dict_vscode_rust=(
+    ["rust-lang.rust-analyzer"]="Rust language support for Visual Studio Code"
+    ["Swellaby.vscode-rust-test-adapter"]="View and run your Rust tests in the Sidebar of Visual Studio Code"
+    ["vadimcn.vscode-lldb"]="A native debugger powered by LLDB. Debug C++, Rust and other compiled languages."
 )

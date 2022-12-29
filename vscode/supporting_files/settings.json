@@ -69,7 +69,6 @@
         // Disable inlay hints as it's too noisy on Rust, they can still be shown
         // when the right keys are pressed (ctrl + alt).
         "editor.inlayHints.enabled": "offUnlessPressed"
-    //     "editor.defaultFormatter": "rust-lang.rust",
     },
 
     // Python settings.

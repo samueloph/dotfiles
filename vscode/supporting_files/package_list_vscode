@@ -11,4 +11,7 @@ PACKAGE_LIST_VSCODE=(
     mypy
     # Required by "--no-cov" option in settings.json for VsCode
     python3-pytest-cov
+    rustfmt
+    rust-clippy
+    rust-src
 )
