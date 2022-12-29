@@ -36,12 +36,9 @@ https://github.com/junegunn/vim-plug/wiki/tips#automatic-installation
 https://github.com/junegunn/vim-plug/wiki/faq#shouldnt-vim-plug-update-itself-on-plugupdate-like-vundle
 1. log headers with aligned text on setup scripts
 https://unix.stackexchange.com/questions/267729/how-can-i-print-a-variable-with-padded-center-alignment
-1. Dotfiles add rust-analyzer (requires rustup)
 1. vscode enable middle click pase
 https://github.com/Microsoft/vscode/issues/110
 https://stackoverflow.com/questions/36723333/how-to-enable-middle-mouse-button-click-paste-in-vs-code
-1. Rust debugger extension
-https://marketplace.visualstudio.com/items?itemName=vadimcn.vscode-lldb
 1. gnome alt tab only on current screen/workspace
 https://linuxiac.com/alt-tab-to-switch-only-on-current-workspace-in-gnome-shell/ (this doesnt work)
 1. vim debugging extension
