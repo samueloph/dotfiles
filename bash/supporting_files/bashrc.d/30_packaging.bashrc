@@ -18,7 +18,10 @@ done < <(grep -Ev "Sid|Experimental" /usr/share/distro-info/debian.csv | tac)
 # bp = build source-only package
 # bp-new = source-build-package = build package and add binaries to dsc (sourceful).
 
-# Use release defined in d/changelog, can be used for unstable and stable-security builds, for example.
+# Use release defined in d/changelog, can be used for unstable and
+# stable-security builds, for example.
+# For non-parallel builds (in case of debugging), you can run:
+# export DEB_BUILD_OPTIONS="parallel=1" && bp
 alias bp="gbp buildpackage --git-builder=sbuild -v --source-only-changes"
 alias bp-new="gbp buildpackage --git-builder=sbuild -v --force-orig-source"
 
