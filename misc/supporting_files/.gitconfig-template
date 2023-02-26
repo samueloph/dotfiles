@@ -3,3 +3,5 @@
 	email = ${EMAIL-PLACEHOLDER}
 [pull]
 	rebase = true
+[color "diff"]
+	meta = yellow bold
