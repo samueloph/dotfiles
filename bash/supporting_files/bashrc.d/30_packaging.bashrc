@@ -63,14 +63,17 @@ function commit-changelog {
   )
 }
 
-# This is copied from:
+# This is based on:
 # https://salsa.debian.org/ruby-team/meta/-/blob/da3f8ebc58853d2706e8ef07679d8389ae09f366/new-upstream
 function import-new-release {
+  # Start a subshell so we can set bash's strict mode, this way the function
+  # stops at any error.
   (
+    # bash strict mode.
     set -euo pipefail
     gbp import-orig --pristine-tar ${1:-'--uscan'}
     upstream_version=$(git tag | grep upstream/ | sort -V | tail -1 | cut -d / -f 2)
-    epoch=$(dpkg-parsechangelog -SVersion | sed -e '/:/!d; s/:.*/:/')
+    epoch=$(dpkg-parsechangelog --show-field Version | sed -e '/:/!d; s/:.*/:/')
     gbp dch --new-version="${epoch}${upstream_version}-1"
     debcommit -a
   )
