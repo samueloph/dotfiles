@@ -46,6 +46,23 @@ alias "bp-$oldstable_codename-bpo-sloppy"="bp-new-${oldstable_codename}-bpo-slop
 # Command to manually update all chroots, in case it's updates are not in a cronjob.
 alias update-schroots="sudo sh /usr/share/doc/sbuild/examples/sbuild-debian-developer-setup-update-all"
 
+# Commit the final changelog changes.
+function commit-changelog {
+  # Start a subshell so we can set bash's strict mode, this way the function
+  # stops at any error.
+  (
+    # bash strict mode.
+    set -euo pipefail
+    # Assume we are at the source of the packaging repo, if it fails, assume we
+    # are inside the debian folder.
+    git add debian/changelog || git add changelog
+    # Commit.
+    git commit -m "Finalize changelog for $(dpkg-parsechangelog --show-field Version) $(dpkg-parsechangelog --show-field Distribution) upload"
+    # Show latest commit, so we can confirm that it's ok.
+    git show HEAD
+  )
+}
+
 # This is copied from:
 # https://salsa.debian.org/ruby-team/meta/-/blob/da3f8ebc58853d2706e8ef07679d8389ae09f366/new-upstream
 function import-new-release {
