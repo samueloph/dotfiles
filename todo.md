@@ -44,3 +44,4 @@ https://linuxiac.com/alt-tab-to-switch-only-on-current-workspace-in-gnome-shell/
 1. vim debugging extension
 https://github.com/puremourning/vimspector
 1. gnome-clock configure clocks for other countries
+1. warn about old schroots (oldoldstable)
