@@ -20,8 +20,16 @@ done < <(grep -Ev "Sid|Experimental" /usr/share/distro-info/debian.csv | tac)
 
 # Use release defined in d/changelog, can be used for unstable and
 # stable-security builds, for example.
+#
 # For non-parallel builds (in case of debugging), you can run:
 # export DEB_BUILD_OPTIONS="parallel=1" && bp
+#
+# For debugging, you can get into the chroot shell with:
+# --build-failed-commands='%SBUILD_SHELL'
+# --finished-build-commands='%SBUILD_SHELL'
+# The first one only puts you in the shell if the build fails,
+# the second one will do it always (on success too).
+#
 alias bp="gbp buildpackage --git-builder=sbuild -v --source-only-changes"
 alias bp-new="gbp buildpackage --git-builder=sbuild -v --force-orig-source"
 
