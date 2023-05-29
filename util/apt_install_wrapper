@@ -16,6 +16,9 @@ apt_install_wrapper(){
         # variable is used, or a command in a pipeline fails.
         set -euo pipefail
 
+        # shellcheck source=/dev/null
+        source "./print_utils"
+
         local three_hours_ago
         local pkgcache_modification_timestamp
         local to_be_installed=()
@@ -48,7 +51,7 @@ apt_install_wrapper(){
         # Install everything that was selected to be installed at once.
         # First check if there is any package to be installed.
         if [[ ! ${#to_be_installed[@]} -eq 0 ]]; then
-            echo "--------------------------------------------------------------------------------"
+            print_header_2 "[apt]"
             echo "►► Installing ${to_be_installed[*]}"
             # Apt cache needs update if last one was more than 3 hours ago.
             if [[ pkgcache_modification_timestamp -ge three_hours_ago ]]; then
@@ -56,7 +59,7 @@ apt_install_wrapper(){
             fi
             # Install packages without prompting for anything.
             sudo DEBIAN_FRONTEND=noninteractive apt install -y "${to_be_installed[@]}"
-            echo "--------------------------------------------------------------------------------"
+            print_header_2 "[/apt]"
         fi
     )
 }

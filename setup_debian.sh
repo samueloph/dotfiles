@@ -12,6 +12,9 @@ logs_folder="logs"
 changed_files_logfile="$project_toplevel/$logs_folder/changed_files_logfile"
 backup_files_logfile="$logs_folder/backup_files_logfile"
 
+# shellcheck source=/dev/null
+source "$project_toplevel/util/print_utils"
+
 # Simple argument validation, it only validates that at least 1 argument was passed
 # and that the first argument is valid. Any other invalid arguments will be gracefully
 # ignored.
@@ -81,9 +84,9 @@ for argument in "$@" ; do
 done
 
 # Print a summary of the changes.
-echo -e "\e[1;32m--------------------[CHANGES]--------------------\e[0m"
+print_header "[CHANGES]"
 
 paste <(echo "$changed_files_logfile") <(echo "$backup_files_logfile")
 paste "$changed_files_logfile" "$backup_files_logfile"
 
-echo -e "\e[1;32m--------------------[/CHANGES]--------------------\e[0m"
+print_header "[/CHANGES]"

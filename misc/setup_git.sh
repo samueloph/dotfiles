@@ -11,10 +11,13 @@ supporting_files_folder="$script_path/supporting_files"
 source "$project_toplevel/util/copy_files_wrapper"
 # shellcheck source=/dev/null
 source "$project_toplevel/util/apt_install_wrapper"
+# shellcheck source=/dev/null
+source "$project_toplevel/util/print_utils"
 
 setup_git(){
 
-    echo -e "\e[1;32m--------------------[GIT]--------------------\e[0m"
+    print_header "[GIT]"
+
     apt_install_wrapper git
 
     # fill in template config files with personal information
@@ -40,7 +43,7 @@ setup_git(){
 
     copy_files_wrapper --sudo=false "$supporting_files_folder/.gitconfig" "$HOME/.gitconfig"
 
-    echo -e "\e[1;32m--------------------[/GIT]-------------------\e[0m"
+    print_header "[/GIT]"
 }
 
 setup_git

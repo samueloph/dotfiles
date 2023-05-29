@@ -2,25 +2,32 @@
 
 set -euo pipefail
 
+# Path of this file, to be used to evaluate path of other files in the project.
+script_path="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
+project_toplevel="$script_path/.."
+
+# shellcheck source=/dev/null
+source "$project_toplevel/util/print_utils"
+
 setup_firefox(){
     # install firefox from unstable and remove firefox-esr
-    echo -e "\e[1;32m--------------------[FIREFOX]--------------------\e[0m"
+    print_header "[FIREFOX]"
 
     if ! (dpkg-query -W -f='${Status}' firefox 2>/dev/null | grep -q "install ok installed")
     then
-        echo "--------------------------------------------------------------------------------"
+        print_header_2 "[apt]"
         # Call apt update as it's very likely the unstable repo was added just
         # now (by this dotfiles script).
         sudo apt update -qq
         sudo DEBIAN_FRONTEND=noninteractive apt install -y -t sid firefox
         echo "Removing firefox ESR now that regular firefox is installed..."
         sudo apt remove -y firefox-esr
-        echo "--------------------------------------------------------------------------------"
+        print_header_2 "[/apt]"
     else
         echo "✔ firefox is already installed"
     fi
 
-    echo -e "\e[1;32m--------------------[/FIREFOX]--------------------\e[0m"
+    print_header "[/FIREFOX]"
 }
 
 setup_firefox

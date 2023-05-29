@@ -11,12 +11,15 @@ supporting_files_folder="$script_path/supporting_files"
 source "$project_toplevel/util/create_backup_of_file"
 # shellcheck source=/dev/null
 source "$project_toplevel/util/apt_install_wrapper"
+# shellcheck source=/dev/null
+source "$project_toplevel/util/print_utils"
 
 # shellcheck source=/dev/null
 source "$supporting_files_folder/package_list_gnome"
 
+
 setup_gnome(){
-    echo -e "\e[1;32m--------------------[GNOME]--------------------\e[0m"
+    print_header "[GNOME]"
 
     # tweak some gnome settings using gsettings
     apt_install_wrapper "${PACKAGE_LIST_GNOME[@]}"
@@ -95,7 +98,7 @@ setup_gnome(){
         echo "✔ \"initial setup\" startup window is already disabled on Gnome"
     fi
 
-    echo -e "\e[1;32m--------------------[/GNOME]-------------------\e[0m"
+    print_header "[/GNOME]"
 }
 
 setup_gnome

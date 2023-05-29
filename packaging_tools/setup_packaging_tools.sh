@@ -12,24 +12,27 @@ source "$project_toplevel/util/apt_install_wrapper"
 # shellcheck source=/dev/null
 source "$project_toplevel/util/copy_files_wrapper"
 # shellcheck source=/dev/null
+source "$project_toplevel/util/print_utils"
+
+# shellcheck source=/dev/null
 source "$supporting_files_folder/package_list_packaging_tools"
 
 # Find out codenames of stable and oldstable.
 while IFS="," read -r _version _codename series _created release _eol _eol_lts _eol_elts
 do
-  if [[ ${stable_codename:-} ]]; then
-    oldstable_codename="$series"
-    break
-  fi
-  if [[ ${release:-} ]]; then
-    stable_codename="$series"
-    continue
-  fi
+    if [[ ${stable_codename:-} ]]; then
+        oldstable_codename="$series"
+        break
+    fi
+    if [[ ${release:-} ]]; then
+        stable_codename="$series"
+        continue
+    fi
 done < <(grep -Ev "Sid|Experimental" /usr/share/distro-info/debian.csv | tac)
 
 setup_packaging_tools(){
 
-    echo -e "\e[1;32m--------------------[PACKAGING TOOLS]--------------------\e[0m"
+    print_header "[PACKAGING TOOLS]"
 
     # install and configure a bunch of tools needed for packaging work
 
@@ -55,7 +58,7 @@ setup_packaging_tools(){
     copy_files_wrapper --sudo=false "$supporting_files_folder/.gbp.conf" "$HOME/.gbp.conf"
     copy_files_wrapper --sudo=false "$supporting_files_folder/.devscripts" "$HOME/.devscripts"
 
-    echo -e "\e[1;32m--------------------[/PACKAGING-TOOLS]-------------------\e[0m"
+    print_header "[/PACKAGING TOOLS]"
 }
 
 setup_packaging_tools

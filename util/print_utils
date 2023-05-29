@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# Based on https://stackoverflow.com/a/69041635
+_print_header() {
+    local heading width headinglen padlength i color_bold_green color_reset
+
+    color_bold_green="\e[1;32m"
+    color_reset="\e[0m" # No Color
+
+    heading="$2"
+    # We could achieve dynamic header sizes with width="$(tput cols)",
+    # but I prefer to hardcode it at 80.
+    width="$1"
+    headinglen=${#heading}
+    padlength=$(( (width - 2 - headinglen) / 2 ))
+
+    echo -e "${color_bold_green}"
+
+    for ((i = 0; i < padlength; ++i)); do
+    printf "-"
+    done
+    printf " %s " "$heading"
+    for ((i = 0; i < padlength; ++i)); do
+        printf "-"
+    done
+    if (( (width - 2 - headinglen) % 2 )); then
+        printf "-"
+    fi
+    echo -e "${color_reset}"
+}
+
+# This is equivalent to "header_1"
+print_header() {
+    _print_header 80 "$*"
+}
+
+# 2nd level header.
+print_header_2() {
+    _print_header 50 "$*"
+}

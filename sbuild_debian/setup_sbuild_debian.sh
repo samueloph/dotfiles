@@ -14,6 +14,8 @@ source "$supporting_files_folder/package_list_sbuild_debian"
 source "$project_toplevel/util/apt_install_wrapper"
 # shellcheck source=/dev/null
 source "$project_toplevel/util/copy_files_wrapper"
+# shellcheck source=/dev/null
+source "$project_toplevel/util/print_utils"
 
 backup_files_logfile="$project_toplevel/logs/backup_files_logfile"
 changed_files_logfile="$project_toplevel/logs/changed_files_logfile"
@@ -82,11 +84,11 @@ setup_sbuild_debian(){
     then
         test_ccache="true"
         echo "►► setting up sbuild's ${release} chroot"
-        echo "--------------------------------------------------------------------------------"
+        print_header_2 "[sbuild-createchroot]"
         sudo sbuild-createchroot --include=eatmydata,ccache,gnupg "$release" \
         "/srv/chroot/${release}-${arch}-sbuild" http://127.0.0.1:3142/deb.debian.org/debian
         sudo sbuild-adduser "$USER" &>/dev/null
-        echo "--------------------------------------------------------------------------------"
+        print_header_2 "[/sbuild-createchroot]"
     else
         echo "✔ sbuild's ${release} chroot is already configured"
     fi

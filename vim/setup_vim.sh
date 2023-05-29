@@ -11,12 +11,15 @@ supporting_files_folder="$script_path/supporting_files"
 source "$project_toplevel/util/copy_files_wrapper"
 # shellcheck source=/dev/null
 source "$project_toplevel/util/apt_install_wrapper"
+# shellcheck source=/dev/null
+source "$project_toplevel/util/print_utils"
 
 # shellcheck source=/dev/null
 source "$supporting_files_folder/package_list_vim"
 
 setup_vim(){
-    echo -e "\e[1;32m--------------------[VIM]--------------------\e[0m"
+
+    print_header "[VIM]"
 
     # vimrc-pre-pluginstall is needed to allow for PlugInstall to work, otherwise
     # it will try to use uninstalled plugins.
@@ -38,7 +41,7 @@ setup_vim(){
         echo "✔ .vimrc is already the same"
     fi
 
-    echo -e "\e[1;32m--------------------[/VIM]-------------------\e[0m"
+    print_header "[/VIM]"
 }
 
 setup_vim

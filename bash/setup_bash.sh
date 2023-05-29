@@ -13,12 +13,15 @@ source "$project_toplevel/util/create_backup_of_file"
 source "$project_toplevel/util/apt_install_wrapper"
 # shellcheck source=/dev/null
 source "$project_toplevel/util/copy_files_wrapper"
+# shellcheck source=/dev/null
+source "$project_toplevel/util/print_utils"
 
 # shellcheck source=/dev/null
 source "$supporting_files_folder/package_list_bash"
 
 setup_bash(){
-    echo -e "\e[1;32m--------------------[BASH]--------------------\e[0m"
+
+    print_header "[BASH]"
 
     apt_install_wrapper "${PACKAGE_LIST_BASH[@]}"
 
@@ -47,7 +50,7 @@ setup_bash(){
         echo "export DEBEMAIL DEBFULLNAME" >> "$HOME/.bashrc.d/35_deb_packaging_personal_vars.bashrc"
     fi
 
-    echo -e "\e[1;32m--------------------[/BASH]-------------------\e[0m"
+    print_header "[/BASH]"
 }
 
 # Enable the usage of ~/.bashrc.d/* scripts in ~/.bashrc.

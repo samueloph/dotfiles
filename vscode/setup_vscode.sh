@@ -13,6 +13,8 @@ source "$project_toplevel/util/apt_install_wrapper"
 source "$project_toplevel/util/copy_files_wrapper"
 # shellcheck source=/dev/null
 source "$project_toplevel/util/create_backup_of_file"
+# shellcheck source=/dev/null
+source "$project_toplevel/util/print_utils"
 
 # shellcheck source=/dev/null
 source "$supporting_files_folder/extension_list_vscode"
@@ -20,7 +22,8 @@ source "$supporting_files_folder/extension_list_vscode"
 source "$supporting_files_folder/package_list_vscode"
 
 setup_vscode(){
-    echo -e "\e[1;32m--------------------[VSCODE]--------------------\e[0m"
+
+    print_header "[VSCODE]"
 
     apt_install_wrapper "${PACKAGE_LIST_VSCODE[@]}"
     snap_installed_packages=$(snap list)
@@ -34,7 +37,7 @@ setup_vscode(){
     setup_vscode_settings
     setup_vscode_keybindings
 
-    echo -e "\e[1;32m--------------------[/VSCODE]-------------------\e[0m"
+    print_header "[/VSCODE]"
 }
 
 setup_vscode_extensions(){
@@ -43,13 +46,13 @@ setup_vscode_extensions(){
     # package_dict_vscode* is a dictionary that contains the extension id and their
     # descriptions.
 
-    echo -e "\e[1;32m--------------------[VSCODE EXTENSIONS]--------------------\e[0m"
+    print_header "[VSCODE EXTENSIONS]"
     # Cache list of installed extensions to be used below.
     vscode_installed_extensions=$(/snap/bin/code --list-extensions)
 
     # Iterate on array listing every variable name for the dictionary of extensions
     for package_dict_varname in "${EXTENSION_LIST_OF_DICT_VSCODE[@]}"; do
-        echo -e "\e[1;32m----------------------------------------${package_dict_varname}----------------------------------------\e[0m"
+        print_header_2 "${package_dict_varname}"
         # Get the variable named by the list by reference.
         declare -n package_dict="$package_dict_varname"
         # Iterate on every key-value pair of the dictionary.
@@ -62,11 +65,12 @@ setup_vscode_extensions(){
             fi
         done
     done
-    echo -e "\e[1;32m--------------------[/VSCODE EXTENSIONS]--------------------\e[0m"
+    print_header "[/VSCODE EXTENSIONS]"
 }
 
 setup_vscode_settings(){
-    echo -e "\e[1;32m--------------------[VSCODE SETTINGS]--------------------\e[0m"
+
+    print_header "[VSCODE SETTINGS]"
 
     settings_identifier="samueloph vscode settings"
     settings_version=$(grep "START $settings_identifier" "$supporting_files_folder/settings.json" | grep -oE "[0-9]{4}-[0-9]{2}-[0-9]{2}")
@@ -115,12 +119,12 @@ setup_vscode_settings(){
         fi
     fi
 
-    echo -e "\e[1;32m--------------------[/VSCODE SETTINGS]-------------------\e[0m"
+    print_header "[/VSCODE SETTINGS]"
 }
 
 setup_vscode_keybindings(){
 
-    echo -e "\e[1;32m--------------------[VSCODE KEYBINDINGS]--------------------\e[0m"
+    print_header "[VSCODE KEYBINDINGS]"
 
     keybindings_identifier="samueloph vscode keybindings"
     keybindings_version=$(grep "START $keybindings_identifier" "$supporting_files_folder/keybindings.json" | grep -oE "[0-9]{4}-[0-9]{2}-[0-9]{2}")
@@ -169,7 +173,7 @@ setup_vscode_keybindings(){
         fi
     fi
 
-    echo -e "\e[1;32m--------------------[/VSCODE KEYBINDINGS]-------------------\e[0m"
+    print_header "[/VSCODE KEYBINDINGS]"
 }
 
 setup_vscode

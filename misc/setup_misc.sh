@@ -6,8 +6,13 @@ set -euo pipefail
 script_path="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 project_toplevel="$script_path/.."
 
+# shellcheck source=/dev/null
+source "$project_toplevel/util/print_utils"
+
 setup_misc(){
-    echo -e "\e[1;32m--------------------[MISC]--------------------\e[0m"
+
+    print_header "[MISC]"
+
     # setup miscellaneous
     bash "$project_toplevel/misc/setup_apt_repos.sh"
     bash "$project_toplevel/misc/setup_misc_packages.sh"
@@ -17,8 +22,7 @@ setup_misc(){
     bash "$project_toplevel/misc/setup_fstrim.sh"
     bash "$project_toplevel/misc/setup_tmpfs.sh"
 
-    echo -e "\e[1;32m--------------------[/MISC]-------------------\e[0m"
-
+    print_header "[/MISC]"
 }
 
 setup_misc

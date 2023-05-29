@@ -9,17 +9,19 @@ supporting_files_folder="$script_path/supporting_files"
 
 # shellcheck source=/dev/null
 source "$project_toplevel/util/apt_install_wrapper"
+# shellcheck source=/dev/null
+source "$project_toplevel/util/print_utils"
 
 # shellcheck source=/dev/null
 source "$supporting_files_folder/package_list_battery_tools"
 
 setup_battery_tools(){
     # install battery saving tools
-    echo -e "\e[1;32m--------------------[BATTERY]--------------------\e[0m"
+    print_header "[BATTERY]"
 
     apt_install_wrapper "${PACKAGE_LIST_BATTERY_TOOLS[@]}"
 
-    echo -e "\e[1;32m--------------------[/BATTERY]--------------------\e[0m"
+    print_header "[/BATTERY]"
 }
 
 setup_battery_tools

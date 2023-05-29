@@ -8,10 +8,12 @@ project_toplevel="$script_path/.."
 
 # shellcheck source=/dev/null
 source "$project_toplevel/util/apt_install_wrapper"
-
+# shellcheck source=/dev/null
+source "$project_toplevel/util/print_utils"
 
 setup_snap(){
-    echo -e "\e[1;32m--------------------[SNAP]--------------------\e[0m"
+
+    print_header "[SNAP]"
 
     apt_install_wrapper snapd
 
@@ -41,7 +43,7 @@ setup_snap(){
         echo "✔ vscode snap is already installed"
     fi
 
-    echo -e "\e[1;32m--------------------[/SNAP]-------------------\e[0m"
+    print_header "[/SNAP]"
 }
 
 setup_snap
