@@ -10,16 +10,22 @@ project_toplevel="$script_path/.."
 source "$project_toplevel/util/print_utils"
 
 setup_tmpfs(){
-    # mount tmp in RAM, to save disk writes and increase performance on systems with
-    # lots of RAM
+    # Mount tmp in RAM, to save disk writes and increase performance on systems with
+    # lots of RAM.
     print_header "[TMPFS]"
 
-    if systemctl status tmp.mount &>/dev/null; then
-        print_skip "tmp is already mounted as tmpfs"
+    # If the machine doesn't have at least 16GiB of RAM, skip this.
+    if [[ $(( $(getconf _PHYS_PAGES) * $(getconf PAGE_SIZE) / (1024 * 1024) )) -ge 16000 ]]
+    then
+        if systemctl status tmp.mount &>/dev/null; then
+            print_skip "tmp is already mounted as tmpfs"
+        else
+            print_in_progress "Setting up tmp to be mounted as tmpfs (effective after reboot)"
+            sudo cp /usr/share/systemd/tmp.mount /etc/systemd/system/
+            sudo systemctl enable tmp.mount
+        fi
     else
-        print_in_progress "Setting up tmp to be mounted as tmpfs (effective after reboot)"
-        sudo cp /usr/share/systemd/tmp.mount /etc/systemd/system/
-        sudo systemctl enable tmp.mount
+        print_warning "This system has less than 16Gib of RAM, not setting TMPFS"
     fi
 
     print_header "[/TMPFS]"

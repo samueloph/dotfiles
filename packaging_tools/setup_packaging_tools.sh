@@ -13,36 +13,21 @@ source "$project_toplevel/util/apt_install_wrapper"
 source "$project_toplevel/util/copy_files_wrapper"
 # shellcheck disable=SC1094,SC1091
 source "$project_toplevel/util/print_utils"
+# shellcheck disable=SC1094,SC1091
+source "$project_toplevel/util/set_release_codename_variables"
 
 # shellcheck disable=SC1094,SC1091
 source "$supporting_files_folder/package_list_packaging_tools"
 
-# Find out codenames of stable and oldstable.
-while IFS="," read -r _version _codename series _created release _eol _eol_lts _eol_elts
-do
-    if [[ ${stable_codename:-} ]]; then
-        oldstable_codename="$series"
-        break
-    fi
-    if [[ ${release:-} ]]; then
-        stable_codename="$series"
-        continue
-    fi
-done < <(grep -Ev "Sid|Experimental" /usr/share/distro-info/debian.csv | tac)
-
+# Install and configure a bunch of tools needed for packaging work.
 setup_packaging_tools(){
 
     print_header "[PACKAGING TOOLS]"
 
-    # install and configure a bunch of tools needed for packaging work
-
     apt_install_wrapper "${PACKAGE_LIST_PACKAGING_TOOLS[@]}"
-
-    "$project_toplevel/sbuild_debian/setup_sbuild_debian.sh" unstable "$stable_codename" "$oldstable_codename"
 
     if [[ $supporting_files_folder/.devscripts-template -nt $supporting_files_folder/.devscripts ]]
     then
-
         # shellcheck disable=SC1094,SC1091
         source "$project_toplevel/util/variables/salsa_token" &>/dev/null \
         || read -rp "Salsa token: " SALSA_TOKEN \
@@ -57,6 +42,8 @@ setup_packaging_tools(){
 
     copy_files_wrapper --sudo=false "$supporting_files_folder/.gbp.conf" "$HOME/.gbp.conf"
     copy_files_wrapper --sudo=false "$supporting_files_folder/.devscripts" "$HOME/.devscripts"
+
+    "$project_toplevel/sbuild_debian/setup_sbuild_debian.sh" unstable "$STABLE_CODENAME" "$OLDSTABLE_CODENAME"
 
     print_header "[/PACKAGING TOOLS]"
 }

@@ -33,7 +33,7 @@ setup_bash(){
         copy_files_wrapper --sudo=false "$bashrc_script" "$HOME/.bashrc.d/"
     done
 
-    if [[ ! ${stable_codename:-} ]]; then
+    if [[ ! ${STABLE_CODENAME:-} ]]; then
         # Generate 35_deb_packaging_personal_vars.bashrc
         # shellcheck disable=SC1094,SC1091
         source "$project_toplevel/util/variables/name" &>/dev/null \

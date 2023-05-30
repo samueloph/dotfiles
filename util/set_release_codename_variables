@@ -1,0 +1,45 @@
+#!/bin/bash
+
+# Set variables with codenames for debian stable and oldstable.
+set_release_codename_variables () {
+    # This has to be a function to allow the variables from the
+    # while loop to be local.
+
+    # If the values are already set, skip.
+    if [[ -n ${OLDSTABLE_CODENAME:-} ]] && [[ ${STABLE_CODENAME:-} ]]; then
+        return 0
+    fi
+    # Iterate over the /usr/share/distro-info/debian.csv file in reverse
+    # order. Skip processing sid and experimental, look for the first two
+    # versions which were already released and assumed they are stable and
+    # oldstable.
+    local _version _codename series _created release _eol _eol_lts _eol_elts
+    while IFS="," read -r _version _codename series _created release _eol _eol_lts _eol_elts
+    do
+        # Check if this version has the "release" field set.
+        if [[ $release ]]; then
+            release_date_timestamp=$(date -d "$release" +%s)
+            current_date=$(date +%s)
+            # Check if we are iterating over an already released version
+            # that's not sid or experimental.
+            if [[ $current_date -ge $release_date_timestamp ]] && \
+            [[ $series != "sid" ]] && \
+            [[ $series != "experimental" ]]
+            then
+                # Have we already found the stable release?, then the very
+                # next one in line will be oldstable.
+                # We have to check using the ${variable:-} pattern because
+                # we set the "nounset" bash flag and not doing so would trigger
+                # an error.
+                if [[ -n ${STABLE_CODENAME:-} ]]; then
+                    OLDSTABLE_CODENAME="$series"
+                    break
+                # If STABLE_CODENAME is not set yet, the first match will be it.
+                else
+                    STABLE_CODENAME="$series"
+                fi
+            fi
+        fi
+    done < <(grep -Ev "Sid|Experimental" /usr/share/distro-info/debian.csv | tac)
+}
+set_release_codename_variables

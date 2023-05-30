@@ -16,6 +16,8 @@ source "$project_toplevel/util/apt_install_wrapper"
 source "$project_toplevel/util/copy_files_wrapper"
 # shellcheck disable=SC1094,SC1091
 source "$project_toplevel/util/print_utils"
+# shellcheck disable=SC1094,SC1091
+source "$project_toplevel/util/set_release_codename_variables"
 
 backup_files_logfile="$project_toplevel/logs/backup_files_logfile"
 changed_files_logfile="$project_toplevel/logs/changed_files_logfile"
@@ -41,19 +43,6 @@ setup_sbuild_debian(){
 
     apt_install_wrapper "${PACKAGE_LIST_SBUILD_DEBIAN[@]}"
 
-    # Find out codenames of stable and oldstable.
-    while IFS="," read -r _version _codename series _created _release _eol _eol_lts _eol_elts
-    do
-    if [[ ${stable_codename:-} ]]; then
-        oldstable_codename="$series"
-        break
-    fi
-    if [[ ${release:-} ]]; then
-        stable_codename="$series"
-        continue
-    fi
-    done < <(grep -Ev "Sid|Experimental" /usr/share/distro-info/debian.csv | tac)
-
     # Fill in template config files with personal information.
     if [[ $supporting_files_folder/.sbuildrc -nt $HOME/.sbuildrc ]]
     then
@@ -63,7 +52,7 @@ setup_sbuild_debian(){
         || read -rp "GPG key ID (for ~/.sbuildrc configuration): " GPG_KEY_ID \
         && echo "GPG_KEY_ID=\"$GPG_KEY_ID\"" > "$project_toplevel/util/variables/gpg_key_id"
 
-        if [[ -z "$GPG_KEY_ID" ]]; then
+        if [[ ! "$GPG_KEY_ID" ]]; then
             sed -e "/\${GPG_KEY-PLACEHOLDER}/s/^# *//" \
                 -e "s/\${GPG_KEY-PLACEHOLDER}/${GPG_KEY_ID}/g" \
                 -i "$supporting_files_folder/.sbuildrc"
@@ -102,11 +91,11 @@ setup_sbuild_debian(){
     if [[ $release == "unstable" ]]; then
         setup_schroot_alias "$release" "experimental"
         setup_schroot_alias "$release" "UNRELEASED"
-    elif [[ $release == "$stable_codename" ]]; then
+    elif [[ $release == "$STABLE_CODENAME" ]]; then
     # Set aliases to -security and -backports.
         setup_schroot_alias "$release" "${release}-security"
         setup_schroot_alias "$release" "${release}-backports"
-    elif [[ $release == "$oldstable_codename" ]]; then
+    elif [[ $release == "$OLDSTABLE_CODENAME" ]]; then
     # Set aliases to -security, -backports and -backports-sloppy.
         setup_schroot_alias "$release" "${release}-security"
         setup_schroot_alias "$release" "${release}-backports"
@@ -136,7 +125,7 @@ setup_sbuild_debian(){
     # Create a cronjob to update any/all sbuild chroots.
     copy_files_wrapper --sudo=true "$supporting_files_folder/sbuild-update-all" /etc/cron.d/
 
-    print_header "[CREATE-${release^^}-SCHROOT]"
+    print_header "[/CREATE-${release^^}-SCHROOT]"
 }
 
 setup_ccache(){
@@ -271,4 +260,6 @@ done
 if [[ $(( $(getconf _PHYS_PAGES) * $(getconf PAGE_SIZE) / (1024 * 1024) )) -ge 16000 ]]
 then
     setup_sbuild_tmpfs
+else
+    print_warning "This system has less than 16Gib of RAM, not setting TMPFS for sbuild"
 fi
