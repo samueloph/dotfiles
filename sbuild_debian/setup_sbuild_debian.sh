@@ -30,14 +30,14 @@ setup_sbuild_debian(){
     # $1: Release codename, eg.: unstable, bookworm, trixie.
 
     if [[ $# -ne 1 ]]; then
-        echo "Exactly 1 argument is required: setup_sbuild_debian.sh <release_codename>"
+        print_warning "Exactly 1 argument is required: setup_sbuild_debian.sh <release_codename>"
         echo "<release_codename> is the codename of the chroot you want to prepare."
         exit 1
     fi
 
     local release=$1
 
-    echo -e "\e[32m--------------------[CREATE-${release^^}-SCHROOT]--------------------\e[0m"
+    print_header "[CREATE-${release^^}-SCHROOT]"
 
     apt_install_wrapper "${PACKAGE_LIST_SBUILD_DEBIAN[@]}"
 
@@ -75,7 +75,7 @@ setup_sbuild_debian(){
 
         copy_files_wrapper --sudo=false "$supporting_files_folder/.sbuildrc" "$HOME/.sbuildrc"
     else
-        echo "Skipping $supporting_files_folder/.sbuildrc copying because you already have a file in the destination and it's newer than the one from this script."
+        print_skip "Skipping $supporting_files_folder/.sbuildrc copying because you already have a file in the destination and it's newer than the one from this script."
     fi
 
     # Only proceed if no chroot for $release is found.
@@ -83,14 +83,14 @@ setup_sbuild_debian(){
         -exec false {} +
     then
         test_ccache="true"
-        echo "►► setting up sbuild's ${release} chroot"
+        print_in_progress "Setting up sbuild's ${release} chroot"
         print_header_2 "[sbuild-createchroot]"
         sudo sbuild-createchroot --include=eatmydata,ccache,gnupg "$release" \
         "/srv/chroot/${release}-${arch}-sbuild" http://127.0.0.1:3142/deb.debian.org/debian
         sudo sbuild-adduser "$USER" &>/dev/null
         print_header_2 "[/sbuild-createchroot]"
     else
-        echo "✔ sbuild's ${release} chroot is already configured"
+        print_skip "sbuild's ${release} chroot is already configured"
     fi
 
     # Setup release codename as an alias so we can call autopkgtest by the
@@ -117,7 +117,7 @@ setup_sbuild_debian(){
     if ! find /etc/schroot/chroot.d/ -name "${release}-${arch}-sbuild-*" \
         -exec grep -q "^command-prefix.*eatmydata" {} +
     then
-        echo "►► setting eatmydata command-prefix for ${release}'s schroot"
+        print_in_progress "Setting eatmydata command-prefix for ${release}'s schroot"
         if ! find /etc/schroot/chroot.d/ -name "${release}-${arch}-sbuild-*" \
             -exec grep -q "^command-prefix" {} +
         then
@@ -128,7 +128,7 @@ setup_sbuild_debian(){
                 -exec sed -i -e '/command-prefix/ {/eatmydata/! s/$/,eatmydata/}' {} +
         fi
     else
-        echo "✔ eatmydata command-prefix is already set in ${release}'s schroot"
+        print_skip "eatmydata command-prefix is already set in ${release}'s schroot"
     fi
 
     setup_ccache "$release"
@@ -136,7 +136,7 @@ setup_sbuild_debian(){
     # Create a cronjob to update any/all sbuild chroots.
     copy_files_wrapper --sudo=true "$supporting_files_folder/sbuild-update-all" /etc/cron.d/
 
-    echo -e "\e[32m--------------------[/CREATE-${release^^}-SCHROOT]-------------------\e[0m"
+    print_header "[CREATE-${release^^}-SCHROOT]"
 }
 
 setup_ccache(){
@@ -149,15 +149,15 @@ setup_ccache(){
     local sbuild_setup_file_destination="$ccache_dir/sbuild-setup"
 
     # Setup ccache.
-    echo -e "[CCACHE FOR SCHROOT]"
+    print_header_2 "[CCACHE FOR SCHROOT]"
 
     if [[ ! -d $ccache_dir ]]; then
         test_ccache="true"
-        echo "►► setting up ccache folder"
+        print_in_progress "Setting up ccache folder"
         sudo install --group=sbuild --mode=2775 -d $ccache_dir
         sudo env CCACHE_DIR=$ccache_dir ccache --max-size 4G
     else
-        echo "✔ ccache folder is already setup"
+        print_skip "ccache folder is already setup"
     fi
 
     copy_files_wrapper --sudo=true "$supporting_files_folder/sbuild-setup" $ccache_dir/sbuild-setup
@@ -166,19 +166,19 @@ setup_ccache(){
 
     if ! grep -q "$fstab_schroot_ccacche" /etc/schroot/sbuild/fstab; then
         test_ccache="true"
-        echo "►► setting up mounting of ccache folder from sbuild's chroot"
+        print_in_progress "Setting up mounting of ccache folder from sbuild's chroot"
         echo "$fstab_schroot_ccacche" | sudo tee -a /etc/schroot/sbuild/fstab >/dev/null
 
         echo "/etc/schroot/sbuild/fstab" >> "$changed_files_logfile"
     else
-        echo "✔ ccache folder is already on chroot's fstab"
+        print_skip "ccache folder is already on chroot's fstab"
     fi
 
     if ! find /etc/schroot/chroot.d/ -name "${release}-${arch}-sbuild-*" \
         -exec grep -q "^command-prefix.*$sbuild_setup_file_destination" {} +
     then
         test_ccache="true"
-        echo "►► setting ccache command-prefix for ${release}'s schroot"
+        print_in_progress "Setting ccache command-prefix for ${release}'s schroot"
         if ! find /etc/schroot/chroot.d/ -name "${release}-${arch}-sbuild-*" \
             -exec grep -q "^command-prefix" {} +
         then
@@ -193,7 +193,7 @@ setup_ccache(){
                 -e "/command-prefix/ {/${sbuild_setup_file_destination//\//\\/}/! s/$/,${sbuild_setup_file_destination//\//\\/}/}" {} +
         fi
     else
-        echo "✔ ccache command-prefix is already set in ${release}'s schroot"
+        print_skip "ccache command-prefix is already set in ${release}'s schroot"
     fi
 
     # Test ccache if needed.
@@ -201,15 +201,15 @@ setup_ccache(){
         if sudo schroot -c "source:${release}-${arch}-sbuild" -d /home -- ccache -p \
             | grep -q "$ccache_dir/ccache.conf"
         then
-            echo "✔ ccache sucessfully tested"
+            print_skip "ccache sucessfully tested"
         else
-            echo "⚠️ could not test ccache, something is wrong ⚠️"
+            print_warning "could not test ccache, something is wrong"
         fi
     else
-        echo "✔ skip ccache test because there were no changes"
+        print_skip "Skip ccache test because there were no changes"
     fi
 
-    echo -e "[/CCACHE FOR SCHROOT]"
+    print_header_2 "[/CCACHE FOR SCHROOT]"
 }
 
 setup_schroot_alias(){
@@ -221,7 +221,7 @@ setup_schroot_alias(){
     if ! find /etc/schroot/chroot.d/ -name "${release}-${arch}-sbuild-*" \
         -exec grep -q "^aliases.*\(=\|,\)$release_alias\($\|,\)" {} +
     then
-        echo "►► setting $release_alias alias for ${release}'s schroot"
+        print_in_progress "Setting $release_alias alias for ${release}'s schroot"
         if ! find /etc/schroot/chroot.d/ -name "${release}-${arch}-sbuild-*" \
             -exec grep -q "^aliases" {} +
         then
@@ -232,7 +232,7 @@ setup_schroot_alias(){
                 -exec sed -i -e "/aliases/ s/$/,${release_alias}/" {} +
         fi
     else
-        echo "✔ $release_alias alias is set for ${release}'s schroot"
+        print_skip "$release_alias alias is set for ${release}'s schroot"
     fi
 }
 
@@ -240,7 +240,7 @@ setup_sbuild_tmpfs(){
     fstab_schroot_overlay_tmpfs="none /var/lib/schroot/union/overlay tmpfs uid=root,gid=root,mode=0750 0 0"
 
     if ! grep -q "$fstab_schroot_overlay_tmpfs" /etc/fstab; then
-        echo "►► Using tmpfs for builds"
+        print_in_progress "Using tmpfs for builds"
         local timestamp
 
         # timestamp to use for backup files
@@ -250,12 +250,12 @@ setup_sbuild_tmpfs(){
         echo "/etc/fstab.bkp-${timestamp}" >> "$backup_files_logfile"
         echo "$fstab_schroot_overlay_tmpfs" | sudo tee -a /etc/fstab > /dev/null
     else
-        echo "✔ tmpfs is already used for builds"
+        print_skip "tmpfs is already used for builds"
     fi
 }
 
 if [[ $# -eq 0 ]]; then
-    echo "At least 1 argument is required: setup_sbuild_debian.sh <release_codename>"
+    print_warning "At least 1 argument is required: setup_sbuild_debian.sh <release_codename>"
     echo "<release_codename> is the codename of the chroot you want to prepare."
     echo "You may also provide multiple space-delimited <release_codename>s for multiple chroots setup."
     exit 1

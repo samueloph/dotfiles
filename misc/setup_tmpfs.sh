@@ -15,9 +15,9 @@ setup_tmpfs(){
     print_header "[TMPFS]"
 
     if systemctl status tmp.mount &>/dev/null; then
-        echo "✔ tmp is already mounted as tmpfs"
+        print_skip "tmp is already mounted as tmpfs"
     else
-        echo "►► setting up tmp to be mounted as tmpfs (effective after reboot)"
+        print_in_progress "Setting up tmp to be mounted as tmpfs (effective after reboot)"
         sudo cp /usr/share/systemd/tmp.mount /etc/systemd/system/
         sudo systemctl enable tmp.mount
     fi

@@ -68,10 +68,10 @@ setup_bashrcd(){
         # Check if the version present is the one set as the latest one ($bashrcd_script_version).
         if grep -q "START ${bashrcd_script_identifier} ${bashrcd_script_version}" "$HOME/.bashrc"
         then
-            echo "✔ bashrc.d is already enabled"
+            print_skip "bashrc.d is already enabled"
         # Not the latest version, remove it and append the new one to the end of ~/.bashrc.
         else
-            echo "►► updating bashrc.d script in ~/.bashrc"
+            print_in_progress "Updating bashrc.d script in ~/.bashrc"
             create_backup_of_file --sudo=false "$HOME/.bashrc"
             # -i: in-place editing of file.
             # -0: slurp mode, work on entire file at once (instead of line-by-line),
@@ -88,7 +88,7 @@ setup_bashrcd(){
         fi
     # If the script is not in ~/.bashrc yet, add it and create the ~/.bashrc.d folder.
     else
-        echo "►► setting up bashrc.d script in ~/.bashrc and creating the ~/.bashrc.d folder"
+        print_in_progress "Setting up bashrc.d script in ~/.bashrc and creating the ~/.bashrc.d folder"
         mkdir -p "$HOME/.bashrc.d"
         create_backup_of_file --sudo=false "$HOME/.bashrc"
         tail -n +2 "$supporting_files_folder/bashrcd_script.bashrc" >> "$HOME/.bashrc"

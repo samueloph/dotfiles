@@ -33,12 +33,12 @@ setup_vim(){
 
     # only proceed if file does not exists or it has not been copied already
     if ! cmp -s "$supporting_files_folder/.vimrc" "$HOME/.vimrc"; then
-        echo "►► Setting up vim-plug and .vimrc"
+        print_in_progress "Setting up vim-plug and .vimrc"
         copy_files_wrapper --sudo=false "$supporting_files_folder/.vimrc-pre-pluginstall" "$HOME/.vimrc"
         vim +'PlugInstall --sync' +qa
         cp "$supporting_files_folder/.vimrc" "$HOME/.vimrc"
     else
-        echo "✔ .vimrc is already the same"
+        print_skip ".vimrc is already the same"
     fi
 
     print_header "[/VIM]"

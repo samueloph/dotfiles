@@ -19,32 +19,32 @@ setup_snap(){
 
     snap_installed_packages=$(snap list)
     if ! echo "$snap_installed_packages" | grep -q "spotify"; then
-        echo "►► Installing spotify snap"
+        print_in_progress "Installing spotify snap"
         sudo snap install spotify
     else
-        echo "✔ spotify snap is already installed"
+        print_skip "spotify snap is already installed"
     fi
     if ! echo "$snap_installed_packages" | grep -q "dbeaver-ce"; then
-        echo "►► Installing dbeaver-ce snap"
+        print_in_progress "Installing dbeaver-ce snap"
         sudo snap install dbeaver-ce
     else
-        echo "✔ dbeaver-ce snap is already installed"
+        print_skip "dbeaver-ce snap is already installed"
     fi
     if ! echo "$snap_installed_packages" | grep -q "discord"; then
-        echo "►► Installing discord snap"
+        print_in_progress "Installing discord snap"
         sudo snap install discord
     else
-        echo "✔ discord snap is already installed"
+        print_skip "discord snap is already installed"
     fi
     if ! echo "$snap_installed_packages" | grep -q "vscode"; then
-        echo "►► Installing vscode snap"
+        print_in_progress "Installing vscode snap"
         sudo snap install code --classic
     else
-        echo "✔ vscode snap is already installed"
+        print_skip "vscode snap is already installed"
     fi
 
     print_header "[/SNAP]"
 }
 
 setup_snap
-echo "If you installed any snap packages, you will need to logout and login again so Gnome can pick up the snap packages' shortcuts"
+print_warning "If you installed any snap packages, you will need to logout and login again so Gnome can pick up the snap packages' shortcuts"

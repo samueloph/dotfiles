@@ -21,7 +21,7 @@ source "$project_toplevel/util/print_utils"
 if [[ $# -eq 0 ]] \
 || [[ ! $1 =~ --setup-(all|misc|bash|gnome|vim|snap-packages|vscode|packaging-tools|sbuild-debian) ]]
 then
-    echo "At least 1 argument is required: setup_debian.sh [options...]"
+    print_warning "At least 1 argument is required: setup_debian.sh [options...]"
     echo "Available options are:"
     echo "--setup-all"
     echo "--setup-misc"
@@ -70,7 +70,7 @@ for argument in "$@" ; do
     fi
     if [[ $argument == "--setup-snap-packages" ]]; then
         bash "$project_toplevel/snap_packages/setup_snap_packages.sh"
-        echo "If you installed any snap packages, you will need to logout and login again so Gnome can pick up the snap packages' shortcuts"
+        print_warning "If you installed any snap packages, you will need to logout and login again so Gnome can pick up the snap packages' shortcuts"
     fi
     if [[ $argument == "--setup-vscode" ]]; then
         bash "$project_toplevel/vscode/setup_vscode.sh"

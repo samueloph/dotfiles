@@ -52,7 +52,7 @@ setup_packaging_tools(){
             -e "s/\${SALSA_TOKEN-PLACEHOLDER}/${SALSA_TOKEN}/g" \
             "$supporting_files_folder/.devscripts-template" > "$supporting_files_folder/.devscripts"
     else
-        echo "Skipping $supporting_files_folder/.devscripts copying because you already have a file in the destination and it's newer than the one from this script."
+        print_skip "Skipping $supporting_files_folder/.devscripts copying because you already have a file in the destination and it's newer than the one from this script."
     fi
 
     copy_files_wrapper --sudo=false "$supporting_files_folder/.gbp.conf" "$HOME/.gbp.conf"

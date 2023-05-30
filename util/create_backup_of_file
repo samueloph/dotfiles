@@ -9,8 +9,14 @@ create_backup_of_file(){
         # variable is used, or a command in a pipeline fails.
         set -euo pipefail
 
+        # Path of this file, to be used to evaluate path of other files in the project.
+        script_path="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
+
+        # shellcheck disable=SC1094,SC1091
+        source "$script_path/print_utils"
+
         if [[ $# -ne 2 ]]; then
-            echo "Exactly 2 arguments are required: create_backup_of_file --sudo={true|false} <file_path>"
+            print_warning "Exactly 2 arguments are required: create_backup_of_file --sudo={true|false} <file_path>"
             exit 1
         fi
 
@@ -39,7 +45,7 @@ create_backup_of_file(){
             cp "$file_path" "$backup_file_path"
         fi
 
-        echo "[INFO] Backup file created for $file_path at $backup_file_path"
+        print_info "Backup file created for $file_path at $backup_file_path"
 
         # Log change.
         echo "$file_path" >> "$changed_files_logfile"

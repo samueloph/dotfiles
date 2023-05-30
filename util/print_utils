@@ -9,7 +9,7 @@ _print_header() {
 
     heading="$2"
     # We could achieve dynamic header sizes with width="$(tput cols)",
-    # but I prefer to hardcode it at 80.
+    # but I prefer to let the caller decide (for multiple levels of headers).
     width="$1"
     headinglen=${#heading}
     padlength=$(( (width - 2 - headinglen) / 2 ))
@@ -37,4 +37,25 @@ print_header() {
 # 2nd level header.
 print_header_2() {
     _print_header 50 "$*"
+}
+
+print_in_progress() {
+    echo "⌛ $* ..."
+}
+
+# We are not using this yet.
+# print_changed() {
+#     echo "✅ $*"
+# }
+
+print_skip() {
+    echo "⏭️ $*"
+}
+
+print_warning() {
+    echo "⚠️ $* ⚠️"
+}
+
+print_info() {
+    echo "ℹ️  $*"
 }

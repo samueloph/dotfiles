@@ -38,7 +38,7 @@ setup_git(){
             -e "s/\${EMAIL-PLACEHOLDER}/$EMAIL_ADDRESS/g" \
             "$supporting_files_folder/.gitconfig-template" > "$supporting_files_folder/.gitconfig"
     else
-        echo "Skipping $supporting_files_folder/.gitconfig copying because you already have a file in the destination and it's newer than the one from this script."
+        print_skip "Skipping $supporting_files_folder/.gitconfig copying because you already have a file in the destination and it's newer than the one from this script"
     fi
 
     copy_files_wrapper --sudo=false "$supporting_files_folder/.gitconfig" "$HOME/.gitconfig"

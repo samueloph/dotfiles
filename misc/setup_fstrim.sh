@@ -14,9 +14,9 @@ setup_fstrim(){
     print_header "[FSTRIM]"
 
     if systemctl status fstrim.timer &>/dev/null; then
-        echo "✔ fstrim is already enabled"
+        print_skip "fstrim is already enabled"
     else
-        echo "►► enabling fstrim"
+        print_in_progress "Enabling fstrim"
         sudo systemctl enable --now fstrim.timer
     fi
 

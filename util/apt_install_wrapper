@@ -16,8 +16,11 @@ apt_install_wrapper(){
         # variable is used, or a command in a pipeline fails.
         set -euo pipefail
 
+        # Path of this file, to be used to evaluate path of other files in the project.
+        script_path="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
+
         # shellcheck disable=SC1094,SC1091
-        source "./print_utils"
+        source "$script_path/print_utils"
 
         local three_hours_ago
         local pkgcache_modification_timestamp
@@ -44,7 +47,7 @@ apt_install_wrapper(){
             then
                 to_be_installed+=("$package")
             else
-                echo "✔ $packagename is already installed"
+                print_skip "$packagename is already installed"
             fi
         done
 
@@ -52,7 +55,7 @@ apt_install_wrapper(){
         # First check if there is any package to be installed.
         if [[ ! ${#to_be_installed[@]} -eq 0 ]]; then
             print_header_2 "[apt]"
-            echo "►► Installing ${to_be_installed[*]}"
+            print_in_progress "Installing ${to_be_installed[*]}"
             # Apt cache needs update if last one was more than 3 hours ago.
             if [[ pkgcache_modification_timestamp -ge three_hours_ago ]]; then
                 sudo apt update -qq

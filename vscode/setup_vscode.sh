@@ -28,10 +28,10 @@ setup_vscode(){
     apt_install_wrapper "${PACKAGE_LIST_VSCODE[@]}"
     snap_installed_packages=$(snap list)
     if ! echo "$snap_installed_packages" | grep -q "vscode"; then
-        echo "►► Installing vscode snap"
+        print_in_progress "Installing vscode snap"
         sudo snap install code --classic
     else
-        echo "✔ vscode snap is already installed"
+        print_skip "vscode snap is already installed"
     fi
     setup_vscode_extensions
     setup_vscode_settings
@@ -85,10 +85,10 @@ setup_vscode_settings(){
             # Check if the version present is the one set as the latest one ($settings_version).
             if grep -q "START ${settings_identifier} ${settings_version}" "$HOME/.config/Code/User/settings.json"
             then
-                echo "✔ vscode settings are already set"
+                print_skip "vscode settings are already set"
             # Not the latest version, remove it and append the new one to the end of the file.
             else
-                echo "►► updating vscode settings"
+                print_in_progress "updating vscode settings"
                 create_backup_of_file --sudo=false "$HOME/.config/Code/User/settings.json"
                 # -i: in-place editing of file.
                 # -0: slurp mode, work on entire file at once (instead of line-by-line),
@@ -139,10 +139,10 @@ setup_vscode_keybindings(){
             # Check if the version present is the one set as the latest one ($keybindings_version).
             if grep -q "START ${keybindings_identifier} ${keybindings_version}" "$HOME/.config/Code/User/keybindings.json"
             then
-                echo "✔ vscode keybindings are already set"
+                print_skip "vscode keybindings are already set"
             # Not the latest version, remove it and append the new one to the end of the file.
             else
-                echo "►► updating vscode keybindings"
+                print_in_progress "updating vscode keybindings"
                 create_backup_of_file --sudo=false "$HOME/.config/Code/User/keybindings.json"
                 # -i: in-place editing of file.
                 # -0: slurp mode, work on entire file at once (instead of line-by-line),

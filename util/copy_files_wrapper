@@ -9,6 +9,12 @@ copy_files_wrapper(){
         # variable is used, or a command in a pipeline fails.
         set -euo pipefail
 
+        # Path of this file, to be used to evaluate path of other files in the project.
+        script_path="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
+
+        # shellcheck disable=SC1094,SC1091
+        source "$script_path/print_utils"
+
         if [[ $# -ne 3 ]]; then
             echo "Exactly 3 arguments are required: copy_files_wrapper --sudo={true|false} <source_file> <dest_location>"
             exit 1
@@ -45,7 +51,7 @@ copy_files_wrapper(){
 
         # If no ovewrite is needed, copy file.
         if [[ ! -f $dest_location ]]; then
-            echo "►► Copying $dest_location"
+            print_in_progress "Copying $dest_location"
             if $sudo_enabled; then
                 sudo cp "$source_file" "$dest_location"
             else
@@ -57,11 +63,11 @@ copy_files_wrapper(){
         else
             # Check if file is already the same.
             if cmp -s "$source_file" "$dest_location"; then
-                echo "✔ $dest_location is already the same"
+                print_skip "$dest_location is already the same"
             # File is different, create a backup and ovewrite.
             else
                 if [[ "$dest_location" =~ /etc/apt/* ]]; then sudo apt update -qq; fi
-                echo "[INFO] $dest_location already exists and it's different, overwriting it with new file from $source_file."
+                print_info "$dest_location already exists and it's different, overwriting it with new file from $source_file"
 
                 create_backup_of_file "--sudo=$sudo_enabled" "$dest_location"
                 if $sudo_enabled; then

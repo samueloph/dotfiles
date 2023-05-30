@@ -20,11 +20,11 @@ setup_firefox(){
         # now (by this dotfiles script).
         sudo apt update -qq
         sudo DEBIAN_FRONTEND=noninteractive apt install -y -t sid firefox
-        echo "Removing firefox ESR now that regular firefox is installed..."
+        print_in_progress "Removing firefox ESR now that regular firefox is installed"
         sudo apt remove -y firefox-esr
         print_header_2 "[/apt]"
     else
-        echo "✔ firefox is already installed"
+        print_skip "firefox is already installed"
     fi
 
     print_header "[/FIREFOX]"
