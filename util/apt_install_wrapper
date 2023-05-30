@@ -16,7 +16,7 @@ apt_install_wrapper(){
         # variable is used, or a command in a pipeline fails.
         set -euo pipefail
 
-        # shellcheck source=/dev/null
+        # shellcheck disable=SC1094,SC1091
         source "./print_utils"
 
         local three_hours_ago

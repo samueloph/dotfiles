@@ -12,7 +12,7 @@ logs_folder="logs"
 changed_files_logfile="$project_toplevel/$logs_folder/changed_files_logfile"
 backup_files_logfile="$logs_folder/backup_files_logfile"
 
-# shellcheck source=/dev/null
+# shellcheck disable=SC1094,SC1091
 source "$project_toplevel/util/print_utils"
 
 # Simple argument validation, it only validates that at least 1 argument was passed

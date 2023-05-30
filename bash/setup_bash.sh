@@ -7,16 +7,16 @@ script_path="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 project_toplevel="$script_path/.."
 supporting_files_folder="$script_path/supporting_files"
 
-# shellcheck source=/dev/null
+# shellcheck disable=SC1094,SC1091
 source "$project_toplevel/util/create_backup_of_file"
-# shellcheck source=/dev/null
+# shellcheck disable=SC1094,SC1091
 source "$project_toplevel/util/apt_install_wrapper"
-# shellcheck source=/dev/null
+# shellcheck disable=SC1094,SC1091
 source "$project_toplevel/util/copy_files_wrapper"
-# shellcheck source=/dev/null
+# shellcheck disable=SC1094,SC1091
 source "$project_toplevel/util/print_utils"
 
-# shellcheck source=/dev/null
+# shellcheck disable=SC1094,SC1091
 source "$supporting_files_folder/package_list_bash"
 
 setup_bash(){
@@ -35,12 +35,12 @@ setup_bash(){
 
     if [[ ! ${stable_codename:-} ]]; then
         # Generate 35_deb_packaging_personal_vars.bashrc
-        # shellcheck source=/dev/null
+        # shellcheck disable=SC1094,SC1091
         source "$project_toplevel/util/variables/name" &>/dev/null \
         || read -rp "Name: " NAME \
         && echo "NAME=\"$NAME\"" > "$project_toplevel/util/variables/name"
 
-        # shellcheck source=/dev/null
+        # shellcheck disable=SC1094,SC1091
         source "$project_toplevel/util/variables/email_address" &>/dev/null \
         || read -rp "Email address: " EMAIL_ADDRESS \
         && echo "EMAIL_ADDRESS=\"$EMAIL_ADDRESS\"" > "$project_toplevel/util/variables/email_address"

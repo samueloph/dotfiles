@@ -7,14 +7,14 @@ script_path="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 project_toplevel="$script_path/.."
 supporting_files_folder="$script_path/supporting_files"
 
-# shellcheck source=/dev/null
+# shellcheck disable=SC1094,SC1091
 source "$project_toplevel/util/create_backup_of_file"
-# shellcheck source=/dev/null
+# shellcheck disable=SC1094,SC1091
 source "$project_toplevel/util/apt_install_wrapper"
-# shellcheck source=/dev/null
+# shellcheck disable=SC1094,SC1091
 source "$project_toplevel/util/print_utils"
 
-# shellcheck source=/dev/null
+# shellcheck disable=SC1094,SC1091
 source "$supporting_files_folder/package_list_gnome"
 
 

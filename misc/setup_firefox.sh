@@ -6,7 +6,7 @@ set -euo pipefail
 script_path="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 project_toplevel="$script_path/.."
 
-# shellcheck source=/dev/null
+# shellcheck disable=SC1094,SC1091
 source "$project_toplevel/util/print_utils"
 
 setup_firefox(){

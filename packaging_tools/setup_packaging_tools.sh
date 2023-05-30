@@ -7,14 +7,14 @@ script_path="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 project_toplevel="$script_path/.."
 supporting_files_folder="$script_path/supporting_files"
 
-# shellcheck source=/dev/null
+# shellcheck disable=SC1094,SC1091
 source "$project_toplevel/util/apt_install_wrapper"
-# shellcheck source=/dev/null
+# shellcheck disable=SC1094,SC1091
 source "$project_toplevel/util/copy_files_wrapper"
-# shellcheck source=/dev/null
+# shellcheck disable=SC1094,SC1091
 source "$project_toplevel/util/print_utils"
 
-# shellcheck source=/dev/null
+# shellcheck disable=SC1094,SC1091
 source "$supporting_files_folder/package_list_packaging_tools"
 
 # Find out codenames of stable and oldstable.
@@ -43,7 +43,7 @@ setup_packaging_tools(){
     if [[ $supporting_files_folder/.devscripts-template -nt $supporting_files_folder/.devscripts ]]
     then
 
-        # shellcheck source=/dev/null
+        # shellcheck disable=SC1094,SC1091
         source "$project_toplevel/util/variables/salsa_token" &>/dev/null \
         || read -rp "Salsa token: " SALSA_TOKEN \
         && echo "SALSA_TOKEN=\"$SALSA_TOKEN\"" > "$project_toplevel/util/variables/salsa_token"

@@ -6,7 +6,7 @@ set -euo pipefail
 script_path="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 supporting_files_folder="$script_path/supporting_files"
 
-# shellcheck source=/dev/null
+# shellcheck disable=SC1094,SC1091
 source "$supporting_files_folder/extension_list_vscode"
 
 

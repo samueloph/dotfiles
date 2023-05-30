@@ -21,7 +21,7 @@ copy_files_wrapper(){
         # Copy files if they're not already at the destination, create a backup
         # of changed files and log it.
 
-        # shellcheck source=/dev/null
+        # shellcheck disable=SC1094,SC1091
         source "$project_toplevel/util/create_backup_of_file"
 
         if [[ $1 == --sudo=true ]]; then

@@ -7,14 +7,14 @@ script_path="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 project_toplevel="$script_path/.."
 supporting_files_folder="$script_path/supporting_files"
 
-# shellcheck source=/dev/null
+# shellcheck disable=SC1094,SC1091
 source "$supporting_files_folder/package_list_sbuild_debian"
 
-# shellcheck source=/dev/null
+# shellcheck disable=SC1094,SC1091
 source "$project_toplevel/util/apt_install_wrapper"
-# shellcheck source=/dev/null
+# shellcheck disable=SC1094,SC1091
 source "$project_toplevel/util/copy_files_wrapper"
-# shellcheck source=/dev/null
+# shellcheck disable=SC1094,SC1091
 source "$project_toplevel/util/print_utils"
 
 backup_files_logfile="$project_toplevel/logs/backup_files_logfile"
@@ -58,7 +58,7 @@ setup_sbuild_debian(){
     if [[ $supporting_files_folder/.sbuildrc -nt $HOME/.sbuildrc ]]
     then
 
-        # shellcheck source=/dev/null
+        # shellcheck disable=SC1094,SC1091
         source "$project_toplevel/util/variables/gpg_key_id" &>/dev/null \
         || read -rp "GPG key ID (for ~/.sbuildrc configuration): " GPG_KEY_ID \
         && echo "GPG_KEY_ID=\"$GPG_KEY_ID\"" > "$project_toplevel/util/variables/gpg_key_id"

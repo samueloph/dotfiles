@@ -7,11 +7,11 @@ script_path="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 project_toplevel="$script_path/.."
 supporting_files_folder="$script_path/supporting_files"
 
-# shellcheck source=/dev/null
+# shellcheck disable=SC1094,SC1091
 source "$project_toplevel/util/copy_files_wrapper"
-# shellcheck source=/dev/null
+# shellcheck disable=SC1094,SC1091
 source "$project_toplevel/util/apt_install_wrapper"
-# shellcheck source=/dev/null
+# shellcheck disable=SC1094,SC1091
 source "$project_toplevel/util/print_utils"
 
 setup_git(){
@@ -24,12 +24,12 @@ setup_git(){
     if [[ $supporting_files_folder/.gitconfig-template -nt $supporting_files_folder/.gitconfig ]]
     then
 
-        # shellcheck source=/dev/null
+        # shellcheck disable=SC1094,SC1091
         source "$project_toplevel/util/variables/name" &>/dev/null \
         || read -rp "Name: " NAME \
         && echo "NAME=\"$NAME\"" > "$project_toplevel/util/variables/name"
 
-        # shellcheck source=/dev/null
+        # shellcheck disable=SC1094,SC1091
         source "$project_toplevel/util/variables/email_address" &>/dev/null \
         || read -rp "Email address: " EMAIL_ADDRESS \
         && echo "EMAIL_ADDRESS=\"$EMAIL_ADDRESS\"" > "$project_toplevel/util/variables/email_address"
