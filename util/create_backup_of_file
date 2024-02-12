@@ -26,17 +26,19 @@ create_backup_of_file(){
 
         changed_files_logfile="$project_toplevel/logs/changed_files_logfile"
         backup_files_logfile="$project_toplevel/logs/backup_files_logfile"
+        backup_files_location="$project_toplevel/backups/"
 
         # Timestamp to use for backup file names.
         timestamp=$(date -d now +'%Y-%m-%d-%Hh%Mm%Ss')
+
+        file_path="$2"
+        backup_file_path="${backup_files_location}/$(basename ${file_path}).bkp-${timestamp}"
 
         if [[ $1 == --sudo=true ]]; then
             sudo_enabled=true
         else
             sudo_enabled=false
         fi
-        file_path="$2"
-        backup_file_path="${file_path}.bkp-${timestamp}"
 
         # Create the backup file.
         if $sudo_enabled; then

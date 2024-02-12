@@ -6,3 +6,4 @@ util/variables/name
 util/variables/email_address
 util/variables/gpg_key_id
 util/variables/salsa_token
+backups/*
