@@ -78,6 +78,15 @@ setup_gnome(){
         print_skip "Keyboard layouts are already configured on Gnome"
     fi
 
+    # Set Capslock to act as escape key.
+    if [[ $(gsettings get org.gnome.desktop.input-sources xkb-options) != "['caps:escape']" ]]
+    then
+        print_in_progress "Capslock key changed to act as Esc"
+        gsettings set org.gnome.desktop.input-sources xkb-options "['caps:escape']"
+    else
+        print_skip "Capslock key already changed to act as Esc"
+    fi
+
     # Disable "initial setup" startup window.
     if ! grep -q "yes" ~/.config/gnome-initial-setup-done 2>/dev/null; then
         print_in_progress "Disabling \"initial setup\" startup window on Gnome"
