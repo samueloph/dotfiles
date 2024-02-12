@@ -69,15 +69,6 @@ setup_gnome(){
         print_skip "Gnome monospace font is already Hack 11"
     fi
 
-    # Focus on mouse hover
-    if [[ $(gsettings get org.gnome.desktop.wm.preferences focus-mode) != "'sloppy'" ]]
-    then
-        print_in_progress "Setting Gnome to focus on mouse hover"
-        gsettings set org.gnome.desktop.wm.preferences focus-mode "sloppy"
-    else
-        print_skip "Gnome is already set to focus on mouse hover"
-    fi
-
     # Add keyboard layouts for both "English (US)" and "English (US alt. intl.)" (for the Brazilian ortography).
     if [[ $(gsettings get org.gnome.desktop.input-sources sources) != "[('xkb', 'us'), ('xkb', 'us+alt-intl')]" ]]
     then
