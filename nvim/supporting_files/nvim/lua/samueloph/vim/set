@@ -1,0 +1,13 @@
+" highlight trailing whitespaces
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+
+" press return to temporarily get out of the highlighted search
+" https://vim.fandom.com/wiki/Highlight_all_search_pattern_matches
+nnoremap <CR> :nohlsearch<CR><CR>
+
+" open file on last place visited
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+endif
+

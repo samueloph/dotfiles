@@ -1,7 +1,7 @@
 #!/bin/bash
 # Increase history size
-HISTSIZE=5000
-HISTFILESIZE=10000
+HISTSIZE=10000
+HISTFILESIZE=20000
 
 # Add timestamp to bash history
 export HISTTIMEFORMAT="%g/%m/%d %H:%M "
@@ -27,4 +27,6 @@ alias ll='ls -l'
     builtin cd "$@" && ls -Ftr1
 }
 
-export EDITOR=vim
+export EDITOR=nvim
+
+set -o vi

@@ -42,9 +42,9 @@ create_backup_of_file(){
 
         # Create the backup file.
         if $sudo_enabled; then
-            sudo cp "$file_path" "$backup_file_path"
+            sudo mv "$file_path" "$backup_file_path"
         else
-            cp "$file_path" "$backup_file_path"
+            mv "$file_path" "$backup_file_path"
         fi
 
         print_info "Backup file created for $file_path at $backup_file_path"
