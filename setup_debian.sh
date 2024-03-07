@@ -50,7 +50,7 @@ echo "backup-files" >> "$backup_files_logfile"
 for argument in "$@" ; do
     if [[ $argument == "--setup-all" ]]; then
         # Call all the setup scripts.
-        bash "$project_toplevel/misc/setup_alacritty.sh"
+        bash "$project_toplevel/alacritty/setup_alacritty.sh"
         bash "$project_toplevel/misc/setup_misc.sh"
         bash "$project_toplevel/bash/setup_bash.sh"
         bash "$project_toplevel/gnome/setup_gnome.sh"
@@ -65,7 +65,7 @@ for argument in "$@" ; do
         break
     fi
     if [[ $argument == "--setup-alacritty" ]]; then
-        bash "$project_toplevel/misc/setup_alacritty.sh"
+        bash "$project_toplevel/alacritty/setup_alacritty.sh"
     fi
     if [[ $argument == "--setup-misc" ]]; then
         bash "$project_toplevel/misc/setup_misc.sh"

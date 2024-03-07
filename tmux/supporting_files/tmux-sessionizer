@@ -11,11 +11,12 @@ else
         ~/packaging/sponsors/* \
         ~/upstream \
         ~/packages \
-        ~/al_packages \
+        ~/al_packages/* \
+        ~/brazil_packages \
         -mindepth 1 -maxdepth 1 \
         -not -path "*build-area*" \
         2>/dev/null | \
-        fzf --cycle --layout=reverse --keep-right --scheme path --tiebreak end\
+        fzf --scheme path --tiebreak end\
     )
 fi
 
