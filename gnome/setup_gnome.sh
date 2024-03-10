@@ -60,13 +60,13 @@ setup_gnome(){
         print_skip "Gnome animations is already set to false"
     fi
 
-    # Use "Hack" font
-    if [[ $(gsettings get org.gnome.desktop.interface monospace-font-name) != "'Hack 11'" ]]
+    # Use "Hack Nerd Font Mono" font
+    if [[ $(gsettings get org.gnome.desktop.interface monospace-font-name) != "'Hack Nerd Font Mono 11'" ]]
     then
-        print_in_progress "Setting Gnome monospace font to Hack 11"
-        gsettings set org.gnome.desktop.interface monospace-font-name "Hack 11"
+        print_in_progress "Setting Gnome monospace font to Hack Nerd Font Mono 11"
+        gsettings set org.gnome.desktop.interface monospace-font-name "Hack Nerd Font Mono 11"
     else
-        print_skip "Gnome monospace font is already Hack 11"
+        print_skip "Gnome monospace font is already Hack Nerd Font Mono 11"
     fi
 
     # Add keyboard layouts for both "English (US)" and "English (US alt. intl.)" (for the Brazilian ortography).

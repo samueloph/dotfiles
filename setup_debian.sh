@@ -50,13 +50,13 @@ echo "backup-files" >> "$backup_files_logfile"
 for argument in "$@" ; do
     if [[ $argument == "--setup-all" ]]; then
         # Call all the setup scripts.
+        bash "$project_toplevel/hack_nerd_font/setup_hack_nerd_font.sh"
         bash "$project_toplevel/alacritty/setup_alacritty.sh"
         bash "$project_toplevel/misc/setup_misc.sh"
         bash "$project_toplevel/bash/setup_bash.sh"
         bash "$project_toplevel/gnome/setup_gnome.sh"
         bash "$project_toplevel/vim/setup_vim.sh"
         bash "$project_toplevel/nvim/setup_nvim.sh"
-        bash "$project_toplevel/hack_nerd_font/setup_hack_nerd_font.sh"
         bash "$project_toplevel/tmux/setup_tmux.sh"
         bash "$project_toplevel/snap_packages/setup_snap_packages.sh"
         bash "$project_toplevel/vscode/setup_vscode.sh"
