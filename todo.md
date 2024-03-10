@@ -48,14 +48,12 @@ https://github.com/puremourning/vimspector
 
 1. sway
 
-1. install hack nerdfont and set gnome to use it
 1. gnome shortcut for each workspace - https://www.reddit.com/r/gnome/comments/j6lr73/comment/g84nhqr/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
 1. gnome terminal shortcut open alacritty instead of gnome
 1. make sure copying from nvim and tmux works both in local and remote mode
 1. harpoon remapt ctrl+; to ctrl+h, the former is not supported by terminal emulators
 1. make sure python and rust tests are discoverable
 1. neovim as pager - https://vi.stackexchange.com/questions/16582/how-to-use-neovim-as-a-pager
-1. gitsigns show git blame - https://www.reddit.com/r/neovim/comments/145gs4t/comment/jnnjmbk/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
 1. inputrc alt . for last parameter on vim mode
 1. nvim session manager - https://github.com/rmagatti/auto-session - https://github.com/folke/persistence.nvim
 1. nvim spellcheck
@@ -66,6 +64,4 @@ https://github.com/puremourning/vimspector
 1. sudo vim - https://github.com/vim-scripts/sudo.vim/tree/master
 1. LSCOLORS theme - https://github.com/sharkdp/vivid
 1. alacritty LSCOLORS - https://github.com/alacritty/alacritty/issues/4710
-1. /home/samhn/.local/bin/tmux-sessionizer: line 41: return: can only `return' from a function or sourced script
- no current client
 
