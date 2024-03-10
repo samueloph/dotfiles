@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # shellcheck disable=SC2034
-PACKAGE_LIST_TMUX=(
-    # For OSC52 support.
+PACKAGE_LIST_ALACRITTY=(
     alacritty
 )

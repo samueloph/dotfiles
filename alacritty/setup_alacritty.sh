@@ -21,7 +21,7 @@ setup_alacritty(){
 
     print_header "[ALACRITTY]"
 
-    #apt_install_wrapper "${PACKAGE_LIST_ALACRITTY[@]}"
+    apt_install_wrapper "${PACKAGE_LIST_ALACRITTY[@]}"
 
     mkdir -p ~/.config/alacritty
     copy_files_wrapper --sudo=false "$supporting_files_folder/alacritty.toml" ~/.config/alacritty/
