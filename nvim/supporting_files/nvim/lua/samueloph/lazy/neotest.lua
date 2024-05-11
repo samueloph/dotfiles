@@ -1,20 +1,21 @@
 return {
     {
-  "nvim-neotest/neotest",
-  dependencies = {
-    "nvim-lua/plenary.nvim",
-    "antoinemadec/FixCursorHold.nvim",
-    "nvim-treesitter/nvim-treesitter",
-    "nvim-neotest/neotest-python",
-    "rouge8/neotest-rust",
-  },
-  config = function()
+        "nvim-neotest/neotest",
+        dependencies = {
+            "nvim-neotest/nvim-nio",
+            "nvim-lua/plenary.nvim",
+            "antoinemadec/FixCursorHold.nvim",
+            "nvim-treesitter/nvim-treesitter",
+            "nvim-neotest/neotest-python",
+            "rouge8/neotest-rust",
+        },
+        config = function()
             local neotest = require("neotest")
             neotest.setup({
                 adapters = {
-                        require("neotest-python"),
-                        require("neotest-rust"),
-                    },
+                    require("neotest-python"),
+                    require("neotest-rust"),
+                },
             })
 
             vim.keymap.set("n", "<leader>tc", function()
