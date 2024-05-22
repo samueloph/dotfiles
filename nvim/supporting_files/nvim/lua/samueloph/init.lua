@@ -39,11 +39,13 @@ autocmd('TextYankPost', {
     end,
 })
 
-autocmd({"BufWritePre"}, {
-    group = ThePrimeagenGroup,
-    pattern = "*",
-    command = [[%s/\s\+$//e]],
-})
+-- Do not autoremove trailing whitespaces because this will cause undesired
+-- changes when dealing with rebases and stuff.
+-- autocmd({"BufWritePre"}, {
+--     group = ThePrimeagenGroup,
+--     pattern = "*",
+--     command = [[%s/\s\+$//e]],
+-- })
 
 autocmd('LspAttach', {
     group = ThePrimeagenGroup,
