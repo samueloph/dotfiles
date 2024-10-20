@@ -1,7 +1,7 @@
 #!/bin/bash
 # Increase history size
-HISTSIZE=10000
-HISTFILESIZE=20000
+HISTSIZE=100000
+HISTFILESIZE=100000
 
 # Add timestamp to bash history
 export HISTTIMEFORMAT="%g/%m/%d %H:%M "
