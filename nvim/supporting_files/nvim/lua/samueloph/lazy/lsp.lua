@@ -27,7 +27,10 @@ return {
         require("mason-lspconfig").setup({
             ensure_installed = {
                 "lua_ls",
-                "rust_analyzer",
+                -- we have to :MasonInstall codelldb
+                -- "codelldb",
+                -- https://github.com/LazyVim/LazyVim/discussions/3549#discussioncomment-9800612
+                -- "rust_analyzer",
                 "ts_ls",
                 "bashls",
                 "pyright",
