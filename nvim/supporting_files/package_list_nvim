@@ -16,4 +16,5 @@ PACKAGE_LIST_NEOVIM=(
     tree-sitter
     # needs patched hack font from nerdfonts
     # https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Hack.zip
+    lldb
 )
