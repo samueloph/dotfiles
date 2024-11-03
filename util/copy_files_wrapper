@@ -49,20 +49,20 @@ copy_files_wrapper(){
             fi
         fi
 
-        # If no ovewrite is needed, copy file.
-        if [[ ! -f $dest_location ]]; then
-            print_in_progress "Copying $dest_location"
+        # If no overwrite is needed, copy file.
+        if [[ ! -e $dest_location ]]; then
+            print_in_progress "Copying to $dest_location"
             if $sudo_enabled; then
-                sudo cp "$source_file" "$dest_location"
+                sudo cp -r "$source_file" "$dest_location"
             else
-                cp "$source_file" "$dest_location"
+                cp -r "$source_file" "$dest_location"
             fi
             # If the file is used by apt, then perform an apt update afterwards.
             if [[ "$dest_location" =~ /etc/apt/* ]]; then sudo apt update -qq; fi
         # Ovewrite is needed.
         else
             # Check if file is already the same.
-            if cmp -s "$source_file" "$dest_location"; then
+            if diff "$source_file" "$dest_location" >/dev/null; then
                 print_skip "$dest_location is already the same"
             # File is different, create a backup and ovewrite.
             else
@@ -71,9 +71,9 @@ copy_files_wrapper(){
 
                 create_backup_of_file "--sudo=$sudo_enabled" "$dest_location"
                 if $sudo_enabled; then
-                    sudo cp "$source_file" "$dest_location"
+                    sudo cp -r "$source_file" "$dest_location"
                 else
-                    cp "$source_file" "$dest_location"
+                    cp -r "$source_file" "$dest_location"
                 fi
                 # If the file is used by apt, then perform an apt update afterwards.
                 if [[ "$dest_location" =~ /etc/apt/* ]]; then sudo apt update -qq; fi

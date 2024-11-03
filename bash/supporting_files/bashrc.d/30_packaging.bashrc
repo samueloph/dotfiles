@@ -1,7 +1,5 @@
 #!/bin/bash
 
-export EDITOR=vim
-
 # Set variables with codenames for debian stable and oldstable.
 set_release_codename_variables () {
     # This has to be a function to allow the variables from the

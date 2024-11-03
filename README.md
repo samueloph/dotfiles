@@ -10,6 +10,8 @@ As of 2022-10-23, I have spent an estimated amount of 100 hours working on this.
 ## Setup
 In order to setup everything, you can call `setup_debian.sh` with the `--setup-all` option, you can get a list of available options with `setup_debian.sh -h`. This script will generate logs and backup files for changes made.
 
+This has only been thoroughly tested on Debian testing, some things will break if you run this on Debian stable.
+
 Individual `setup_*.sh` scripts can also be called, eg.: `vim/setup_vim.sh` for vim setup only.
 
 The `sbuild_debian/setup_sbuild_debian.sh` script might be especially useful for people who just want to setup a chroot environment to be used with sbuild. You just need to call it with a release codename, like `sbuild_debian/setup_sbuild_debian.sh unstable` and it will setup a chroot with eatmydata, ccache, apt-cacher-nd, aliases and auto updates done by a cronjob.

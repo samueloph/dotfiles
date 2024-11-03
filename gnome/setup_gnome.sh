@@ -60,13 +60,13 @@ setup_gnome(){
         print_skip "Gnome animations is already set to false"
     fi
 
-    # Use "Hack" font
-    if [[ $(gsettings get org.gnome.desktop.interface monospace-font-name) != "'Hack 11'" ]]
+    # Use "Hack Nerd Font Mono" font
+    if [[ $(gsettings get org.gnome.desktop.interface monospace-font-name) != "'Hack Nerd Font Mono 11'" ]]
     then
-        print_in_progress "Setting Gnome monospace font to Hack 11"
-        gsettings set org.gnome.desktop.interface monospace-font-name "Hack 11"
+        print_in_progress "Setting Gnome monospace font to Hack Nerd Font Mono 11"
+        gsettings set org.gnome.desktop.interface monospace-font-name "Hack Nerd Font Mono 11"
     else
-        print_skip "Gnome monospace font is already Hack 11"
+        print_skip "Gnome monospace font is already Hack Nerd Font Mono 11"
     fi
 
     # Add keyboard layouts for both "English (US)" and "English (US alt. intl.)" (for the Brazilian ortography).
@@ -86,6 +86,25 @@ setup_gnome(){
     else
         print_skip "Capslock key already changed to act as Esc"
     fi
+
+    # Set shortcuts to switch to workspace and move windows to workspaces, like if it was i3.
+    # Partial Ubuntu support: first check if we are running the dash-to-dock extension
+    # and disable its hot-keys.
+    if gsettings get org.gnome.shell.extensions.dash-to-dock hot-keys
+    then
+        print_in_progress "Disable hot-keys from dash-to-dock in order to unblock worskpace switching hot-keys"
+        gsettings set org.gnome.shell.extensions.dash-to-dock hot-keys false
+    else
+        print_skip "Dash-to-dock is not installed, no need to remove its hot-keys shortcuts"
+    fi
+
+    # Remove default switch to application shortcuts as they use Meta+number and we want to override.
+    for number in {1..9}; do gsettings set org.gnome.shell.keybindings switch-to-application-"${number}" '[]'; done
+
+    # We never check if the shortcut is already there, always set it up. TODO: Only set if not enabled.
+    print_in_progress "Setting shortcuts for worskpace switching and moving windows to worskpaces: Meta + number, Meta + Shift + number"
+    for number in {1..9}; do gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-"${number}" "['<Super>$number']";done
+    for number in {1..9}; do gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-"${number}" "['<Super><Shift>$number']";done
 
     # Disable "initial setup" startup window.
     if ! grep -q "yes" ~/.config/gnome-initial-setup-done 2>/dev/null; then

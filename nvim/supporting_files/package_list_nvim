@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# shellcheck disable=SC2034
+PACKAGE_LIST_NEOVIM=(
+    neovim
+    # Required by mason to provide auto installation of LSPs.
+    npm
+    python3-pip
+    cargo
+    # Required by telescope
+    ripgrep
+    fd-find
+    fzf
+    # Probably required for tree-sitter auto-install, although I'm not sure
+    # because "ensure_installed" works without it.
+    tree-sitter
+    # needs patched hack font from nerdfonts
+    # https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Hack.zip
+    lldb
+)

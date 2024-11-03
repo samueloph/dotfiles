@@ -19,19 +19,23 @@ source "$project_toplevel/util/print_utils"
 # and that the first argument is valid. Any other invalid arguments will be gracefully
 # ignored.
 if [[ $# -eq 0 ]] \
-|| [[ ! $1 =~ --setup-(all|misc|bash|gnome|vim|snap-packages|vscode|packaging-tools|sbuild-debian) ]]
+|| [[ ! $1 =~ --setup-(all|alacritty|misc|bash|gnome|vim|nvim|hack-nerd-font|tmux|snap-packages|vscode|packaging-tools|sbuild-debian) ]]
 then
     print_warning "At least 1 argument is required: setup_debian.sh [options...]"
     echo "Available options are:"
+    echo "--setup-alacritty"
     echo "--setup-all"
-    echo "--setup-misc"
     echo "--setup-bash"
     echo "--setup-gnome"
-    echo "--setup-vim"
-    echo "--setup-snap-packages"
-    echo "--setup-vscode"
+    echo "--setup-misc"
+    echo "--setup-nvim"
+    echo "--setup-hack-nerd-font"
     echo "--setup-packaging-tools"
     echo "--setup-sbuild-debian (this option will install only the unstable chroot, you can install more by calling setup_sbuild_debian.sh directly or using --setup-packaging-tools (which installs unstable, stable and oldstable))."
+    echo "--setup-snap-packages"
+    echo "--setup-tmux"
+    echo "--setup-vim"
+    echo "--setup-vscode"
     echo "For more information, read the README.md file."
     exit 1
 fi
@@ -46,15 +50,22 @@ echo "backup-files" >> "$backup_files_logfile"
 for argument in "$@" ; do
     if [[ $argument == "--setup-all" ]]; then
         # Call all the setup scripts.
+        bash "$project_toplevel/hack_nerd_font/setup_hack_nerd_font.sh"
+        bash "$project_toplevel/alacritty/setup_alacritty.sh"
         bash "$project_toplevel/misc/setup_misc.sh"
         bash "$project_toplevel/bash/setup_bash.sh"
         bash "$project_toplevel/gnome/setup_gnome.sh"
         bash "$project_toplevel/vim/setup_vim.sh"
+        bash "$project_toplevel/nvim/setup_nvim.sh"
+        bash "$project_toplevel/tmux/setup_tmux.sh"
         bash "$project_toplevel/snap_packages/setup_snap_packages.sh"
         bash "$project_toplevel/vscode/setup_vscode.sh"
         bash "$project_toplevel/packaging_tools/setup_packaging_tools.sh"
         echo "If you installed any snap packages, you will need to logout and login again so Gnome can pick up the snap packages' shortcuts"
         break
+    fi
+    if [[ $argument == "--setup-alacritty" ]]; then
+        bash "$project_toplevel/alacritty/setup_alacritty.sh"
     fi
     if [[ $argument == "--setup-misc" ]]; then
         bash "$project_toplevel/misc/setup_misc.sh"
@@ -67,6 +78,15 @@ for argument in "$@" ; do
     fi
     if [[ $argument == "--setup-vim" ]]; then
         bash "$project_toplevel/vim/setup_vim.sh"
+    fi
+    if [[ $argument == "--setup-tmux" ]]; then
+        bash "$project_toplevel/tmux/setup_tmux.sh"
+    fi
+    if [[ $argument == "--setup-nvim" ]]; then
+        bash "$project_toplevel/nvim/setup_nvim.sh"
+    fi
+    if [[ $argument == "--setup-hack-nerd-font" ]]; then
+        bash "$project_toplevel/hack_nerd_font/setup_hack_nerd_font.sh"
     fi
     if [[ $argument == "--setup-snap-packages" ]]; then
         bash "$project_toplevel/snap_packages/setup_snap_packages.sh"

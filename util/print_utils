@@ -57,5 +57,5 @@ print_warning() {
 }
 
 print_info() {
-    echo "ℹ️  $*"
+    echo "ℹ️ $*"
 }

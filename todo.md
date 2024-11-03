@@ -45,3 +45,23 @@ https://linuxiac.com/alt-tab-to-switch-only-on-current-workspace-in-gnome-shell/
 https://github.com/puremourning/vimspector
 1. gnome-clock configure clocks for other countries
 1. warn about old schroots (oldoldstable)
+
+1. sway
+
+1. gnome shortcut for each workspace - https://www.reddit.com/r/gnome/comments/j6lr73/comment/g84nhqr/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+1. gnome terminal shortcut open alacritty instead of gnome
+1. make sure copying from nvim and tmux works both in local and remote mode
+1. harpoon remapt ctrl+; to ctrl+h, the former is not supported by terminal emulators
+1. make sure python and rust tests are discoverable
+1. neovim as pager - https://vi.stackexchange.com/questions/16582/how-to-use-neovim-as-a-pager
+1. inputrc alt . for last parameter on vim mode
+1. nvim session manager - https://github.com/rmagatti/auto-session - https://github.com/folke/persistence.nvim
+1. nvim spellcheck
+1. tmux smart window names - https://github.com/ofirgall/tmux-window-name
+1. neovim emacs mapings on insert mode for ctrl w, ctrl a and ctrl e, also for readline on vi mode
+1. readline vi mode alt . - https://superuser.com/questions/18498/last-parameter-of-last-command-in-bash-in-vi-mode/559246#559246
+1. readline vi mode extended commands - https://www.reddit.com/r/vim/comments/u0nihr/comment/i47rzqd/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+1. sudo vim - https://github.com/vim-scripts/sudo.vim/tree/master
+1. LSCOLORS theme - https://github.com/sharkdp/vivid
+1. alacritty LSCOLORS - https://github.com/alacritty/alacritty/issues/4710
+
