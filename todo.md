@@ -65,3 +65,10 @@ https://github.com/puremourning/vimspector
 1. LSCOLORS theme - https://github.com/sharkdp/vivid
 1. alacritty LSCOLORS - https://github.com/alacritty/alacritty/issues/4710
 
+1. gnome 46 (Ubuntu 24.04) requires a manual change for the tilling to work - https://askubuntu.com/a/1494637 
+> Please, run the Extensions (gnome-extensions-app) application and disable Ubuntu Tiling Assistant (under the Built-In section).
+> 
+> Instead of disabling this extension, you can just go to the Settings of this extension and disable Open after tiling a window (under Tiling Popup section).
+> 
+> If this does not help, please follow my comment above: Go to Gnome Settings → Keyboard → Keyboard Shortcuts → Windows and remove any non-default customizations.
+
