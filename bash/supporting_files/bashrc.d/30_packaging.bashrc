@@ -46,7 +46,6 @@ set_release_codename_variables
 
 # Aliases to build packages:
 # bp = build source-only package
-# bp-new = source-build-package = build package and add binaries to dsc (sourceful).
 
 # Use release defined in d/changelog, can be used for unstable and
 # stable-security builds, for example.
@@ -60,26 +59,19 @@ set_release_codename_variables
 # The first one only puts you in the shell if the build fails,
 # the second one will do it always (on success too).
 #
-alias bp="gbp buildpackage --git-builder=sbuild -v --source-only-changes"
-alias bp-new="gbp buildpackage --git-builder=sbuild -v --force-orig-source"
+alias bp="gbp buildpackage --git-builder=sbuild -v"
 
 # For stable backports.
 # shellcheck disable=SC2139
-alias "bp-new-$STABLE_CODENAME-bpo"="gbp buildpackage --git-builder=sbuild -v -d ${STABLE_CODENAME}-backports --build-dep-resolver=aptitude --extra-repository=\"deb http://deb.debian.org/debian ${STABLE_CODENAME}-backports main\" --force-orig-source"
-# shellcheck disable=SC2139
-alias "bp-$STABLE_CODENAME-bpo"="bp-new-${STABLE_CODENAME}-bpo --source-only-changes"
+alias "bp-$STABLE_CODENAME-bpo"="gbp buildpackage --git-builder=sbuild -v -d ${STABLE_CODENAME}-backports --build-dep-resolver=aptitude --extra-repository=\"deb http://deb.debian.org/debian ${STABLE_CODENAME}-backports main\""
 
 # For oldstable backports.
 # shellcheck disable=SC2139
-alias "bp-new-$OLDSTABLE_CODENAME-bpo"="gbp buildpackage --git-builder=sbuild -v -d ${OLDSTABLE_CODENAME}-backports --build-dep-resolver=aptitude --extra-repository=\"deb http://deb.debian.org/debian ${OLDSTABLE_CODENAME}-backports main\" --force-orig-source"
-# shellcheck disable=SC2139
-alias "bp-$OLDSTABLE_CODENAME-bpo"="bp-new-${OLDSTABLE_CODENAME}-bpo --source-only-changes"
+alias "bp-$OLDSTABLE_CODENAME-bpo"="gbp buildpackage --git-builder=sbuild -v -d ${OLDSTABLE_CODENAME}-backports --build-dep-resolver=aptitude --extra-repository=\"deb http://deb.debian.org/debian ${OLDSTABLE_CODENAME}-backports main\""
 
 # For oldstable sloppy backports.
 # shellcheck disable=SC2139
-alias "bp-new-$OLDSTABLE_CODENAME-bpo-sloppy"="gbp buildpackage --git-builder=sbuild -v -d ${OLDSTABLE_CODENAME}-backports-sloppy --build-dep-resolver=aptitude --extra-repository=\"deb http://deb.debian.org/debian ${OLDSTABLE_CODENAME}-backports main\" --extra-repository=\"deb http://deb.debian.org/debian ${OLDSTABLE_CODENAME}-backports-sloppy main\" --force-orig-source"
-# shellcheck disable=SC2139
-alias "bp-$OLDSTABLE_CODENAME-bpo-sloppy"="bp-new-${OLDSTABLE_CODENAME}-bpo-sloppy --force-orig-source --source-only-changes"
+alias "bp-$OLDSTABLE_CODENAME-bpo-sloppy"="gbp buildpackage --git-builder=sbuild -v -d ${OLDSTABLE_CODENAME}-backports-sloppy --build-dep-resolver=aptitude --extra-repository=\"deb http://deb.debian.org/debian ${OLDSTABLE_CODENAME}-backports main\" --extra-repository=\"deb http://deb.debian.org/debian ${OLDSTABLE_CODENAME}-backports-sloppy main\" --force-orig-source"
 
 # Command to manually update all chroots, in case it's updates are not in a cronjob.
 alias update-schroots="sudo sh /usr/share/doc/sbuild/examples/sbuild-debian-developer-setup-update-all"
