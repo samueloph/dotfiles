@@ -22,7 +22,7 @@ setup_hack_nerd_font(){
         if [[ ! -f "${supporting_files_folder}/Hack.tar.xz" ]]; then
             print_in_progress "Downloading zip file of patched Hack font"
             cd "${supporting_files_folder}"
-            curl -s -L https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Hack.tar.xz -o Hack.tar.xz
+            curl -s -L https://github.com/ryanoasis/nerd-fonts/releases/download/v3.3.0/Hack.tar.xz -o Hack.tar.xz
             tar xf Hack.tar.xz
             ls
             cd -
