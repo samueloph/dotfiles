@@ -2,6 +2,5 @@
 
 # shellcheck disable=SC2034
 PACKAGE_LIST_BASH=(
-    powerline
-    powerline-gitstatus
+    powerline-go
 )

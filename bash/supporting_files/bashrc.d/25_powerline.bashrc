@@ -1,8 +1,16 @@
 #!/bin/bash
-# Powerline
-powerline-daemon -q
-# shellcheck disable=SC2034
-POWERLINE_BASH_CONTINUATION=1
-# shellcheck disable=SC2034
-POWERLINE_BASH_SELECT=1
-. /usr/share/powerline/bindings/bash/powerline.sh
+
+function _update_ps1() {
+    PS1="$(/usr/bin/powerline-go -error $? -jobs $(jobs -p | wc -l))"
+
+    # Uncomment the following line to automatically clear errors after showing
+    # them once. This not only clears the error for powerline-go, but also for
+    # everything else you run in that shell. Don't enable this if you're not
+    # sure this is what you want.
+
+    #set "?"
+}
+
+if [ "$TERM" != "linux" ] && [ -f "/usr/bin/powerline-go" ]; then
+    PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
+fi
