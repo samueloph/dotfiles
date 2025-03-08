@@ -5,3 +5,22 @@
 	rebase = true
 [color "diff"]
 	meta = yellow bold
+[diff]
+	algorithm = histogram
+	colorMoved = plain
+	mnemonicPrefix = true
+	renames = true
+[merge]
+	conflictstyle = zdiff3
+[commit]
+	verbose = true
+[tag]
+	sort = version:refname
+[push]
+	autoSetupRemote = true
+[fetch]
+	prune = true
+	pruneTags = true
+	all = true
+[help]
+	autocorrect = prompt
