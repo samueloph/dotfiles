@@ -19,8 +19,6 @@ setup_misc(){
     bash "$project_toplevel/misc/setup_firefox.sh"
     bash "$project_toplevel/misc/setup_git.sh"
     bash "$project_toplevel/misc/setup_battery_tools.sh"
-    bash "$project_toplevel/misc/setup_fstrim.sh"
-    bash "$project_toplevel/misc/setup_tmpfs.sh"
 
     print_header "[/MISC]"
 }
