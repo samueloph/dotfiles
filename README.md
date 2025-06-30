@@ -37,8 +37,6 @@ Install miscellaneous packages from the official repository, the list of package
 Install firefox and remove firefox-esr (requires unstable repo set on `misc/setup_apt_repos.sh`).
 #### misc/setup_git.sh
 Setup .gitconfig (mainly name and email address).
-#### misc/setup_battery_tools.sh
-Install tools related to battery usage (usefull for laptops), the list of packages installed is on [misc/supporting_files/package_list_battery_tools](misc/supporting_files/package_list_battery_tools).
 ### bash/setup_bash.sh
 Enable usage of `~/.bashrc.d/` folder and add scripts there, also install a `~/.inputrc` dotfile with autocompletion improvements. Part of the setup will install and enable powerline with gitstatus.
 ### gnome/setup_gnome.sh
