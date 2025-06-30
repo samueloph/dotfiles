@@ -72,7 +72,7 @@ setup_bashrcd(){
         # Not the latest version, remove it and append the new one to the end of ~/.bashrc.
         else
             print_in_progress "Updating bashrc.d script in ~/.bashrc"
-            create_backup_of_file --sudo=false "$HOME/.bashrc"
+            create_backup_of_file "$HOME/.bashrc"
             # -i: in-place editing of file.
             # -0: slurp mode, work on entire file at once (instead of line-by-line),
             #     this allows multi-line search-and-replace.
@@ -90,7 +90,7 @@ setup_bashrcd(){
     else
         print_in_progress "Setting up bashrc.d script in ~/.bashrc and creating the ~/.bashrc.d folder"
         mkdir -p "$HOME/.bashrc.d"
-        create_backup_of_file --sudo=false "$HOME/.bashrc"
+        create_backup_of_file "$HOME/.bashrc"
         tail -n +2 "$supporting_files_folder/bashrcd_script.bashrc" >> "$HOME/.bashrc"
     fi
 }

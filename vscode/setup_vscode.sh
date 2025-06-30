@@ -89,7 +89,7 @@ setup_vscode_settings(){
             # Not the latest version, remove it and append the new one to the end of the file.
             else
                 print_in_progress "updating vscode settings"
-                create_backup_of_file --sudo=false "$HOME/.config/Code/User/settings.json"
+                create_backup_of_file "$HOME/.config/Code/User/settings.json"
                 # -i: in-place editing of file.
                 # -0: slurp mode, work on entire file at once (instead of line-by-line),
                 #     this allows multi-line search-and-replace.
@@ -110,7 +110,7 @@ setup_vscode_settings(){
         # If the settings file exists but doesn't have any version of the settings
         # shipped by this script.
         else
-            create_backup_of_file --sudo=false "$HOME/.config/Code/User/settings.json"
+            create_backup_of_file "$HOME/.config/Code/User/settings.json"
             # Remove last "}" from settings so we can append our file to it.
             sed -i 's/}[^}]*$//' "$HOME/.config/Code/User/settings.json"
             # Tail to remove the first line of the settings we are going to
@@ -143,7 +143,7 @@ setup_vscode_keybindings(){
             # Not the latest version, remove it and append the new one to the end of the file.
             else
                 print_in_progress "updating vscode keybindings"
-                create_backup_of_file --sudo=false "$HOME/.config/Code/User/keybindings.json"
+                create_backup_of_file "$HOME/.config/Code/User/keybindings.json"
                 # -i: in-place editing of file.
                 # -0: slurp mode, work on entire file at once (instead of line-by-line),
                 #     this allows multi-line search-and-replace.
@@ -164,7 +164,7 @@ setup_vscode_keybindings(){
         # If the keybindings file exists but doesn't have any version of the keybindings
         # shipped by this script.
         else
-            create_backup_of_file --sudo=false "$HOME/.config/Code/User/keybindings.json"
+            create_backup_of_file "$HOME/.config/Code/User/keybindings.json"
             # Remove last "]" from keybindings so we can append our file to it.
             sed -i 's/][^]]*$//' "$HOME/.config/Code/User/keybindings.json"
             # Tail to remove the first line of the keybindings we are going to

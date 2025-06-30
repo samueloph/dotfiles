@@ -110,7 +110,7 @@ setup_gnome(){
     if ! grep -q "yes" ~/.config/gnome-initial-setup-done 2>/dev/null; then
         print_in_progress "Disabling \"initial setup\" startup window on Gnome"
         if [[ -f "$HOME/.config/gnome-initial-setup-done" ]]; then
-            create_backup_of_file --sudo=false "$HOME/.config/gnome-initial-setup-done"
+            create_backup_of_file "$HOME/.config/gnome-initial-setup-done"
         fi
         echo "yes" > ~/.config/gnome-initial-setup-done
     else

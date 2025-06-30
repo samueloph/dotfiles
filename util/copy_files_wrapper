@@ -69,7 +69,7 @@ copy_files_wrapper(){
                 if [[ "$dest_location" =~ /etc/apt/* ]]; then sudo apt update -qq; fi
                 print_info "$dest_location already exists and it's different, overwriting it with new file from $source_file"
 
-                create_backup_of_file "--sudo=$sudo_enabled" "$dest_location"
+                create_backup_of_file "$dest_location"
                 if $sudo_enabled; then
                     sudo cp -r "$source_file" "$dest_location"
                 else

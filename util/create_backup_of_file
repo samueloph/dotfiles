@@ -15,8 +15,8 @@ create_backup_of_file(){
         # shellcheck disable=SC1094,SC1091
         source "$script_path/print_utils"
 
-        if [[ $# -ne 2 ]]; then
-            print_warning "Exactly 2 arguments are required: create_backup_of_file --sudo={true|false} <file_path>"
+        if [[ $# -ne 1 ]]; then
+            print_warning "Exactly 1 argument is required: create_backup_of_file <file_path>"
             exit 1
         fi
 
@@ -34,18 +34,7 @@ create_backup_of_file(){
         file_path="$2"
         backup_file_path="${backup_files_location}/$(basename ${file_path}).bkp-${timestamp}"
 
-        if [[ $1 == --sudo=true ]]; then
-            sudo_enabled=true
-        else
-            sudo_enabled=false
-        fi
-
-        # Create the backup file.
-        if $sudo_enabled; then
-            sudo mv "$file_path" "$backup_file_path"
-        else
-            mv "$file_path" "$backup_file_path"
-        fi
+        mv "$file_path" "$backup_file_path"
 
         print_info "Backup file created for $file_path at $backup_file_path"
 
