@@ -512,7 +512,7 @@ $lintian_opts = ['-i', '-I', '-E', '--pedantic'];
 # (default), "sudo", "autopkgtest" and "unshare".
 # See also related command line options in sbuild(1):
 #   --chroot-mode
-$chroot_mode = unshare;
+$chroot_mode = 'unshare';
 
 # CHROOT_ALIASES
 # Type: HASH:STRING
