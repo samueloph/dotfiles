@@ -10,6 +10,8 @@ supporting_files_folder="$script_path/supporting_files"
 # shellcheck disable=SC1094,SC1091
 source "$project_toplevel/util/copy_files_wrapper"
 # shellcheck disable=SC1094,SC1091
+source "$project_toplevel/util/create_backup_of_file"
+# shellcheck disable=SC1094,SC1091
 source "$project_toplevel/util/print_utils"
 
 setup_apt_repos(){
@@ -21,6 +23,12 @@ setup_apt_repos(){
     copy_files_wrapper --sudo=true "$supporting_files_folder/unstable.sources" /etc/apt/sources.list.d/unstable.sources
     copy_files_wrapper --sudo=true "$supporting_files_folder/apt_preferences_unstable" /etc/apt/preferences.d/unstable
     copy_files_wrapper --sudo=true "$supporting_files_folder/experimental.sources" /etc/apt/sources.list.d/experimental.sources
+    # Remove /etc/apt/sources.list since we're using the new format (.sources)
+    if [[ -f "/etc/apt/sources.liist" ]]; then
+        print_in_progress "Removing /etc/apt/sources.list in favor of /etc/apt/sources.list.d/debian.sources"
+        create_backup_of_file "/etc/apt/sources.list"
+        sudo rm /etc/apt/sources.list
+    fi
 
     print_header "[/APT REPOS]"
 }
