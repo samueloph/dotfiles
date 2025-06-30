@@ -31,7 +31,7 @@ then
     echo "--setup-nvim"
     echo "--setup-hack-nerd-font"
     echo "--setup-packaging-tools"
-    echo "--setup-sbuild-debian (this option will install only the unstable chroot, you can install more by calling setup_sbuild_debian.sh directly or using --setup-packaging-tools (which installs unstable, stable and oldstable))."
+    echo "--setup-sbuild-debian"
     echo "--setup-snap-packages"
     echo "--setup-tmux"
     echo "--setup-vim"
