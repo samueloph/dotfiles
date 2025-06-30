@@ -78,13 +78,13 @@ setup_gnome(){
         print_skip "Keyboard layouts are already configured on Gnome"
     fi
 
-    # Set Capslock to act as escape key.
-    if [[ $(gsettings get org.gnome.desktop.input-sources xkb-options) != "['caps:escape']" ]]
+    # Set Capslock to act as a control key.
+    if [[ $(gsettings get org.gnome.desktop.input-sources xkb-options) != "['caps:ctrl_modifier']" ]]
     then
-        print_in_progress "Capslock key changed to act as Esc"
-        gsettings set org.gnome.desktop.input-sources xkb-options "['caps:escape']"
+        print_in_progress "Capslock key changed to act as Ctrl"
+        gsettings set org.gnome.desktop.input-sources xkb-options "['caps:ctrl_modifier']"
     else
-        print_skip "Capslock key already changed to act as Esc"
+        print_skip "Capslock key already changed to act as Ctrl"
     fi
 
     # Set shortcuts to switch to workspace and move windows to workspaces, like if it was i3.
