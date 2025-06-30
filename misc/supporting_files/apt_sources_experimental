@@ -1,2 +1,5 @@
-deb http://deb.debian.org/debian/ experimental main contrib non-free non-free-firmware
-deb-src http://deb.debian.org/debian/ experimental main contrib non-free non-free-firmware
+Types: deb deb-src
+URIs: http://deb.debian.org/debian/
+Suites: experimental
+Components: main non-free contrib
+Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg

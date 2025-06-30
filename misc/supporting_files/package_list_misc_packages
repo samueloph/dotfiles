@@ -1,19 +1,18 @@
 #!/bin/bash
 
 # shellcheck disable=SC2034
-PACKAGE_LIST_MICS_PACKAGES=(
-    bc
+PACKAGE_LIST_MISC_PACKAGES=(
     colordiff
-    docker.io
+    podman
     gparted
     make
     msmtp
+    neomutt
     nmap
     python3-pip
     rsync
-    screen
+    # caff for KSP
     signing-party
-    telegram-desktop
     tree
     virt-manager
     whois

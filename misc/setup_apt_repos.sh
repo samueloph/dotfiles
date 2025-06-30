@@ -17,9 +17,8 @@ setup_apt_repos(){
     # unintended upgrade happens
     print_header "[APT REPOS]"
 
-    copy_files_wrapper --sudo=true "$supporting_files_folder/apt_preferences_unstable" /etc/apt/preferences.d/unstable
-    copy_files_wrapper --sudo=true "$supporting_files_folder/apt_sources_unstable" /etc/apt/sources.list.d/unstable.list
-    copy_files_wrapper --sudo=true "$supporting_files_folder/apt_sources_experimental" /etc/apt/sources.list.d/experimental.list
+    copy_files_wrapper --sudo=true "$supporting_files_folder/apt_sources_unstable" /etc/apt/sources.list.d/unstable.sources
+    copy_files_wrapper --sudo=true "$supporting_files_folder/apt_sources_experimental" /etc/apt/sources.list.d/experimental.sources
 
     print_header "[/APT REPOS]"
 }
