@@ -3,4 +3,5 @@
 # shellcheck disable=SC2034
 PACKAGE_LIST_BASH=(
     powerline-go
+    distro-info-data
 )
