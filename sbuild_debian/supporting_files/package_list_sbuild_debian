@@ -4,7 +4,4 @@
 PACKAGE_LIST_SBUILD_DEBIAN=(
     apt-cacher-ng
     sbuild
-    ccache
-    sbuild-debian-developer-setup
-    distro-info-data
 )

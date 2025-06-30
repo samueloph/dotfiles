@@ -13,8 +13,6 @@ source "$project_toplevel/util/apt_install_wrapper"
 source "$project_toplevel/util/copy_files_wrapper"
 # shellcheck disable=SC1094,SC1091
 source "$project_toplevel/util/print_utils"
-# shellcheck disable=SC1094,SC1091
-source "$project_toplevel/util/set_release_codename_variables"
 
 # shellcheck disable=SC1094,SC1091
 source "$supporting_files_folder/package_list_packaging_tools"
@@ -43,7 +41,7 @@ setup_packaging_tools(){
     copy_files_wrapper --sudo=false "$supporting_files_folder/.gbp.conf" "$HOME/.gbp.conf"
     copy_files_wrapper --sudo=false "$supporting_files_folder/.devscripts" "$HOME/.devscripts"
 
-    "$project_toplevel/sbuild_debian/setup_sbuild_debian.sh" unstable "$STABLE_CODENAME" "$OLDSTABLE_CODENAME"
+    "$project_toplevel/sbuild_debian/setup_sbuild_debian.sh"
 
     print_header "[/PACKAGING TOOLS]"
 }
