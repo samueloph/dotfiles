@@ -28,5 +28,3 @@ alias ll='ls -l'
 }
 
 export EDITOR=nvim
-
-set -o vi
