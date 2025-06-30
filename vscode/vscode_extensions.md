@@ -22,7 +22,6 @@
 |redhat.vscode-yaml|YAML Language Support by Red Hat, with built-in Kubernetes syntax support|https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml|
 |ms-vscode.powershell|Develop PowerShell modules, commands and scripts in Visual Studio Code!|https://marketplace.visualstudio.com/items?itemName=ms-vscode.powershell|
 |ban.troff|TROFF Syntax Highlighter|https://marketplace.visualstudio.com/items?itemName=ban.troff|
-|joaompinto.vscode-graphviz|This extension provides GraphViz (dot) language support for Visual Studio Code|https://marketplace.visualstudio.com/items?itemName=joaompinto.vscode-graphviz|
 |coolbear.systemd-unit-file|Language support for systemd unit files|https://marketplace.visualstudio.com/items?itemName=coolbear.systemd-unit-file|
 
 ## Python

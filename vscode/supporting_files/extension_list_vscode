@@ -37,7 +37,6 @@ declare -A extension_dict_vscode_domain_specific=(
     ["samuelcolvin.jinjahtml"]="Syntax highlighting for jinja(2) including HTML, Markdown, YAML, Ruby and LaTeX templates"
     ["ms-vscode.powershell"]="Develop PowerShell modules, commands and scripts in Visual Studio Code!"  # requires installing powershell
     ["redhat.vscode-yaml"]="YAML Language Support by Red Hat, with built-in Kubernetes syntax support"
-    ["joaompinto.vscode-graphviz"]="This extension provides GraphViz (dot) language support for Visual Studio Code"
     ["shd101wyy.markdown-preview-enhanced"]="Markdown Preview Enhanced ported to vscode"
     ["coolbear.systemd-unit-file"]="Language support for systemd unit files"
     ["ban.troff"]="TROFF Syntax Highlighter"
