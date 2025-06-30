@@ -43,13 +43,13 @@ setup_gnome(){
     fi
 
     # Night light (dim screen at night)
-    if [[ $(gsettings get org.gnome.settings-daemon.plugins.color night-light-enabled) != "true" ]]
-    then
-        print_in_progress "Enabling Night Light on Gnome"
-        gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true
-    else
-        print_skip "Night Light is already enabled on Gnome"
-    fi
+    # if [[ $(gsettings get org.gnome.settings-daemon.plugins.color night-light-enabled) != "true" ]]
+    # then
+    #     print_in_progress "Enabling Night Light on Gnome"
+    #     gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true
+    # else
+    #     print_skip "Night Light is already enabled on Gnome"
+    # fi
 
     # Disable animations
     if [[ $(gsettings get org.gnome.desktop.interface enable-animations) == "true" ]]
