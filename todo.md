@@ -72,3 +72,4 @@ https://github.com/puremourning/vimspector
 > 
 > If this does not help, please follow my comment above: Go to Gnome Settings → Keyboard → Keyboard Shortcuts → Windows and remove any non-default customizations.
 
+1. steam-installer (adding the x86 arch to apt)
