@@ -3,5 +3,4 @@
 # shellcheck disable=SC2034
 PACKAGE_LIST_GNOME=(
     fonts-hack
-    gnome-shell-extension-system-monitor
 )
