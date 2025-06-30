@@ -1,5 +1,6 @@
 # Samuel Henrique \<samueloph\> dotfiles and scripts for setup
 
+
 ## About
 I've decided to create this to speedup configuration of newly installed systems but also to be able to point other people to the way I configure it in case they find it useful.
 
@@ -7,16 +8,17 @@ At the same time this has been a very good exercise in writting bash code and ga
 
 As of 2022-10-23, I have spent an estimated amount of 100 hours working on this.
 
+## Written for Debian Testing
+If you try to run this on a Debian Stable system, both `setup_firefox` and `setup_apt_repos` are not going to work properly and will partially upgrade your machine to Debian Testing.
+
+If you want to run it in another release, or even another distro, you can manually invoke the setup commands you need, just make sure you do not call the ones mentioned above.
+
 ## Setup
 In order to setup everything, you can call `setup_debian.sh` with the `--setup-all` option, you can get a list of available options with `setup_debian.sh -h`. This script will generate logs and backup files for changes made.
 
 This has only been thoroughly tested on Debian testing, some things will break if you run this on Debian stable.
 
 Individual `setup_*.sh` scripts can also be called, eg.: `vim/setup_vim.sh` for vim setup only.
-
-The `sbuild_debian/setup_sbuild_debian.sh` script might be especially useful for people who just want to setup a chroot environment to be used with sbuild. You just need to call it with a release codename, like `sbuild_debian/setup_sbuild_debian.sh unstable` and it will setup a chroot with eatmydata, ccache, apt-cacher-nd, aliases and auto updates done by a cronjob.
-
-The script `sbuild_debian/setup_sbuild_debian.sh` can be used to install and configure chroots to be used by sbuild.
 
 A list of vscode extensions I use is available at [vscode/vscode_extensions.md](vscode/vscode_extensions.md).
 
@@ -46,6 +48,8 @@ Install vim-plug, extensions and add my own [vim/supporting_files/.vimrc](vim/su
 ### snap_packages/setup_snap_packages.sh
 Install snapd and all the packages I use, packages are listed in the script itself at [snap_packages/setup_snap_packages.sh](snap_packages/setup_snap_packages.sh).
 ### vscode/setup_vscode.sh
+Note: I've moved to neovim, so this setup is not kept up-to-date.
+
 Install vscode with my list of extensions and my own settings and keybindings.
 
 Extensions I use can be seen at [vscode/vscode_extensions.md](vscode/vscode_extensions.md).
@@ -58,6 +62,4 @@ Install packages and dotfiles used in packaging.
 ### sbuild_debian/setup_sbuild_debian.sh
 Configures sbuild with the unshare backend and apt-cacher-ng.
 
-This script is usually called by `setup_packaging_tools.sh` but it can be used it directly too.
-
-It expects the release codenames as arguments (eg.: `sbuild_debian/setup_sbuild_debian.sh unstable` for unstable installation or `sbuild_debian/setup_sbuild_debian.sh unstable trixie`... for more than a single chroot).
+This script is called by `setup_packaging_tools.sh` but it can be invoked directly too.
