@@ -16,7 +16,7 @@ setup_git(){
     # setup miscellaneous
     print_header "[MISC PACKAGES]"
 
-    apt_install_wrapper "${PACKAGE_LIST_MICS_PACKAGES[@]}"
+    apt_install_wrapper "${PACKAGE_LIST_MISC_PACKAGES[@]}"
 
     print_header "[/MISC PACKAGES]"
 }
