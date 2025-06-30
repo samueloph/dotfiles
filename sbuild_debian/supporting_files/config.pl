@@ -208,8 +208,7 @@
 #   -s
 #   --source
 #   --no-source
-$build_source = 1;
-
+#$build_source = 0;
 # BIN_NMU
 # Type: STRING
 # Binary NMU changelog entry.
@@ -268,8 +267,7 @@ $build_source = 1;
 # See also related command line options in sbuild(1):
 #   --clean-source
 #   --no-clean-source
-$clean_source = 0;
-
+#$clean_source = 1;
 # SOURCE_ONLY_CHANGES
 # Type: BOOL
 # Also produce a changes file suitable for a source-only upload.
@@ -342,8 +340,7 @@ $clean_source = 0;
 # See also related command line options in sbuild(1):
 #   --lintian-opt
 #   --lintian-opts
-$lintian_opts = ['-i', '-I', '-E', '--pedantic'];
-
+#$lintian_opts = [];
 # LINTIAN_REQUIRE_SUCCESS
 # Type: BOOL
 # Let sbuild fail if lintian fails.
@@ -512,8 +509,7 @@ $lintian_opts = ['-i', '-I', '-E', '--pedantic'];
 # (default), "sudo", "autopkgtest" and "unshare".
 # See also related command line options in sbuild(1):
 #   --chroot-mode
-$chroot_mode = 'unshare';
-
+#$chroot_mode = undef;
 # CHROOT_ALIASES
 # Type: HASH:STRING
 # A mapping of distribution names to their aliases which will be used to
@@ -778,8 +774,7 @@ $chroot_mode = 'unshare';
 # option, that chroot will never be updated by sbuild. But if the chroot
 # tarball was outdated (see UNSHARE_MMDEBSTRAP_MAX_AGE), it will still get
 # re-created and used but not saved back to the given path.
-$unshare_mmdebstrap_keep_tarball = 1;
-
+#$unshare_mmdebstrap_keep_tarball = 0;
 # UNSHARE_MMDEBSTRAP_EXTRA_ARGS
 # Type: HASH:STRING
 # This is an experimental feature. In unshare mode, when mmdebstrap is run
@@ -1288,7 +1283,7 @@ $unshare_mmdebstrap_keep_tarball = 1;
 # See also related command line options in sbuild(1):
 #   -k
 #   --keyid
-# $key_id='${GPG_KEY-PLACEHOLDER}';
+# $key_id = undef;
 
 
 
@@ -1425,11 +1420,70 @@ $unshare_mmdebstrap_keep_tarball = 1;
 #stats_dir = ...;
 #
 
+##
+## samueloph's settings
+##
+
+# Key ID to use in .changes for the current upload.  It overrides both
+# $maintainer_name and $uploader_name.
+# $key_id='${GPG_KEY-PLACEHOLDER}';
+
+# By default, do not build a source package (binary only build).  Set to 1
+# to force creation of a source package, but note that this is
+# inappropriate for binary NMUs, where the option will always be disabled.
+$build_source = 1;
+
+# When running sbuild from within an unpacked source tree, run the 'clean'
+# target before generating the source package. This might require some of
+# the build dependencies necessary for running the 'clean' target to be
+# installed on the host machine. Only disable if you start from a clean
+# checkout and you know what you are doing.
+$clean_source = 0;
+
+# Options to pass to lintian.  Each option is a separate arrayref element. 
+# For example, ['-i', '-v'] to add -i and -v.
+$lintian_opts = ['-i', '-I', '-E', '--pedantic'];
+
+# Mechanism to use for chroot virtualisation.  Possible value are "schroot"
+# (default), "sudo", "autopkgtest" and "unshare".
+$chroot_mode = 'unshare';
+
+# This is an experimental feature. In unshare mode and only if
+# UNSHARE_MMDEBSTRAP_AUTO_CREATE is true, write the created tarball back to
+# its appropriate location in ~/.cache/sbuild/${release}-${arch}.tar. If a
+# chroot tarball was given explicitly by passing a path with the --chroot
+# option, that chroot will never be updated by sbuild. But if the chroot
+# tarball was outdated (see UNSHARE_MMDEBSTRAP_MAX_AGE), it will still get
+# re-created and used but not saved back to the given path.
+$unshare_mmdebstrap_keep_tarball = 1;
+
+# This is an experimental feature. In unshare mode, when mmdebstrap is run
+# because UNSHARE_MMDEBSTRAP_AUTO_CREATE was set to true, pass these extra
+# arguments to the mmdebstrap invocation. The option array is given as
+# key/value pairs. Each key will be matched against strings created from
+# sbuild configuration variables, namely: DISTRIBUTION,
+# DISTRIBUTION-BUILD_ARCH, DISTRIBUTION-BUILD_ARCH-HOST_ARCH as well as
+# against the name of the chroot itself (defined if you use --chroot). If a
+# key matches one of these strings, the value, containing extra mmdebstrap
+# arguments is appended to the mmdebstrap argument list. A key can be a
+# plain string, in which case glob-style expressions can be used. If the
+# key is a plain string, it has to fully match. If the key is a plain
+# string, percentage escapes %a and %r will be replaced by host
+# architecture and distribution of the current build, respectively. A key
+# can also be a precompiled qr// regular expression but match groups cannot
+# be referenced in the extra arguments. The value is an array of extra
+# arguments which are appended to the end of the mmdebstrap exec array.
+#
 # Use apt-cacher-ng
 $unshare_mmdebstrap_extra_args = [
     '*' => [ '--aptopt=Acquire::http { Proxy "http://127.0.0.1:3142"; }' ],
 ];
 
+# External commands to run at various stages of a build. Commands are held
+# in a hash of arrays of arrays data structure. There is no equivalent for
+# the --anything-failed-commands command line option. All percent escapes
+# mentioned in the sbuild man page can be used.
+#
 # Drop in a shell inside the build environment on failures
 $external_commands = { "build-failed-commands" => [ [ '%SBUILD_SHELL' ] ] };
 
