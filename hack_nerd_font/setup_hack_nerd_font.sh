@@ -18,7 +18,7 @@ setup_hack_nerd_font(){
 
     print_header "[HACK NERD FONT]"
 
-    if ! ( fc-list; exit 0) | grep -q "HackNerdFont-Regular"; then
+    if ! ( fc-list; exit 0) | grep -q "HackNerdFont-Regular" || ! ( fc-list; exit 0) | grep -q "HackNerdFontMono-Regular"; then
         if [[ ! -f "${supporting_files_folder}/Hack.tar.xz" ]]; then
             print_in_progress "Downloading zip file of patched Hack font"
             wcurl https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/Hack.tar.xz -o "${supporting_files_folder}/Hack.tar.xz"
@@ -34,6 +34,7 @@ setup_hack_nerd_font(){
             cd -
             mkdir -p ~/.local/share/fonts
             copy_files_wrapper --sudo=false "${supporting_files_folder}/HackNerdFontMono-Regular.ttf" ~/.local/share/fonts
+            copy_files_wrapper --sudo=false "${supporting_files_folder}/HackNerdFont-Regular.ttf" ~/.local/share/fonts
             print_in_progress "Installing font HackNerdFontMono-Regular"
             fc-cache -f
             print_info "If you didn't run --setup-all or --setup-gnome, you now need to set this font to be used on gnome tweaks"
