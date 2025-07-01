@@ -1,17 +1,6 @@
 ## TODO
-1. gnome add shortcut to "open terminal"
-gsettings get org.gnome.settings-daemon.plugins.media-keys custom-keybindings
-['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']
-gsettings get org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name
-'Open terminal'
-gsettings get org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command
-'gnome-terminal'
-gsettings get org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding
-'<Super>Return'
-https://super-unix.com/ubuntu/ubuntu-how-to-set-custom-keyboard-shortcuts-from-terminal/
 1. gnome disable alt tab windows grouping (possibly the default now)
 1. gnome show battery percentage and enable hot corner
-1. gnome install and enable gpaste and system monitor extensions
 1. gnome install paperwm
 1. configure msmt (and caff) with d.o and gmail
 1. colorful manpages (probably with "most")
@@ -44,12 +33,10 @@ https://linuxiac.com/alt-tab-to-switch-only-on-current-workspace-in-gnome-shell/
 1. vim debugging extension
 https://github.com/puremourning/vimspector
 1. gnome-clock configure clocks for other countries
-1. warn about old schroots (oldoldstable)
 
 1. sway
 
 1. gnome shortcut for each workspace - https://www.reddit.com/r/gnome/comments/j6lr73/comment/g84nhqr/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
-1. gnome terminal shortcut open alacritty instead of gnome
 1. make sure copying from nvim and tmux works both in local and remote mode
 1. harpoon remapt ctrl+; to ctrl+h, the former is not supported by terminal emulators
 1. make sure python and rust tests are discoverable
@@ -72,5 +59,4 @@ https://github.com/puremourning/vimspector
 > 
 > If this does not help, please follow my comment above: Go to Gnome Settings → Keyboard → Keyboard Shortcuts → Windows and remove any non-default customizations.
 
-1. steam-installer (adding the x86 arch to apt)
 1. gnome nightlight: lower intesity and only trigger at 1AM
