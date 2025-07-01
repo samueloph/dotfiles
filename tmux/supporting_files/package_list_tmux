@@ -4,8 +4,6 @@
 PACKAGE_LIST_TMUX=(
     tmux
     fzf
-    # tmux-notify
-    libnotify-bin
     # For OSC52 support.
     alacritty
 )
