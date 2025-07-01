@@ -17,9 +17,6 @@ source "$project_toplevel/util/copy_files_wrapper"
 # shellcheck disable=SC1094,SC1091
 source "$project_toplevel/util/print_utils"
 
-backup_files_logfile="$project_toplevel/logs/backup_files_logfile"
-changed_files_logfile="$project_toplevel/logs/changed_files_logfile"
-
 setup_sbuild_debian(){
     # Install and configure sbuild with the unshare backend, using apt-cacher-ng.
 
