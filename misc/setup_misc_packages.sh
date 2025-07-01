@@ -10,9 +10,11 @@ supporting_files_folder="$script_path/supporting_files"
 # shellcheck disable=SC1094,SC1091
 source "$supporting_files_folder/package_list_misc_packages"
 # shellcheck disable=SC1094,SC1091
+source "$project_toplevel/util/apt_install_wrapper"
+# shellcheck disable=SC1094,SC1091
 source "$project_toplevel/util/print_utils"
 
-setup_git(){
+setup_misc_packages(){
     # setup miscellaneous
     print_header "[MISC PACKAGES]"
 
@@ -31,3 +33,5 @@ setup_git(){
 
     print_header "[/MISC PACKAGES]"
 }
+
+setup_misc_packages
