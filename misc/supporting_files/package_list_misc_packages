@@ -4,6 +4,8 @@
 PACKAGE_LIST_MISC_PACKAGES=(
     colordiff
     curl
+    fd-find
+    fzf
     podman
     gparted
     make
@@ -11,6 +13,7 @@ PACKAGE_LIST_MISC_PACKAGES=(
     neomutt
     nmap
     python3-pip
+    ripgrep
     rsync
     # caff for KSP
     signing-party

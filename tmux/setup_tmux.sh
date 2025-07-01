@@ -21,7 +21,7 @@ setup_tmux(){
 
     print_header "[TMUX]"
 
-    #apt_install_wrapper "${PACKAGE_LIST_TMUX[@]}"
+    apt_install_wrapper "${PACKAGE_LIST_TMUX[@]}"
 
     mkdir -p ~/.local/bin
     copy_files_wrapper --sudo=false "$supporting_files_folder/tmux-sessionizer" ~/.local/bin/
