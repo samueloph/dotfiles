@@ -3,6 +3,7 @@
 # shellcheck disable=SC2034
 PACKAGE_LIST_MISC_PACKAGES=(
     colordiff
+    curl
     podman
     gparted
     make
