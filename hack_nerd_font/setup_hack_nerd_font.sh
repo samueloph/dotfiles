@@ -10,13 +10,15 @@ supporting_files_folder="$script_path/supporting_files"
 # shellcheck disable=SC1094,SC1091
 source "$project_toplevel/util/copy_files_wrapper"
 # shellcheck disable=SC1094,SC1091
-# source "$project_toplevel/util/apt_install_wrapper"
+source "$project_toplevel/util/apt_install_wrapper"
 # shellcheck disable=SC1094,SC1091
 source "$project_toplevel/util/print_utils"
 
 setup_hack_nerd_font(){
 
     print_header "[HACK NERD FONT]"
+
+    apt_install_wrapper curl
 
     if ! ( fc-list; exit 0) | grep -q "HackNerdFont-Regular" || ! ( fc-list; exit 0) | grep -q "HackNerdFontMono-Regular"; then
         if [[ ! -f "${supporting_files_folder}/Hack.tar.xz" ]]; then
