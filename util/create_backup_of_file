@@ -31,7 +31,7 @@ create_backup_of_file(){
         # Timestamp to use for backup file names.
         timestamp=$(date -d now +'%Y-%m-%d-%Hh%Mm%Ss')
 
-        file_path="$2"
+        file_path="$1"
         backup_file_path="${backup_files_location}/$(basename ${file_path}).bkp-${timestamp}"
 
         mv "$file_path" "$backup_file_path"
