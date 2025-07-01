@@ -81,10 +81,19 @@ setup_gnome(){
     # Set Capslock to act as a control key.
     if [[ $(gsettings get org.gnome.desktop.input-sources xkb-options) != "['caps:ctrl_modifier']" ]]
     then
-        print_in_progress "Capslock key changed to act as Ctrl"
+        print_in_progress "Changing Capslock key to act as Ctrl"
         gsettings set org.gnome.desktop.input-sources xkb-options "['caps:ctrl_modifier']"
     else
         print_skip "Capslock key already changed to act as Ctrl"
+    fi
+
+    # Enable battery percentage in top bar.
+    if [[ $(gsettings get org.gnome.desktop.interface show-battery-percentage) != "true" ]]
+    then
+        print_in_progress "Enabling battery percentage in topbar"
+        gsettings set org.gnome.desktop.interface show-battery-percentage true
+    else
+        print_skip "Battery percentage already enabled in topbar"
     fi
 
     # Set shortcuts to switch to workspace and move windows to workspaces, like if it was i3.
@@ -92,7 +101,7 @@ setup_gnome(){
     # and disable its hot-keys.
     if gsettings get org.gnome.shell.extensions.dash-to-dock hot-keys
     then
-        print_in_progress "Disable hot-keys from dash-to-dock in order to unblock worskpace switching hot-keys"
+        print_in_progress "Disable hot-keys from dash-to-dock in order to unblock workspace switching hot-keys"
         gsettings set org.gnome.shell.extensions.dash-to-dock hot-keys false
     else
         print_skip "Dash-to-dock is not installed, no need to remove its hot-keys shortcuts"
@@ -102,9 +111,21 @@ setup_gnome(){
     for number in {1..9}; do gsettings set org.gnome.shell.keybindings switch-to-application-"${number}" '[]'; done
 
     # We never check if the shortcut is already there, always set it up. TODO: Only set if not enabled.
-    print_in_progress "Setting shortcuts for worskpace switching and moving windows to worskpaces: Meta + number, Meta + Shift + number"
+    print_in_progress "Setting shortcuts for workspace switching and moving windows to workspaces: Meta + number, Meta + Shift + number"
     for number in {1..9}; do gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-"${number}" "['<Super>$number']";done
     for number in {1..9}; do gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-"${number}" "['<Super><Shift>$number']";done
+
+    # Custom keybinding to open Alacritty with Super+Return
+    if [[ $(gsettings get org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding 2>/dev/null) != "'<Super>Return'" ]]
+    then
+        print_in_progress "Setting up custom keybinding to open Alacritty with Super+Return"
+        gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
+        gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name 'Open terminal'
+        gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command 'alacritty'
+        gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding '<Super>Return'
+    else
+        print_skip "Custom keybinding to open Alacritty with Super+Return is already configured"
+    fi
 
     # Disable "initial setup" startup window.
     if ! grep -q "yes" ~/.config/gnome-initial-setup-done 2>/dev/null; then
