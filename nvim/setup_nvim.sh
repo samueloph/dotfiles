@@ -17,23 +17,46 @@ source "$project_toplevel/util/print_utils"
 # shellcheck disable=SC1094,SC1091
 source "$supporting_files_folder/package_list_nvim"
 
+install_nvim(){
+        sudo wcurl https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage -o /usr/bin/nvim
+        sudo chmod +x /usr/bin/nvim
+}
+
 setup_nvim(){
 
     print_header "[NEOVIM]"
 
-    #apt_install_wrapper "${PACKAGE_LIST_NEOVIM[@]}"
+    apt_install_wrapper "${PACKAGE_LIST_NEOVIM[@]}"
 
-    # Install packer.
-    #
+    # Rememove neovim installed from APT
+    if (dpkg-query -W -f='${Status}' "neovim" 2>/dev/null | grep -q "install ok installed")
+    then
+        print_in_progress "Removing neovim installed with APT"
+        sudo apt remove neovim
+    fi
 
-    # create config folder if it doesnt exist
-    #mkdir -p "$HOME/.config/nvim"
+    # Check if nvim exists
+    if [ -f /usr/bin/nvim ]; then
 
-    # copy over all configs
+        # Get version installed
+        current_version=$(nvim --version | head -n1 | awk '{print $2}')
 
-    # warn that user needs to start nvim once to start all plugins
-    # nvim --headless "+Lazy! sync" +qa
+        print_in_progress "Verifying what's the latest neovim release"
+        # Get latest version from GitHub
+        latest_url=$(curl -L -s -w "%{url_effective}" -o /dev/null https://github.com/neovim/neovim/releases/latest)
+        latest_version=${latest_url##*/}
 
+        # If the versions don't match, assume GitHub's is newer
+        if [ "$current_version" != "$latest_version" ]; then
+            sudo rm /usr/bin/nvim
+            install_nvim
+        else
+            print_skip "Neovim installed is already the latest version"
+        fi
+    # If there's no neovim binary, install it
+    else
+        install_nvim
+    fi
 
     copy_files_wrapper --sudo=false "$supporting_files_folder/nvim" ~/.config/
 
