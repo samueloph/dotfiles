@@ -34,7 +34,8 @@ create_backup_of_file(){
         file_path="$1"
         backup_file_path="${backup_files_location}/$(basename ${file_path}).bkp-${timestamp}"
 
-        cp "$file_path" "$backup_file_path"
+        # If moving without sudo fails, try with it
+        mv "$file_path" "$backup_file_path" || sudo mv "$file_path" "$backup_file_path"
 
         print_info "Backup file created for $file_path at $backup_file_path"
 
