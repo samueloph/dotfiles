@@ -34,6 +34,7 @@ return {
                 "ts_ls",
                 "bashls",
                 "pyright",
+                "perlnavigator",
             },
             handlers = {
                 function(server_name) -- default handler (optional)
