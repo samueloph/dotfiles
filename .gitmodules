@@ -1,3 +1,0 @@
-[submodule "tmux/supporting_files/tmux/plugins/tmux-gruvbox"]
-	path = tmux/supporting_files/tmux/plugins/tmux-gruvbox
-	url = https://github.com/egel/tmux-gruvbox.git
