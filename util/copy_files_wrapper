@@ -62,7 +62,7 @@ copy_files_wrapper(){
         # Ovewrite is needed.
         else
             # Check if file is already the same.
-            if diff "$source_file" "$dest_location" >/dev/null; then
+            if diff -r "$source_file" "$dest_location" >/dev/null; then
                 print_skip "$dest_location is already the same"
             # File is different, create a backup and ovewrite.
             else
