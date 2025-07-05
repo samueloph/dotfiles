@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function _update_ps1() {
-    PS1="$(/usr/bin/powerline-go -error $? -jobs $(jobs -p | wc -l))"
+    PS1="$(/usr/bin/powerline-go -newline -error $? -jobs $(jobs -p | wc -l))"
 
     # Uncomment the following line to automatically clear errors after showing
     # them once. This not only clears the error for powerline-go, but also for
