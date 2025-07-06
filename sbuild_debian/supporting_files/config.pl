@@ -1440,6 +1440,10 @@ $build_source = 1;
 # checkout and you know what you are doing.
 $clean_source = 0;
 
+# Also produce a changes file suitable for a source-only upload.
+# See also related command line options in sbuild(1):
+$source_only_changes = 1;
+
 # Options to pass to lintian.  Each option is a separate arrayref element. 
 # For example, ['-i', '-v'] to add -i and -v.
 $lintian_opts = ['-i', '-I', '-E', '--pedantic'];
