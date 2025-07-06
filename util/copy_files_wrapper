@@ -70,6 +70,16 @@ copy_files_wrapper(){
                 print_info "$dest_location already exists and it's different, overwriting it with new file from $source_file"
 
                 create_backup_of_file "$dest_location"
+                # If dest_location is a folder, remove it (after backup)
+                # because we don't want to merge folders, we want to replace
+                # them.
+                if [[ -d $dest_location ]]; then
+                    if $sudo_enabled; then
+                        sudo rm -rf "$dest_location"
+                    else
+                        rm -rf "$dest_location"
+                    fi
+                fi
                 if $sudo_enabled; then
                     sudo cp -r "$source_file" "$dest_location"
                 else
