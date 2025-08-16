@@ -25,7 +25,6 @@ setup_tmux(){
 
     mkdir -p ~/.local/bin
     copy_files_wrapper --sudo=false "$supporting_files_folder/tmux-sessionizer" ~/.local/bin/
-    mkdir -p ~/.local/bin
     mkdir -p ~/.config/tmux
     copy_files_wrapper --sudo=false "$supporting_files_folder/tmux/tmux.conf" ~/.config/tmux/
     copy_files_wrapper --sudo=false "$supporting_files_folder/tmux/plugins" ~/.config/tmux/
