@@ -15,14 +15,14 @@ source "$project_toplevel/util/apt_install_wrapper"
 source "$project_toplevel/util/print_utils"
 
 # shellcheck disable=SC1094,SC1091
-source "$supporting_files_folder/package_list_nvim"
+source "$supporting_files_folder/package_list_neovim"
 
-install_nvim(){
+install_neovim(){
         sudo wcurl https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage -o /usr/bin/nvim
         sudo chmod +x /usr/bin/nvim
 }
 
-setup_nvim(){
+setup_neovim(){
 
     print_header "[NEOVIM]"
 
@@ -49,13 +49,13 @@ setup_nvim(){
         # If the versions don't match, assume GitHub's is newer
         if [ "$current_version" != "$latest_version" ]; then
             sudo rm /usr/bin/nvim
-            install_nvim
+            install_neovim
         else
             print_skip "Neovim installed is already the latest version"
         fi
     # If there's no neovim binary, install it
     else
-        install_nvim
+        install_neovim
     fi
 
     copy_files_wrapper --sudo=false "$supporting_files_folder/nvim" ~/.config/
@@ -63,4 +63,4 @@ setup_nvim(){
     print_header "[/NEOVIM]"
 }
 
-setup_nvim
+setup_neovim

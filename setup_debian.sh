@@ -19,7 +19,7 @@ source "$project_toplevel/util/print_utils"
 # and that the first argument is valid. Any other invalid arguments will be gracefully
 # ignored.
 if [[ $# -eq 0 ]] \
-|| [[ ! $1 =~ --setup-(all|alacritty|misc|bash|gnome|vim|nvim|hack-nerd-font|tmux|snap-packages|vscode|packaging-tools|sbuild-debian) ]]
+|| [[ ! $1 =~ --setup-(all|alacritty|misc|bash|gnome|vim|neovim|hack-nerd-font|tmux|snap-packages|vscode|packaging-tools|sbuild-debian) ]]
 then
     print_warning "At least 1 argument is required: setup_debian.sh [options...]"
     echo "Available options are:"
@@ -28,7 +28,7 @@ then
     echo "--setup-bash"
     echo "--setup-gnome"
     echo "--setup-misc"
-    echo "--setup-nvim"
+    echo "--setup-neovim"
     echo "--setup-hack-nerd-font"
     echo "--setup-packaging-tools"
     echo "--setup-sbuild-debian"
@@ -56,7 +56,7 @@ for argument in "$@" ; do
         bash "$project_toplevel/bash/setup_bash.sh"
         bash "$project_toplevel/gnome/setup_gnome.sh"
         bash "$project_toplevel/vim/setup_vim.sh"
-        bash "$project_toplevel/nvim/setup_nvim.sh"
+        bash "$project_toplevel/neovim/setup_neovim.sh"
         bash "$project_toplevel/tmux/setup_tmux.sh"
         bash "$project_toplevel/snap_packages/setup_snap_packages.sh"
         bash "$project_toplevel/vscode/setup_vscode.sh"
@@ -82,8 +82,8 @@ for argument in "$@" ; do
     if [[ $argument == "--setup-tmux" ]]; then
         bash "$project_toplevel/tmux/setup_tmux.sh"
     fi
-    if [[ $argument == "--setup-nvim" ]]; then
-        bash "$project_toplevel/nvim/setup_nvim.sh"
+    if [[ $argument == "--setup-neovim" ]]; then
+        bash "$project_toplevel/neovim/setup_neovim.sh"
     fi
     if [[ $argument == "--setup-hack-nerd-font" ]]; then
         bash "$project_toplevel/hack_nerd_font/setup_hack_nerd_font.sh"
