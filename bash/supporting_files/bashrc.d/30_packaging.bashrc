@@ -102,7 +102,7 @@ function import-new-release {
         # bash strict mode.
         set -euo pipefail
         gbp import-orig --pristine-tar ${1:-'--uscan'}
-        upstream_version=$(git tag | grep upstream/ | sort -V | tail -1 | cut -d / -f 2)
+        upstream_version=$(git tag | grep upstream/ | sort -V | tail -1 | cut -d / -f 2 | sed s/_/~/ )
         epoch=$(dpkg-parsechangelog --show-field Version | sed -e '/:/!d; s/:.*/:/')
         gbp dch --new-version="${epoch}${upstream_version}-1"
         debcommit -a
