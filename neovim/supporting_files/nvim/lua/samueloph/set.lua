@@ -30,6 +30,8 @@ vim.opt.updatetime = 50
 
 vim.opt.colorcolumn = "100"
 
+vim.opt.spell = true
+
 vim.api.nvim_set_keymap('n', '<C-N>', ":NvimTreeToggle<CR>", { noremap = true })
 
 -- Highlight trailing whitespaces
